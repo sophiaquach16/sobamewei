@@ -5,27 +5,45 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
-{
-    use Notifiable;
+class User {
 
-	protected $guard = 'admin';
+    private $id;
+    private $firstName;
+    private $lastName;
+    private $email;
+    private $phone;
+    private $admin;
+    private $physicalAddress;
+    private $password;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    public function __construct($data) {
+        $this->set($data);
+    }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function set($data) {
+        $this->id = $data->id;
+        $this->firstName = $data->firstName;
+        $this->lastName = $data->lastName;
+        $this->email = $data->email;
+        $this->phone = $data->phone;
+        $this->admin = $data->admin;
+        $this->physicalAddress = $data->physicalAddress;
+        $this->password = $data->password;
+    }
+    
+    public function get(){
+        $returnData = new \stdClass();
+        
+        $returnData->id = $thid->id;
+        $returnData->firstName = $thid->firstName;
+        $returnData->lastName = $thid->lastName;
+        $returnData->email = $thid->email;
+        $returnData->phone = $thid->phone;
+        $returnData->admin = $thid->admin;
+        $returnData->physicalAddress = $thid->physicalAddress;
+        $returnData->password = $thid->password;   
+        
+        return $returnData;
+    }
+
 }
