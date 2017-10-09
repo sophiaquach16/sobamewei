@@ -12,5 +12,27 @@
 */
 
 Route::get('/', function () {
+    return view('pages.index');
+});
+
+Route::get('/login', function () {
+    return view('pages.login');
+});
+
+Route::post('login', function() {
+     
+});
+
+Route::get('/inventory', function () {
+    return view('pages.inventory');
+});
+
+Route::get('/add-items', function () {
+    return view('pages.add-items');
+});
+
+/*
+Route::get('/welcome', function () {
     return view('welcome');
 });
+*/

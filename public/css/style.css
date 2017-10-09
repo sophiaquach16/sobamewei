@@ -1,0 +1,60 @@
+.navbar {
+    border-radius: 0px;
+}
+
+#loginForm {
+    background-color: dodgerblue;
+    padding-bottom: 20px;
+}
+
+.logo {
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 150%;
+}
+
+.pageContainer {
+    padding-top: 75px;
+}
+
+h1 {
+    color: black;
+}
+
+
+.blueTitle {
+    color: dodgerblue;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 250%;
+  
+}
+
+.rectangular {
+    border-radius: 0px;
+}
+
+.topMess {
+    margin-bottom: 0px;
+}
+
+/* for inventory.handlebars */
+
+table {
+    width:100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+   
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+.navbar{
+    margin-bottom:0px;
+}
