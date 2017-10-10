@@ -38,4 +38,4 @@
 3) Type ```composer update --no-scripts``` and press enter to install the dependencies of the app.
 
 ## Open the website on your local computer
-- Go to ```laravel.dev``` on your browser.
+- Go to ```laravel.dev``` on your browser (if you followed the tutorial in the installation step).
