@@ -1,3 +1,5 @@
+# IMPORTANT: This is the new repository for our project. We switched to the Laravel Framework since with the NodeJS framework we had to do a lot of nested callbacks (see http://callbackhell.com/).
+
 # ConUShop
 
 ## Website Info
