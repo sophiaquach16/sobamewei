@@ -13,6 +13,7 @@ yarn-error.log
 
 # imported
 .mwb.bak
+*.mwb.bak
 
 # NodeJS
 node_modules
