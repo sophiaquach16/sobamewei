@@ -11,11 +11,14 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+				@if( !Auth::check() )
                     <li><a href="/login">Log In<span class="sr-only">(current)</span></a></li>
+				@else
                     <li><a href="add-items">Add Items</a></li>
                     <li><a href="inventory">Inventory</a></li>
                     <li><a href="/logout">Log Out</a></li>
                 </ul>
+				@endif
             </div>
         </div>
     </nav>

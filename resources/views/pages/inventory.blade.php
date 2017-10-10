@@ -18,24 +18,110 @@
         <th>Touch Screen</th>
         <th>Electronic Type</th>
     </tr>
-    {{#each items}}
+	@if (! empty($items))
+    @foreach ($items as $item)
     <tr>
-        <td>{{#if dimension}}{{dimension}}{{else}}N/A{{/if}}</td>
-        <td>{{#if weight}}{{weight}}{{else}}N/A{{/if}}</td>
-        <td>{{#if modelNumber}}{{modelNumber}}{{else}}N/A{{/if}}</td>
-        <td>{{#if brandName}}{{brandName}}{{else}}N/A{{/if}}</td>
-        <td>{{#if hdSize}}{{hdSize}}{{else}}N/A{{/if}}</td>
-        <td>{{#if price}}{{price}}{{else}}N/A{{/if}}</td>
-        <td>{{#if processorType}}{{processorType}}{{else}}N/A{{/if}}</td>
-        <td>{{#if ramSize}}{{ramSize}}{{else}}N/A{{/if}}</td>
-        <td>{{#if cpuCores}}{{cpuCores}}{{else}}N/A{{/if}}</td>
-        <td>{{#if batteryInfo}}{{batteryInfo}}{{else}}N/A{{/if}}</td>
-        <td>{{#if os}}{{os}}{{else}}N/A{{/if}}</td>
-        <td>{{#if camera}}{{camera}}{{else}}N/A{{/if}}</td>
-        <td>{{#if touchScreen}}{{touchScreen}}{{else}}N/A{{/if}}</td>
-        <td>{{#if ElectronicType_name}}{{ElectronicType_name}}{{else}}N/A{{/if}}</td>
+        <td>
+		@if ($item->dimension ) 
+		{{$item->dimension}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->weight ) 
+		{{$item->weight}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->modelNumber ) 
+		{{$item->modelNumber}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->brandName ) 
+		{{$item->brandName}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->hdSize ) 
+		{{$item->hdSize}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->price ) 
+		{{$item->price}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->processorType ) 
+		{{$item->processorType}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->ramSize ) 
+		{{$item->ramSize}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->cpuCores ) 
+		{{$item->cpuCores}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->batteryInfo ) 
+		{{$item->batteryInfo}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->os ) 
+		{{$item->os}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->camera ) 
+		{{$item->camera}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->touchScreen ) 
+		{{$item->touchScreen}}
+		@else
+		N/A
+		@endif
+		</td>
+        <td>
+		@if ( $item->name ) 
+		{{$item->name}}
+		@else
+		N/A
+		@endif
+		</td>
     </tr>
-    {{/each}}
+    @endforeach
+	@endif
     
 </table>
 @stop

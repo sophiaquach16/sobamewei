@@ -5,7 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User {
+class User extends Authenticatable {
+
+use Notifiable;
 
     private $id;
     private $firstName;
@@ -16,8 +18,18 @@ class User {
     private $physicalAddress;
     private $password;
 
-    public function __construct($data) {
-        $this->set($data);
+	//source for multiple constructors: http://www.webtrafficexchange.com/multiple-constructors-php
+	function __construct() {
+        $argv = func_get_args();
+        switch( func_num_args() ) {
+            case 1:
+                self::__construct1($argv[0]);
+                break;
+         }
+    }
+ 
+    function __construct1($data) {
+		$this->set($data);
     }
 
     public function set($data) {
