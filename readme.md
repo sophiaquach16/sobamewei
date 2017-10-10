@@ -26,7 +26,7 @@
 1) We recommend that you use Xampp to run the Laravel framework app by following [this tutorial](https://www.codementor.io/magarrent/how-to-install-laravel-5-xampp-windows-du107u9ji).
 2) Clone the Repository into htdocs with the folder named as laravel instead of ConUShop.
 
-## Database Synchronization (do everytime the database model has been modified)
+## Database Synchronization (do everytime the database model is modified)
 1) Go to ```http://localhost/phpmyadmin```
 2) Click on SQL tab.
 3) Open the ```databaseScript.sql``` file in the project folder with notepad. Copy and paste everything in the textarea of the SQL tab.
