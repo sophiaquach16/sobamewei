@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\ElectronicTDG;
+use Session;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class AuthController extends BaseController {
@@ -24,7 +25,8 @@ class AuthController extends BaseController {
 
     public function doLogout() {
         Auth::logout();
-        return redirect('')->with('success_msg', 'Successfully logged out.');
+        Session::flash('success_msg', "Successfully logged out.");
+        return redirect('');
     }
 
 }
