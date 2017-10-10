@@ -15,12 +15,6 @@ function loadForm() {
         <div class="items text-center"><span class="blueTitle">DESKTOP COMPUTER</span></div>
     </div>
 
-    <div class="container">
-
-        <div class="col-sm-2"></div>
-
-        <form id="desktopform" class="form-horizontal col-sm-8  text-center desktop-form" action="/add-items-action" method="POST">
-
             <input type="hidden" name="ElectronicType_id" value=1>
 
             <div class="form-group">
@@ -82,22 +76,13 @@ function loadForm() {
 
             <button type="submit" id="desktop-button" class="btn btn-success btn-block">Submit</button>
             </br>
-        </form>
-
-        <div class="col-sm-2"></div>
-    </div>`);
+`);
             break;
 
         case 'laptop':
             $("#formLoad").html(`<div class="row">
         <div class="items text-center"><span class="blueTitle">LAPTOP</span></div>
     </div>
-
-    <div class="container">
-
-        <div class="col-sm-2"></div>
-
-        <form id="laptopform" class="form-horizontal col-sm-8  text-center laptop-form" action="/add-items-action" method="POST">
 
 <input type="hidden" name="ElectronicType_id" value=2>
 
@@ -198,22 +183,13 @@ function loadForm() {
 
         <button type="submit" class="btn btn-success btn-block">Submit</button>
         </br>
-        </form>
-
-        <div class="col-sm-2"></div>
-    </div>`);
+`);
             break;
 
         case 'monitor':
             $("#formLoad").html(`<div class="row">
         <div class="items text-center"><span class="blueTitle">MONITOR</span></div>
     </div>
-
-    <div class="container">
-
-        <div class="col-sm-2"></div>
-
-        <form id="monitorform" class="form-horizontal col-sm-8  text-center monitor-form" action="/add-items-action" method="POST">
 
 <input type="hidden" name="ElectronicType_id" value=3>
 
@@ -259,22 +235,13 @@ function loadForm() {
 
             <button type="submit" class="btn btn-success btn-block">Submit</button>
             <br>
-        </form>
-
-        <div class="col-sm-2"></div>
-    </div>`);
+`);
             break;
 
         case 'tablet':
             $("#formLoad").html(`<div class="row">
         <div class="items text-center"><span class="blueTitle">TABLET</span></div>
     </div>
-
-    <div class="container">
-
-        <div class="col-sm-2"></div>
-
-        <form id="tabletform" class="form-horizontal col-sm-8  text-center tablet-form" action="/add-items-action" method="POST">
 
 <input type="hidden" name="ElectronicType_id" value=4>
 
@@ -361,22 +328,14 @@ function loadForm() {
 
             <button type="submit" class="btn btn-success btn-block">Submit</button>
             <br>
-        </form>
-
-        <div class="col-sm-2"></div>
-    </div>`);
+        `);
             break;
 
         case 'tv':
-            $("#formLoad").html(`<div class="row">
+            $("#formLoad").html(`
+<div class="row">
         <div class="items text-center"><span class="blueTitle">TELEVISION</span></div>
     </div>
-
-    <div class="container">
-
-        <div class="col-sm-2"></div>
-
-        <form id="televisionform" class="form-horizontal col-sm-8  text-center television-form" action="/add-items-action" method="POST">
 
 <input type="hidden" name="ElectronicType_id" value=5>
 
@@ -418,10 +377,7 @@ function loadForm() {
 
         <button type="submit" class="btn btn-success btn-block">Submit</button>
         </br>
-        </form>
-
-        <div class="col-sm-2"></div>
-    </div>`);
+        `);
             break;
     }
 }

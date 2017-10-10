@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\MySQLConnection;
+
 class ElectronicTDG {
 
     private $conn;
 
     public function __construct() {
-        $this->conn = new \MySQLConnection();
+        $this->conn = new MySQLConnection();
     }
 
     /**
@@ -34,4 +36,25 @@ class ElectronicTDG {
         return $this->conn->query($queryString, $parameters);
     }
 
+	public function getAll() {
+
+        $queryString = 'SELECT * FROM Electronic LEFT JOIN ElectronicType ON ElectronicType.id = Electronic.ElectronicType_id';
+		
+        return $this->conn->directQuery($queryString);
+    }
+
+	public function add($parameters) {
+		$queryString = 'INSERT INTO Electronic SET ';
+
+        foreach ($parameters as $key => $value) {
+
+            $queryString .= $key . ' = :' . $key;
+            $queryString .= ' , ';
+        }
+
+        //We delete the last useless ' AND '
+        $queryString = substr($queryString, 0, -2);
+		
+        return $this->conn->query($queryString, $parameters);
+	}
 }

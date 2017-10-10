@@ -11,28 +11,35 @@
 |
 */
 
+use App\ElectronicTDG;
+
 Route::get('/', function () {
     return view('pages.index');
 });
 
-Route::get('/login', function () {
-    return view('pages.login');
-});
+Route::get('login', array(
+	'uses' => 'MainController@showLogin'
+));
 
-Route::post('login', function() {
-     
-});
+Route::post('login', array(
+	'uses' => 'MainController@doLogin'
+));
+
+Route::get('logout', array(
+	'uses' => 'MainController@doLogout'
+));
 
 Route::get('/inventory', function () {
-    return view('pages.inventory');
+	$electronicTDG = new ElectronicTDG();
+	$items = $electronicTDG->getAll();
+
+    return view('pages.inventory', ['items' => $items]);
 });
 
 Route::get('/add-items', function () {
     return view('pages.add-items');
 });
 
-/*
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-*/
+Route::post('add-items', array(
+	'uses' => 'MainController@doAddItems'
+));

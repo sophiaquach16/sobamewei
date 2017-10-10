@@ -1,5 +1,9 @@
 <?php
 
+namespace App;
+
+use PDO;
+
 class MySQLConnection {
 
     private $conn;
@@ -11,16 +15,26 @@ class MySQLConnection {
     public function query($query, $bindValues) {
         $localConn = $this->conn;
 
-        $localConn->prepare($query);
-        
+        $stmt = $localConn->prepare($query);
+
         //We bind the values to make sure we are protected from injections
         foreach ($bindValues as $key => $value) {
-            $localConn->bindValue(':' . $key, $value);
+            $stmt->bindValue(':' . $key, $value);
         }
         
-        $result = $localConn->execute();
+        $stmt->execute();
         
-        return $result->fetchAll(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+	public function directQuery($query) {
+        $localConn = $this->conn;
+
+        $stmt = $localConn->prepare($query);
+		
+		$stmt->execute();
+
+		return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     
     public function getPDOConnection(){
