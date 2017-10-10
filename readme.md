@@ -9,7 +9,7 @@
 - Username: ```admin@conushop.com```
 - Password: ```admin```
 
-## Team Members
+## Team 9 Members
 - Jean-Michel Laliberté
 - Alex Zhang
 - Helen Zhang
