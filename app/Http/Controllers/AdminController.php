@@ -37,7 +37,7 @@ class AdminController extends BaseController {
     public function showInventory() {
         $electronicTDG = new ElectronicTDG();
         $items = $electronicTDG->getAll();
-
+        
         return view('pages.inventory', ['items' => $items]);
     }
     

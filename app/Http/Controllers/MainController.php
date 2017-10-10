@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\ElectronicTDG;
+use Session;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
@@ -42,11 +43,12 @@ class MainController extends BaseController {
                         'email' => $request->input('email'),
                         'password' => $request->input('password')
                     ))) {
+                Session::flash('success_msg', "Successfully logged in.");
                 return Redirect::to('');
             } else {
                 //dd(Hash::make('admin'));
-
-                return Redirect::to('login');
+                //return Redirect::to('login');
+                return view('pages.login', ['email' => $request->input('email'), 'error_msg' => 'Wrong email or password.']);
             }
         }
     }
