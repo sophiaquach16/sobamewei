@@ -19,7 +19,11 @@ use Notifiable;
     private $password;
 
 	//source for multiple constructors: http://www.webtrafficexchange.com/multiple-constructors-php
-	function __construct() {
+
+    /**
+     * User constructor.
+     */
+    function __construct() {
         $argv = func_get_args();
         switch( func_num_args() ) {
             case 1:
@@ -46,14 +50,14 @@ use Notifiable;
     public function get(){
         $returnData = new \stdClass();
         
-        $returnData->id = $thid->id;
-        $returnData->firstName = $thid->firstName;
-        $returnData->lastName = $thid->lastName;
-        $returnData->email = $thid->email;
-        $returnData->phone = $thid->phone;
-        $returnData->admin = $thid->admin;
-        $returnData->physicalAddress = $thid->physicalAddress;
-        $returnData->password = $thid->password;   
+        $returnData->id = $this->id;
+        $returnData->firstName = $this->firstName;
+        $returnData->lastName = $this->lastName;
+        $returnData->email = $this->email;
+        $returnData->phone = $this->phone;
+        $returnData->admin = $this->admin;
+        $returnData->physicalAddress = $this->physicalAddress;
+        $returnData->password = $this->password;
         
         return $returnData;
     }
