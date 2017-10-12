@@ -24,7 +24,8 @@
 
 ## Installation (do once)
 1) We recommend that you use Xampp to run the Laravel framework app by following [this tutorial](https://www.codementor.io/magarrent/how-to-install-laravel-5-xampp-windows-du107u9ji).
-2) Clone the Repository into htdocs with the folder named as laravel instead of ConUShop.
+2) Change Xampp's MySQL password to isY2metT by following [this tutorial](https://www.roodex.com/blog/change-password-phpmyadmin-mysql-xampp/).
+3) Clone the Repository into htdocs with the folder named as laravel instead of ConUShop.
 
 ## Database Synchronization (do everytime the database model is modified)
 1) Go to ```http://localhost/phpmyadmin```
