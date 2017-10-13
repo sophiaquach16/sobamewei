@@ -22,7 +22,16 @@ class ElectronicSpecification {
     private $ElectronicType_name;
     private $ElectronicType_dimensionUnit;
 
-    function __construct($data) {
+  function __construct() {
+        $argv = func_get_args();
+        switch( func_num_args() ) {
+            case 1:
+                self::__construct1($argv[0]);
+                break;
+         }
+    }
+
+    function __construct1($data) {
         $this->set($data);
     }
 
@@ -48,7 +57,7 @@ class ElectronicSpecification {
 
     public function get() {
         $returnData = new \stdClass();
-        
+
         $returnData->id = $this->id;
         $returnData->dimension = $this->dimension;
         $returnData->weight = $this->weight;
