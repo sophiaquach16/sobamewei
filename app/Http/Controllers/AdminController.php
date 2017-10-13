@@ -13,8 +13,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
-use App\ElectronicTDG;
-use App\Http\Middleware\checkAdmin;
+use App\ElectronicCatalogMapper;
+use App\ElectronicCatalogTDG;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class AdminController extends BaseController {
@@ -25,18 +25,28 @@ class AdminController extends BaseController {
     }
 
     public function doAddItems(Request $request) {
+        /*
         $electronicTDG = new ElectronicTDG();
         $inputs = $request->except('_token');
 
         $electronicTDG->add($inputs);
 
         return Redirect::to('inventory');
-        //$electronicTDG->;
+        */
+
+        $electronicCatalogMapper = new ElectronicCatalogMapper();
+        //dd($request->except('_token'));
+        if($electronicCatalogMapper->makeNewElectronicSpecification((object) $request->except('_token'))){
+            return Redirect::to('inventory');
+        }else{
+            //add session flash
+            return Redirect::to('add-items');
+        }
     }
 
     public function showInventory() {
-        $electronicTDG = new ElectronicTDG();
-        $items = $electronicTDG->getAll();
+        $electronicCatalogTDG = new ElectronicCatalogTDG();
+        $items = $electronicCatalogTDG->getAll();
         
         return view('pages.inventory', ['items' => $items]);
     }
