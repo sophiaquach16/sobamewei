@@ -4,7 +4,7 @@ namespace App;
 
 use App\MySQLConnection;
 
-class ElectronicTDG {
+class ElectronicSpecificationTDG {
 
     private $conn;
 
