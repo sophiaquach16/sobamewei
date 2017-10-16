@@ -94,6 +94,13 @@ function loadForm() {
     </div>
 
 <input type="hidden" name="ElectronicType_id" value=2>
+                    
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="dimension">Dimension <br/> </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="dimension" placeholder="Enter dimensions size (width x height x depth) ex: (32x12x5) " name="dimension">
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="displaySize">Display Size</label>

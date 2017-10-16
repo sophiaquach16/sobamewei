@@ -2,12 +2,12 @@
 
 namespace App;
 
-class UserTDG {
+class UserCatalogTDG {
 
     private $conn;
 
     public function __construct() {
-        $this->conn = new \MySQLConnection();
+        $this->conn = new MySQLConnection();
     }
 
     /**
@@ -31,6 +31,35 @@ class UserTDG {
 
         //We send to MySQLConnection the associative array, to bind values to keys
         //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
+        return $this->conn->query($queryString, $parameters);
+    }
+    
+    public function findAll() {
+
+        $queryString = 'SELECT * FROM User';
+
+        $eSDataList = $this->conn->directQuery($queryString);
+
+        return $eSDataList;
+    }
+    
+    public function insertLoginLog($userId, $timestamp) {
+        $parameters = new \stdClass();
+        $parameters->User_id = $userId;
+        $parameters->timestamp = $timestamp;
+        
+        $queryString = 'INSERT INTO LoginLog SET ';
+
+        foreach ($parameters as $key => $value) {
+            if ($value !== null) {
+                $queryString .= $key . ' = :' . $key;
+                $queryString .= ' , ';
+            }
+        }
+
+        //We delete the last useless ' , '
+        $queryString = substr($queryString, 0, -2);
+
         return $this->conn->query($queryString, $parameters);
     }
 
