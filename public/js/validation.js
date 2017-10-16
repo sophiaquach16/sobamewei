@@ -76,7 +76,6 @@ $(document).ready(function ()
                     },
                     modelNumber: {
                         required: true,
-                        number: true,
                     },
                     price: {
                         required: true,
@@ -103,7 +102,6 @@ $(document).ready(function ()
                     },
                     modelNumber: {
                         required: true,
-                        number: true,
                     },
                     os: {
                         required: true,
@@ -151,7 +149,6 @@ $(document).ready(function ()
                     },
                     modelNumber: {
                         required: true,
-                        number: true,
                     },
                     os: {
                         required: true,
@@ -184,7 +181,6 @@ $(document).ready(function ()
                     },
                     modelNumber: {
                         required: true,
-                        number: true,
                     },
                     price: {
                         required: true,
