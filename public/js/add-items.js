@@ -6,12 +6,21 @@ $(document).ready(function () {
     });
 });
 function loadForm() {
+    var htmlString = `
+            <br />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="quantity">Quantity: </label>
+                <div class="col-sm-10">
+                    <input type="number" min=0 max=100 class="form-control" id="quantity" name="quantity">
+                </div>
+            </div>
+`;
     switch ($("#itemSelect").val()) {
         case 'empty':
-            $("#formLoad").html(``);
+            htmlString = ``;
             break;
         case 'desktop':
-            $("#formLoad").html(`<div class="row">
+            htmlString += `<div class="row">
         <div class="items text-center"><span class="blueTitle">DESKTOP COMPUTER</span></div>
     </div>
 
@@ -32,7 +41,7 @@ function loadForm() {
             <div class="form-group">
                 <label class="control-label col-sm-2" for="weight">Weight</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="weight" placeholder="Enter weight" name="weight">
+                    <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
                 </div>
             </div>
             <div class="form-group">
@@ -70,17 +79,17 @@ function loadForm() {
             <div class="form-group">
                 <label class="control-label col-sm-2" for="price">Price</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                    <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
                 </div>
             </div>
 
             <button type="submit" id="desktop-button" class="btn btn-success btn-block">Submit</button>
             </br>
-`);
+`;
             break;
 
         case 'laptop':
-            $("#formLoad").html(`<div class="row">
+            htmlString += `<div class="row">
         <div class="items text-center"><span class="blueTitle">LAPTOP</span></div>
     </div>
 
@@ -132,7 +141,7 @@ function loadForm() {
         <div class="form-group">
             <label class="control-label col-sm-2" for="weight">Weight</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="weight" placeholder="Enter weight" name="weight">
+                <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
             </div>
         </div>
 
@@ -177,17 +186,17 @@ function loadForm() {
         <div class="form-group">
             <label class="control-label col-sm-2" for="price">Price</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
             </div>
         </div>
 
         <button type="submit" class="btn btn-success btn-block">Submit</button>
         </br>
-`);
+`;
             break;
 
         case 'monitor':
-            $("#formLoad").html(`<div class="row">
+            htmlString += `<div class="row">
         <div class="items text-center"><span class="blueTitle">MONITOR</span></div>
     </div>
 
@@ -203,7 +212,7 @@ function loadForm() {
             <div class="form-group">
                 <label class="control-label col-sm-2" for="weight">Weight</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="weight" placeholder="Enter weight" name="weight">
+                    <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
                 </div>
             </div>
 
@@ -227,7 +236,7 @@ function loadForm() {
             <div class="form-group">
                 <label class="control-label col-sm-2" for="price">Price</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                    <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
                 </div>
             </div>
 
@@ -235,11 +244,11 @@ function loadForm() {
 
             <button type="submit" class="btn btn-success btn-block">Submit</button>
             <br>
-`);
+`;
             break;
 
         case 'tablet':
-            $("#formLoad").html(`<div class="row">
+            htmlString += `<div class="row">
         <div class="items text-center"><span class="blueTitle">TABLET</span></div>
     </div>
 
@@ -267,7 +276,7 @@ function loadForm() {
             <div class="form-group">
                 <label class="control-label col-sm-2" for="weight">Weight</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="weight" placeholder="Enter weight" name="weight">
+                    <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
                 </div>
             </div>
             <div class="form-group">
@@ -322,17 +331,17 @@ function loadForm() {
             <div class="form-group">
                 <label class="control-label col-sm-2" for="price">Price</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                    <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
                 </div>
             </div>
 
             <button type="submit" class="btn btn-success btn-block">Submit</button>
             <br>
-        `);
+        `;
             break;
 
         case 'tv':
-            $("#formLoad").html(`
+            htmlString += `
 <div class="row">
         <div class="items text-center"><span class="blueTitle">TELEVISION</span></div>
     </div>
@@ -349,7 +358,7 @@ function loadForm() {
         <div class="form-group">
             <label class="control-label col-sm-2" for="weight">Weight</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="weight" placeholder="Enter weight" name="weight">
+                <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
             </div>
         </div>
 
@@ -371,13 +380,14 @@ function loadForm() {
         <div class="form-group">
             <label class="control-label col-sm-2" for="price">Price</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
             </div>
         </div>
 
         <button type="submit" class="btn btn-success btn-block">Submit</button>
         </br>
-        `);
+        `;
             break;
     }
+    $("#formLoad").html(htmlString);
 }

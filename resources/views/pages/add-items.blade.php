@@ -25,6 +25,7 @@
 
         <form id="televisionform" class="form-horizontal col-sm-8  text-center television-form" action="/add-items" method="POST">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            
             <div id="formLoad">
 				<!-- The form will be loaded here, please see the the file add-items.js in the public/javascript folder to see the html -->
             </div>

@@ -18,60 +18,127 @@ class ElectronicSpecification {
     private $os;
     private $camera;
     private $touchScreen;
+    private $displaySize;
     private $ElectronicType_id;
     private $ElectronicType_name;
     private $ElectronicType_dimensionUnit;
+    private $ElectronicType_displaySizeUnit;
+    private $electronicItems;
 
-
-  function __construct() {
+    function __construct() {
         $argv = func_get_args();
-        switch( func_num_args() ) {
+        switch (func_num_args()) {
+            case 0:
+                self::__construct0();
+                break;
             case 1:
                 self::__construct1($argv[0]);
                 break;
-         }
+        }
+    }
+
+    function __construct0() {
+        $this->electronicItems = array();
     }
 
     function __construct1($data) {
+        $this->electronicItems = array();
         $this->set($data);
     }
 
+    public function addElectronicItem($electronicItemData) {
+        $electronicItem = new ElectronicItem($electronicItemData);
+
+        array_push($this->electronicItems, $electronicItem);
+    }
+    
+    public function deleteElectronicItem($id){
+        foreach($this->electronicItems as $key => $value){
+            if($id === $this->electronicItems[$key]->getId()){
+                unset($this->electronicItems[$key]);
+            }
+        }
+    }
+
     public function set($data) {
-      //mettre isset pour
-        if(isset($data->id))
-        $this->id = $data->id;
-        if(isset($data->dimension))
-        $this->dimension = $data->dimension;
-        if(isset($data->weight))
-        $this->weight = $data->weight;
-        if(isset($data->modelNumber))
-        $this->modelNumber = $data->modelNumber;
-        if(isset($data->brandName))
-        $this->brandName = $data->brandName;
-        if(isset($data->hdSize))
-        $this->hdSize = $data->hdSize;
-        if(isset($data->price))
-        $this->price = $data->price;
-        if(isset($data->processorType))
-        $this->processorType = $data->processorType;
-        if(isset($data->ramSize))
-        $this->ramSize = $data->ramSize;
-        if(isset($data->cpuCores))
-        $this->cpuCores = $data->cpuCores;
-        if(isset($data->batteryInfo))
-        $this->batteryInfo = $data->batteryInfo;
-        if(isset($data->os))
-        $this->os = $data->os;
-        if(isset($data->camera))
-        $this->camera = $data->camera;
-        if(isset($data->touchScreen))
-        $this->touchScreen = $data->touchScreen;
-        if(isset($data->ElectronicType_id))
-        $this->ElectronicType_id = $data->ElectronicType_id;
-        if(isset($data->ElectronicType_name))
-        $this->ElectronicType_name = $data->ElectronicType_name;
-        if(isset($data->ElectronicType_dimensionUnit))
-        $this->ElectronicType_dimensionUnit = $data->ElectronicType_dimensionUnit;
+        //mettre isset pour
+        if (isset($data->id)) {
+            $this->id = $data->id;
+        }
+        if (isset($data->dimension)) {
+            $this->dimension = $data->dimension;
+        }
+        if (isset($data->weight)) {
+            $this->weight = $data->weight;
+        }
+        if (isset($data->modelNumber)) {
+            $this->modelNumber = $data->modelNumber;
+        }
+        if (isset($data->brandName)) {
+            $this->brandName = $data->brandName;
+        }
+        if (isset($data->hdSize)) {
+            $this->hdSize = $data->hdSize;
+        }
+        if (isset($data->price)) {
+            $this->price = $data->price;
+        }
+        if (isset($data->processorType)) {
+            $this->processorType = $data->processorType;
+        }
+        if (isset($data->ramSize)) {
+            $this->ramSize = $data->ramSize;
+        }
+        if (isset($data->cpuCores)) {
+            $this->cpuCores = $data->cpuCores;
+        }
+        if (isset($data->batteryInfo)) {
+            $this->batteryInfo = $data->batteryInfo;
+        }
+        if (isset($data->os)) {
+            $this->os = $data->os;
+        }
+        if (isset($data->camera)) {
+            $this->camera = $data->camera;
+        }
+        if (isset($data->touchScreen)) {
+            $this->touchScreen = $data->touchScreen;
+        }
+        if (isset($data->displaySize)) {
+            $this->displaySize = $data->displaySize;
+        }
+        //dd($data->electronicItems);
+        if (isset($data->electronicItems)) {
+            foreach ($data->electronicItems as $key => $value) {
+                $this->addElectronicItem($data->electronicItems[$key]);
+            }
+        }
+
+        if (isset($data->ElectronicType_id)) {
+            $this->ElectronicType_id = $data->ElectronicType_id;
+            switch ($data->ElectronicType_id) {
+                case 1:
+                    $this->ElectronicType_name = 'Desktop';
+                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    break;
+                case 2:
+                    $this->ElectronicType_name = 'Laptop';
+                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    break;
+                case 3:
+                    $this->ElectronicType_name = 'Monitor';
+                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    break;
+                case 4:
+                    $this->ElectronicType_name = 'Tablet';
+                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    break;
+                case 5:
+                    $this->ElectronicType_name = 'Television';
+                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    break;
+            }
+        }
     }
 
     public function get() {
@@ -91,15 +158,28 @@ class ElectronicSpecification {
         $returnData->os = $this->os;
         $returnData->camera = $this->camera;
         $returnData->touchScreen = $this->touchScreen;
+        $returnData->displaySize = $this->displaySize;
         $returnData->ElectronicType_id = $this->ElectronicType_id;
         $returnData->ElectronicType_name = $this->ElectronicType_name;
         $returnData->ElectronicType_dimensionUnit = $this->ElectronicType_dimensionUnit;
-
+        $returnData->ElectronicType_displaySizeUnit = $this->ElectronicType_displaySizeUnit;
+        
+        $electronicItemsData = array();
+        foreach ($this->electronicItems as $electronicItem) {
+            array_push($electronicItemsData, $electronicItem->get());
+        }
+        
+        $returnData->electronicItems = $electronicItemsData;
+        
         return $returnData;
     }
 
     public function getModelNumber() {
-      return $this->modelNumber;
+        return $this->modelNumber;
+    }
+    
+    public function getId() {
+        return $this->id;
     }
 
 }

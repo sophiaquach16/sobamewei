@@ -21,23 +21,30 @@ class MySQLConnection {
         foreach ($bindValues as $key => $value) {
             $stmt->bindValue(':' . $key, $value);
         }
-        
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+            
+            die($e->getMessage());
+        }
     }
 
-	public function directQuery($query) {
+    public function directQuery($query) {
         $localConn = $this->conn;
 
         $stmt = $localConn->prepare($query);
-		
-		$stmt->execute();
 
-		return $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-    
-    public function getPDOConnection(){
+
+    public function getPDOConnection() {
         return $this->conn;
     }
 

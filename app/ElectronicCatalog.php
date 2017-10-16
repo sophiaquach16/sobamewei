@@ -2,62 +2,93 @@
 
 namespace App;
 
-class ElectronicCatalog
-{
+class ElectronicCatalog {
+
     private $eSList;
-    //private $eIList;
 
-    function __construct()
-    {
+    function __construct($eSListData) {
         $this->eSList = array();
-        //$eIList = array();
 
-        $this->updateESList();
+        $this->setESList($eSListData);
     }
 
-    function updateESList(){
-        $electronicCatalogTDG = new ElectronicCatalogTDG();
-        $items = $electronicCatalogTDG->getAll();
-
-        foreach($items as $item){
-            $eS = new ElectronicSpecification($item);
+    function setESList($eSListData) {
+        //dd($eSListData);
+        foreach ($eSListData as $eSData) {
+            $eS = new ElectronicSpecification($eSData);
             array_push($this->eSList, $eS);
         }
     }
 
-    function findElectronicSpecification($modelNumber)
-    {
-        $modelNumberExists = false;
-        foreach($this->eSList as $eS){
-            if(is_a($eS,'ElectronicSpecification')){
-                if($eS->getModelNumber() ===  $modelNumber) {
-                    $modelNumberExists = true;
+    function getESList() {
+        $returnObject = array();
+
+        foreach ($this->eSList as $eS) {
+            array_push($returnObject, $eS->get());
+        }
+
+        return $returnObject;
+    }
+
+    function deleteElectronicItem($id) {
+        //dd($ids);
+        foreach ($this->eSList as $eS) {
+            foreach ($eS->get()->electronicItems as $eIData) {
+                if ($eIData->id === $id) {
+                    $eS->deleteElectronicItem($id);
                 }
+            }
+        }
+    }
+
+    function findElectronicSpecification($modelNumber) {
+        $modelNumberExists = false;
+        //dd($this->eSList);
+        foreach ($this->eSList as $eS) {
+            if ($eS->getModelNumber() === $modelNumber) {
+                $modelNumberExists = true;
             }
         }
 
         return $modelNumberExists;
     }
-
-    function makeElectronicSpecification($electronicSpecificationData)
-    {
-        $eS = new ElectronicSpecification($electronicSpecificationData);
-
-        array_push($this->eSList, $eS);
-        return $this->addES($eS);
-    }
-
-    function addES($eS){
-        $electronicCatalogTDG = new ElectronicCatalogTDG();
-        $parameters = array();
-
-        foreach($eS->get() as $key => $value)
-        {
-            if($value !== null) {
-                $parameters[$key] = $value;
+    
+    function getElectronicSpecificationById($id) {
+        foreach ($this->eSList as $eS) {
+            if ($eS->getId() === $id) {
+                return $eS->get();
             }
         }
-        return $electronicCatalogTDG->add($parameters);
+        
+        return null;
+    }
+
+    function makeElectronicSpecification($electronicSpecificationData) {
+        $eS = new ElectronicSpecification($electronicSpecificationData);
+
+        //dd($eS);
+
+        array_push($this->eSList, $eS);
+        return true;
+    }
+
+    function makeElectronicItem($modelNumber, $electronicItemData) {
+        foreach ($this->eSList as $key => $value) {
+            if ($this->eSList[$key]->getModelNumber() === $modelNumber) {
+                $this->eSList[$key]->addElectronicItem($electronicItemData);
+
+                break;
+            }
+        }
+    }
+    
+    function modifyElectronicSpecification($eSId, $newESData){
+        foreach($this->eSList as &$eS){
+            if($eS->get()->id === $eSId){
+                $eS->set((object)$newESData);
+            }
+        }
+        //dd($this->eSList);
     }
 
 }

@@ -34,6 +34,14 @@ Route::get('/inventory', array(
     'uses' => 'AdminController@showInventory'
 ));
 
+Route::post('inventory', array(
+    'uses' => 'AdminController@doModifyOrDelete'
+));
+
+Route::post('modify', array(
+    'uses' => 'AdminController@doModify'
+));
+
 Route::get('/add-items', array(
     'uses' => 'AdminController@showAddItems'
 ));
