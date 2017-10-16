@@ -5,17 +5,29 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\ElectronicSpecification;
+use App\ElectronicItem;
 
-class ElectronicSpecificationClassTest extends TestCase {
+class ElectronicSpecificationClassTest extends TestCase
+{
 
     /**
      * A test for the get and set methods of the user class
      *
      * @return void
      */
-    public function testSetGetTest() {
+    public function testSetGetTest()
+    {
 
         $electronic = new ElectronicSpecification();
+        $electronicItem = new ElectronicItem();
+
+        $electronicItemData = new \stdClass();
+        $electronicItemData->id = 'TESTINGID123';
+        $electronicItemData->serialNumber = 'TESTINGSERIAL';
+        $electronicItemData->ElectronicSpecification_id = 'TESTAGAIN';
+
+        $electronicItem->set($electronicItemData);
+        $electronicItems = array($electronicItem);
 
         $electronicData = new \stdClass();
 
@@ -33,26 +45,35 @@ class ElectronicSpecificationClassTest extends TestCase {
         $electronicData->os = 'ubuntu';
         $electronicData->camera = 'bestcam';
         $electronicData->touchScreen = 'True';
-        $electronicData->ElectronicType_id = '123';
-        $electronicData->ElectronicType_name = 'abc';
-        $electronicData->ElectronicType_dimensionUnit = '123';
+        $electronicData->ElectronicType_id = '1';
+        $electronicData->electronicItems = $electronicItems;
+
 
         $electronic->set($electronicData);
-
+        //dump($electronic);
+        //dump($electronicData);
         $result = true;
 
         foreach ($electronicData as $key => $value) {
-            if ($electronicData->$key !== $electronic->get()->$key) {
+            if (is_array($value)) {
+                //dump($value[0]->get());
+                //dump($electronic->get()->$key[0]->id);
+                foreach ($value as $key1 => $value1) {
+                    if ($value1->get()->id !== $electronic->get()->$key[$key1]->id ||
+                        $value1->get()->serialNumber !== $electronic->get()->$key[$key1]->serialNumber ||
+                        $value1->get()->ElectronicSpecification_id !== $electronic->get()->$key[$key1]->ElectronicSpecification_id) {
+                        //dump($electronic->get()->$key[$key1]->id);
+                        //dump($value1->get()->id);
+                        $result = false;
+                    }
+                }
+            } else if ($value !== $electronic->get()->$key) {
+
                 $result = false;
+
             }
-            /*
-              // To debug a test, use echo to print on the terminal
-              echo "\r\n";
-              echo $u->$key;
-              echo "\r\n";
-              echo $user->get()->$key;
-             */
         }
+        //dd($electronic);
 
         $this->assertTrue($result);
     }
