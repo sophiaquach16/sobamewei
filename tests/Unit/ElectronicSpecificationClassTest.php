@@ -59,8 +59,8 @@ class ElectronicSpecificationClassTest extends TestCase
                 //dump($value[0]->get());
                 //dump($electronic->get()->$key[0]->id);
                 foreach ($value as $key1 => $value1) {
-                    if ($value1->get()->id !== $electronic->get()->$key[$key1]->id ||
-                        $value1->get()->serialNumber !== $electronic->get()->$key[$key1]->serialNumber ||
+                    if ($value1->get()->id !== $electronic->get()->$key[$key1]->id &&
+                        $value1->get()->serialNumber !== $electronic->get()->$key[$key1]->serialNumber &&
                         $value1->get()->ElectronicSpecification_id !== $electronic->get()->$key[$key1]->ElectronicSpecification_id) {
                         //dump($electronic->get()->$key[$key1]->id);
                         //dump($value1->get()->id);
