@@ -43,8 +43,8 @@ class ElectronicSpecificationClassTest extends TestCase
         $electronicData->cpuCores = '4';
         $electronicData->batteryInfo = 'infinite';
         $electronicData->os = 'ubuntu';
-        $electronicData->camera = 'bestcam';
-        $electronicData->touchScreen = 'True';
+        $electronicData->camera = true;
+        $electronicData->touchScreen = true;
         $electronicData->ElectronicType_id = '1';
         $electronicData->electronicItems = $electronicItems;
 
