@@ -1,6 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Classes\Mappers;
+
+use App\Classes\TDG\UserCatalogTDG;
+use App\Classes\Core\UserCatalog;
 
 class UserCatalogMapper {
 

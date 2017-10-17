@@ -1,11 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Classes\Mappers;
+
+use App\Classes\TDG\ElectronicCatalogTDG;
+use App\Classes\Core\ElectronicCatalog;
+use App\Classes\UnitOfWork;
 
 class ElectronicCatalogMapper {
 
     private $electronicCatalog;
     private $electronicCatalogTDG;
+    private $unitOfWork;
 
     function __construct() {
         $argv = func_get_args();
@@ -20,29 +25,42 @@ class ElectronicCatalogMapper {
         $electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
+        $this->unitOfWork = new UnitOfWork($this);
+    }
+
+    function saveES($electronicSpecification) {
+        return $this->electronicCatalogTDG->insertElectronicSpecification($electronicSpecification);
+    }
+
+    function updateES($electronicSpecification) {
+        return $this->electronicCatalogTDG->updateElectronicSpecification($electronicSpecification);
+    }
+
+    function deleteEI($electronicItem) {
+        return $this->electronicCatalogTDG->deleteElectronicItem($electronicItem);
     }
 
     function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
         $modelNumberExists = $this->electronicCatalog->findElectronicSpecification($electronicSpecificationData->modelNumber);
-        //$serialNumberPosition = $this->electronicCatalog->findSerialNumberPosition();
-
+        //dd('1');
         if (!$modelNumberExists) {
             //Add to eSList of the catalog
-            $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
-
+            $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
+            //dd('2');
             //Add to database
-            $this->electronicCatalogTDG->insert($electronicSpecificationData);
-
+            $this->unitOfWork->registerNew($electronicSpecification);
+            $this->unitOfWork->commit();
+            //dd('3');
             $serialNumber = $this->generateSerialNumber();
             for ($i = 1; $i <= $quantity; $i++) {
                 $electronicItemData = new \stdClass();
                 $electronicItemData->serialNumber = $serialNumber . $i;
-
+                //dd('4');
                 $this->electronicCatalog->makeElectronicItem($electronicSpecificationData->modelNumber, $electronicItemData);
-
+                //dd('5');
                 $this->electronicCatalogTDG->insertElectronicItem($electronicSpecificationData->modelNumber, $electronicItemData);
+                //dd('6');
             }
-            //dd($this->electronicCatalog->getESList());
             return true;
         } else {
             return false;
@@ -55,8 +73,10 @@ class ElectronicCatalogMapper {
         $newModelNumberExists = $this->electronicCatalog->findElectronicSpecification($eSData->modelNumber);
 
         if (!$newModelNumberExists || $this->electronicCatalog->getElectronicSpecificationById($eSId)->modelNumber === $eSData->modelNumber) {
-            $this->electronicCatalog->modifyElectronicSpecification($eSId, $eSData);
-            $this->electronicCatalogTDG->updateElectronicSpecification($eSId, $eSData);
+            $electronicSpecification = $this->electronicCatalog->modifyElectronicSpecification($eSId, $eSData);
+
+            $this->unitOfWork->registerDirty($electronicSpecification);
+            $this->unitOfWork->commit();
 
             if (sizeOf($eS->electronicItems) === 0) {
                 $serialNumber = $this->generateSerialNumber();
@@ -70,11 +90,8 @@ class ElectronicCatalogMapper {
                 }
             } else {
                 for ($i = 1; $i <= $quantity; $i++) {
-                    //dd(substr(end($eS->electronicItems)->serialNumber, 0, -1));
-                    //$rest = substr("abcdef", 0, -1);  // returns "abcde"
                     $lastChar = substr(end($eS->electronicItems)->serialNumber, -1);
                     $serialNumber = substr(end($eS->electronicItems)->serialNumber, 0, -1);
-                    //dd($serialNumber);
 
                     $electronicItemData = new \stdClass();
                     $electronicItemData->serialNumber = $serialNumber . ($lastChar + $i);
@@ -93,10 +110,23 @@ class ElectronicCatalogMapper {
 
     function deleteElectronicItems($eIIds) {
         foreach ($eIIds as $eIId) {
-            $this->electronicCatalog->deleteElectronicItem($eIId);
+            $electronicItem = $this->electronicCatalog->deleteElectronicItem($eIId);
 
-            $this->electronicCatalogTDG->deleteElectronicItem($eIId);
+            $this->unitOfWork->registerDeleted($electronicItem);
         }
+        $this->unitOfWork->commit();
+    }
+
+    function getAllElectronicSpecifications() {
+        $electronicSpecifications = $this->electronicCatalog->getESList();
+
+        return $electronicSpecifications;
+    }
+
+    function getElectronicSpecification($id) {
+        $electronicSpecification = $this->electronicCatalog->getElectronicSpecificationById($id);
+
+        return $electronicSpecification;
     }
 
     private function generateSerialNumber() {
@@ -109,19 +139,6 @@ class ElectronicCatalogMapper {
         }
 
         return $serialNumber;
-    }
-
-    function getAllElectronicSpecifications() {
-        //dd($this->electronicCatalog->getESList());
-        $electronicSpecifications = $this->electronicCatalog->getESList();
-
-        return $electronicSpecifications;
-    }
-
-    function getElectronicSpecification($id) {
-        $electronicSpecification = $this->electronicCatalog->getElectronicSpecificationById($id);
-
-        return $electronicSpecification;
     }
 
 }

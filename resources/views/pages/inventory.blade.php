@@ -116,7 +116,7 @@
                 @endif
             </td>
             <td>
-                @if ( isset($eS->camera) )
+                @if ( $eS->camera )
                 @if ($eS->camera === "1")
                 Yes
                 @else

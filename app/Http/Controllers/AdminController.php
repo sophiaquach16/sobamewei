@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
-use App\ElectronicCatalogMapper;
+use App\Classes\Mappers\ElectronicCatalogMapper;
 use Session;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
@@ -38,11 +38,7 @@ class AdminController extends BaseController {
     }
 
     public function doModifyOrDelete(Request $request) {
-        //dd($request->except('_token'));
         if ($request->input('modifyRadioSelection') && $request->input('submitButton') === 'modify') {
-            //$this->electronicCatalogMapper->modifyElectronicSpecification($request->input('modifyRadioSelection'));
-            //return Redirect::back();
-
             $eSToModify = $this->electronicCatalogMapper->getElectronicSpecification($request->input('modifyRadioSelection'));
             $request->session()->put('eSToModify', $eSToModify);
             switch ($eSToModify->ElectronicType_id) {

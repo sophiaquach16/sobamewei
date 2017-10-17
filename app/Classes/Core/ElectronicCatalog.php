@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Classes\Core;
 
 class ElectronicCatalog {
 
@@ -33,17 +33,20 @@ class ElectronicCatalog {
     function deleteElectronicItem($id) {
         //dd($ids);
         foreach ($this->eSList as $eS) {
-            foreach ($eS->get()->electronicItems as $eIData) {
-                if ($eIData->id === $id) {
+            foreach ($eS->getElectronicItems() as $eI) {
+                if ($eI->get()->id === $id) {
                     $eS->deleteElectronicItem($id);
+                    return $eI;
                 }
             }
         }
+        
+        return null;
     }
 
     function findElectronicSpecification($modelNumber) {
         $modelNumberExists = false;
-        //dd($this->eSList);
+        
         foreach ($this->eSList as $eS) {
             if ($eS->getModelNumber() === $modelNumber) {
                 $modelNumberExists = true;
@@ -66,16 +69,14 @@ class ElectronicCatalog {
     function makeElectronicSpecification($electronicSpecificationData) {
         $eS = new ElectronicSpecification($electronicSpecificationData);
 
-        //dd($eS);
-
         array_push($this->eSList, $eS);
-        return true;
+        return $eS;
     }
 
     function makeElectronicItem($modelNumber, $electronicItemData) {
         foreach ($this->eSList as $key => $value) {
             if ($this->eSList[$key]->getModelNumber() === $modelNumber) {
-                $this->eSList[$key]->addElectronicItem($electronicItemData);
+                return $this->eSList[$key]->addElectronicItem($electronicItemData);
 
                 break;
             }
@@ -86,9 +87,11 @@ class ElectronicCatalog {
         foreach($this->eSList as &$eS){
             if($eS->get()->id === $eSId){
                 $eS->set((object)$newESData);
+                return $eS;
             }
         }
-        //dd($this->eSList);
+        
+        return null;
     }
 
 }
