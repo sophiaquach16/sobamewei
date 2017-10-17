@@ -24,7 +24,6 @@ class ElectronicCatalogMapper {
     }
 
     function __construct0() {
-        $electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
         $this->unitOfWork = new UnitOfWork($this);
@@ -45,28 +44,28 @@ class ElectronicCatalogMapper {
 
     function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
         $modelNumberExists = $this->electronicCatalog->findElectronicSpecification($electronicSpecificationData->modelNumber);
-        
+
         if (!$modelNumberExists) {
             //Add to eSList of the catalog
             $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
-            
+
             //Add to database
             $this->unitOfWork->registerNew($electronicSpecification);
             $this->unitOfWork->commit();
-            
+
             $serialNumber = $this->generateSerialNumber();
             for ($i = 1; $i <= $quantity; $i++) {
                 $electronicItemData = new \stdClass();
                 $electronicItemData->serialNumber = $serialNumber . $i;
-                
+
                 $this->electronicCatalog->makeElectronicItem($electronicSpecificationData->modelNumber, $electronicItemData);
-                
+
                 $this->electronicCatalogTDG->insertElectronicItem($electronicSpecificationData->modelNumber, $electronicItemData);
             }
-            
+
             //Add to identity map
             $this->identityMap->add('ElectronicSpecification', $electronicSpecification);
-            
+
             return true;
         } else {
             return false;
@@ -117,7 +116,7 @@ class ElectronicCatalogMapper {
     function deleteElectronicItems($eIIds) {
         foreach ($eIIds as $eIId) {
             $this->identityMap->delete('ElectronicItem', 'id', $eIId);
-            
+
             $electronicItem = $this->electronicCatalog->deleteElectronicItem($eIId);
 
             $this->unitOfWork->registerDeleted($electronicItem);
