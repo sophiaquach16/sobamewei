@@ -6,9 +6,17 @@ class ElectronicCatalog {
 
     private $eSList;
 
-    function __construct($eSListData) {
+    function __construct() {
+          $this->eSList = array();
+          $argv = func_get_args();
+          switch (func_num_args()) {
+              case 1:
+                  self::__construct1($argv[0]);
+                  break;
+          }
+      }
+    function __construct1($eSListData) {
         $this->eSList = array();
-
         $this->setESList($eSListData);
     }
 
@@ -40,13 +48,13 @@ class ElectronicCatalog {
                 }
             }
         }
-        
+
         return null;
     }
 
     function findElectronicSpecification($modelNumber) {
         $modelNumberExists = false;
-        
+
         foreach ($this->eSList as $eS) {
             if ($eS->getModelNumber() === $modelNumber) {
                 $modelNumberExists = true;
@@ -55,14 +63,14 @@ class ElectronicCatalog {
 
         return $modelNumberExists;
     }
-    
+
     function getElectronicSpecificationById($id) {
         foreach ($this->eSList as $eS) {
             if ($eS->getId() === $id) {
                 return $eS->get();
             }
         }
-        
+
         return null;
     }
 
@@ -82,7 +90,7 @@ class ElectronicCatalog {
             }
         }
     }
-    
+
     function modifyElectronicSpecification($eSId, $newESData){
         foreach($this->eSList as &$eS){
             if($eS->get()->id === $eSId){
@@ -90,7 +98,7 @@ class ElectronicCatalog {
                 return $eS;
             }
         }
-        
+
         return null;
     }
 
