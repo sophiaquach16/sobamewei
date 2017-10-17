@@ -13,9 +13,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
-use App\ElectronicTDG;
+use App\Classes\TDG\ElectronicTDG;
 use Session;
-use App\UserCatalogMapper;
+use App\Classes\Mappers\UserCatalogMapper;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {

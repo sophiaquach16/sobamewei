@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Classes\TDG;
 
 class ElectronicCatalogTDG {
 
@@ -19,7 +19,7 @@ class ElectronicCatalogTDG {
         $queryString = 'SELECT id, dimension, weight, modelNumber, brandName, hdSize, price, processorType, ramSize, cpuCores, batteryInfo, os, camera, touchScreen, Electronictype_id
             FROM ElectronicSpecification
             WHERE ';
-
+        
         //For each key, (ex: id, email, etc.), we build the query
         foreach ($parameters as $key => $value) {
             $queryString .= $key . ' = :' . $key;
@@ -70,52 +70,25 @@ class ElectronicCatalogTDG {
         //dd($eSDataList);
     }
 
-    public function insert($parameters) {
+    public function insertElectronicSpecification($electronicSpecification) {
+        $parameters = $this->unsetUselessESProperties($electronicSpecification);
+        unset($parameters->id);
+        
         $queryString = 'INSERT INTO ElectronicSpecification SET ';
-
+        
         foreach ($parameters as $key => $value) {
             if ($value !== null) {
                 $queryString .= $key . ' = :' . $key;
                 $queryString .= ' , ';
             }
         }
-
+        
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
-
-        return $this->conn->query($queryString, $parameters);
-    }
-
-    public function deleteElectronicItem($id) {
-        $queryString = 'DELETE FROM ElectronicItem WHERE ';
-
-        $queryString .= 'id' . ' = :' . 'id';
-        
-        $parameters = new \stdClass();
-        $parameters->id = $id;
 
         return $this->conn->query($queryString, $parameters);
     }
     
-    public function updateElectronicSpecification($id, $parameters) {
-        $queryString = 'UPDATE ElectronicSpecification SET ';
-        
-        foreach ($parameters as $key => $value) {
-            if ($value !== null) {
-                $queryString .= $key . ' = :' . $key;
-                $queryString .= ' , ';
-            }
-        }
-
-        //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
-        
-        $queryString .= ' WHERE id = :id';
-        $parameters->id = $id;
-
-        return $this->conn->query($queryString, $parameters);
-    }
-
     public function insertElectronicItem($modelNumber, $parameters) {
         $queryString = 'SELECT * FROM ElectronicSpecification';
 
@@ -123,7 +96,6 @@ class ElectronicCatalogTDG {
 
         $electronicSpecificationId = -1;
         foreach ($electronicSpecifications as $electronicSpecification) {
-            //var_dump($electronicSpecification->modelNumber);
             if ($electronicSpecification->modelNumber === $modelNumber) {
                 $electronicSpecificationId = $electronicSpecification->id;
             }
@@ -144,6 +116,53 @@ class ElectronicCatalogTDG {
         $queryString = substr($queryString, 0, -2);
 
         return $this->conn->query($queryString, $parameters);
+    }
+
+    public function deleteElectronicItem($electronicItem) {
+        $queryString = 'DELETE FROM ElectronicItem WHERE ';
+
+        $queryString .= 'id' . ' = :' . 'id';
+        
+        $parameters = new \stdClass();
+        $parameters->id = $electronicItem->get()->id;
+
+        return $this->conn->query($queryString, $parameters);
+    }
+    
+    public function updateElectronicSpecification($electronicSpecification) {
+        $parameters = $this->unsetUselessESProperties($electronicSpecification);
+        
+        $queryString = 'UPDATE ElectronicSpecification SET ';
+        
+        foreach ($parameters as $key => $value) {
+            if ($value !== null && $key != 'id' ) {
+                $queryString .= $key . ' = :' . $key;
+                $queryString .= ' , ';
+            }
+        }
+        
+        //We delete the last useless ' , '
+        $queryString = substr($queryString, 0, -2);
+        
+        $queryString .= ' WHERE id = :id';
+
+        return $this->conn->query($queryString, $parameters);
+    }
+    
+    public function unsetUselessESProperties($object){
+        $objectData = (array)$object->get();
+        foreach ($objectData as $key => $value) {
+            if (is_array($objectData[$key]) || is_null($objectData[$key])) {
+                unset($objectData[$key]);
+            }
+        }
+        //unset($electronicSpecificationData['id']);
+        unset($objectData['ElectronicType_name']);
+        unset($objectData['ElectronicType_name']);
+        unset($objectData['ElectronicType_displaySizeUnit']);
+        $parameters = (object) $objectData;
+        
+        return $parameters;
     }
 
 }

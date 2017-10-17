@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\ElectronicSpecification;
-use App\ElectronicItem;
+use App\Classes\Core\ElectronicSpecification;
+use App\Classes\Core\ElectronicItem;
 
 class ElectronicSpecificationClassTest extends TestCase
 {

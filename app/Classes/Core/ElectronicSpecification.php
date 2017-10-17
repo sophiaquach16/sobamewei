@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Classes\Core;
 
 class ElectronicSpecification {
 
@@ -50,11 +50,13 @@ class ElectronicSpecification {
         $electronicItem = new ElectronicItem($electronicItemData);
 
         array_push($this->electronicItems, $electronicItem);
+        
+        return $electronicItem;
     }
-    
-    public function deleteElectronicItem($id){
-        foreach($this->electronicItems as $key => $value){
-            if($id === $this->electronicItems[$key]->getId()){
+
+    public function deleteElectronicItem($id) {
+        foreach ($this->electronicItems as $key => $value) {
+            if ($id === $this->electronicItems[$key]->getId()) {
                 unset($this->electronicItems[$key]);
             }
         }
@@ -170,14 +172,18 @@ class ElectronicSpecification {
         }
         
         $returnData->electronicItems = $electronicItemsData;
-        
+
         return $returnData;
+    }
+    
+    public function getElectronicItems(){
+        return $this->electronicItems;
     }
 
     public function getModelNumber() {
         return $this->modelNumber;
     }
-    
+
     public function getId() {
         return $this->id;
     }

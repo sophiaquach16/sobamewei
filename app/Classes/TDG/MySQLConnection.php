@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Classes\TDG;
 
 use PDO;
 
@@ -25,11 +25,11 @@ class MySQLConnection {
         try {
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-            
+
             return $result;
         } catch (PDOException $e) {
             return false;
-            
+
             die($e->getMessage());
         }
     }
