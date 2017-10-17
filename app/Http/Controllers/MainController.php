@@ -15,9 +15,16 @@ use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\ElectronicTDG;
 use Session;
+use App\UserCatalogMapper;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
+    
+    private $userCatalogMapper;
+    
+    public function __construct() {
+        $this->userCatalogMapper = new UserCatalogMapper();
+    }
 
     public function showLogin() {
         return view('pages.login');
@@ -43,6 +50,9 @@ class MainController extends BaseController {
                         'email' => $request->input('email'),
                         'password' => $request->input('password')
                     ))) {
+                
+                $this->userCatalogMapper->makeLoginLog($request->user()->id);
+                
                 Session::flash('success_msg', "Successfully logged in.");
                 return Redirect::to('');
             } else {
