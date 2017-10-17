@@ -5,12 +5,14 @@ namespace App\Classes\Mappers;
 use App\Classes\TDG\ElectronicCatalogTDG;
 use App\Classes\Core\ElectronicCatalog;
 use App\Classes\UnitOfWork;
+use App\Classes\IdentityMap;
 
 class ElectronicCatalogMapper {
 
     private $electronicCatalog;
     private $electronicCatalogTDG;
     private $unitOfWork;
+    private $identityMap;
 
     function __construct() {
         $argv = func_get_args();
@@ -26,6 +28,7 @@ class ElectronicCatalogMapper {
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
         $this->unitOfWork = new UnitOfWork($this);
+        $this->identityMap = new IdentityMap();
     }
 
     function saveES($electronicSpecification) {
@@ -42,25 +45,28 @@ class ElectronicCatalogMapper {
 
     function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
         $modelNumberExists = $this->electronicCatalog->findElectronicSpecification($electronicSpecificationData->modelNumber);
-        //dd('1');
+        
         if (!$modelNumberExists) {
             //Add to eSList of the catalog
             $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
-            //dd('2');
+            
             //Add to database
             $this->unitOfWork->registerNew($electronicSpecification);
             $this->unitOfWork->commit();
-            //dd('3');
+            
             $serialNumber = $this->generateSerialNumber();
             for ($i = 1; $i <= $quantity; $i++) {
                 $electronicItemData = new \stdClass();
                 $electronicItemData->serialNumber = $serialNumber . $i;
-                //dd('4');
+                
                 $this->electronicCatalog->makeElectronicItem($electronicSpecificationData->modelNumber, $electronicItemData);
-                //dd('5');
+                
                 $this->electronicCatalogTDG->insertElectronicItem($electronicSpecificationData->modelNumber, $electronicItemData);
-                //dd('6');
             }
+            
+            //Add to identity map
+            $this->identityMap->add('ElectronicSpecification', $electronicSpecification);
+            
             return true;
         } else {
             return false;
@@ -110,6 +116,8 @@ class ElectronicCatalogMapper {
 
     function deleteElectronicItems($eIIds) {
         foreach ($eIIds as $eIId) {
+            $this->identityMap->delete('ElectronicItem', 'id', $eIId);
+            
             $electronicItem = $this->electronicCatalog->deleteElectronicItem($eIId);
 
             $this->unitOfWork->registerDeleted($electronicItem);
