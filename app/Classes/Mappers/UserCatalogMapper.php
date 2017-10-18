@@ -20,11 +20,10 @@ class UserCatalogMapper {
     }
 
     function __construct0() {
-        $userCatalogTDG = new userCatalogTDG();
         $this->userCatalogTDG = new userCatalogTDG();
         $this->userCatalog = new userCatalog($this->userCatalogTDG->findAll());
     }
-    
+
     function makeLoginLog($id) {
         date_default_timezone_set('EST');
         $timestamp = date("Y-m-d H:i:s");
