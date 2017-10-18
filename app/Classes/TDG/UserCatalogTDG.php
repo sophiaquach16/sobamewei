@@ -38,9 +38,9 @@ class UserCatalogTDG {
 
         $queryString = 'SELECT * FROM User';
 
-        $eSDataList = $this->conn->directQuery($queryString);
+        $userDataList = $this->conn->directQuery($queryString);
 
-        return $eSDataList;
+        return $userDataList;
     }
     
     public function insertLoginLog($userId, $timestamp) {
