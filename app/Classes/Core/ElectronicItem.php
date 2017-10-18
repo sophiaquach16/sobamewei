@@ -54,5 +54,8 @@ class ElectronicItem {
     function getSerialNumber() {
         return $this->serialNumber;
     }
+    function getElectronicSpecification_id() {
+        return $this->ElectronicSpecification_id;
+    }
 
 }
