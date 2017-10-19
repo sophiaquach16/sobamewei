@@ -50,13 +50,12 @@ class ElectronicCatalogTest extends TestCase
     $catalogListJson = json_decode(json_encode($catalogList),true);
     $electronicDataJson = json_decode(json_encode($electronicData),true);
 
-    var_dump($catalogListJson);
-    var_dump($electronicData);
-    $valid=false;
-
+    //flag for value comparison. if items don't match, $valuesMatch becomes false
+    $valuesMatch=false;
+    //compare values added from electronicData with the actual
+    //ElectronicSpecification object
     foreach ($catalogListJson as $outerKey => $outerValue)
     {
-      //dump($outerKey);
       foreach ($outerValue as $innerKey => $innerValue)
       {
         if (is_array($catalogListJson[$outerKey][$innerKey])==false)
@@ -64,47 +63,37 @@ class ElectronicCatalogTest extends TestCase
           if (  $innerKey != "ElectronicType_displaySizeUnit" && $innerKey != "ElectronicType_dimensionUnit" && $innerKey != "ElectronicType_name")
           {
             if ($catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
-            {
-              //dump($innerKey);
-              $valid=true;
-            }
+              $valuesMatch=true;
             else
             {
-              $valid=false;
+              $valuesMatch=false;
               break;
             }//else
           }//if2
         }//if is_array is false
-        else if (is_array($catalogListJson[$outerKey][$innerKey])==true)
-        {
-          foreach ($catalogListJson[$outerKey][$innerKey] as $arrayindexKey => $singleItemArray )
-          //  dump($arrayindexKey);
-          //  dump($singleItemArray);
-            //dump("bitch");
-            //dump ($itemInfo);
-            foreach($singleItemArray as $key => $eachItemInfo)
-            {
-              //dump ($eachItemInfo);
-            }
-        }//if is array is true
       }//foreach2
     }//foreach
-     dump ($valid);
 
-     dump($catalogListJson[0]["electronicItems"]);
+    //foreach loop that checks if the ElectronicItems object attributes
+    //match electronicData->electronicItems values added at the beginning of
+    //the code
+    foreach($catalogListJson[0]["electronicItems"] as $itemIndex =>$item )
+    {
+       foreach ($item as $attributeKey => $attributeValue)
+      {
+         if($attributeValue==($electronicDataJson["electronicItems"][$itemIndex]["$attributeKey"]))
+           $valuesMatch=true;
+        else
+        {
+          $valuesMatch=false;
+          return;
+        }//else
+      }//foreach inner
+    }//foreach outer
+    $this->assertTrue($valuesMatch);
+}//test 'testmakeElectronicSpecification' end
 
-    // {
-    //   //dump($outerKey);
-    //   foreach ($outerValue as $innerKey => $innerValue)//innerKey is '0' or '1'
-    //   {
-    //     dump($innerValue);
-    //
-    //   }//foreach2
-    // }//foreach
-
-}//test end
-
-  public function testgetElectronicSpecificationByIdTest(){
+  public function testgetElectronicSpecificationById(){
     $electronicSpecification = new ElectronicSpecification();
     $electronicItem1 = new ElectronicItem();
     $electronicItem2 = new ElectronicItem();
@@ -177,9 +166,7 @@ class ElectronicCatalogTest extends TestCase
         }//if
       }//foreach2
     }//foreach
-     dump ($valid);
      $catalogList = $electronicCatalog->getESList();
-     //dump($catalogList);
      $catalogListJson = json_decode(json_encode($catalogList),true);
      $electronicItemsJson=$catalogListJson[0]["electronicItems"];
      $electronicCount = 0;
@@ -189,7 +176,6 @@ class ElectronicCatalogTest extends TestCase
      {
       $tempArray = array($innerArray->getId(), $innerArray->getSerialNumber(),$innerArray->getElectronicSpecification_id());
       $tempArray = array_values($tempArray);
-      //dump($tempArray);
       $count = 0;
 
         foreach($electronicItemsJson[$electronicCount] as $innerKey => $innerValue)
@@ -205,7 +191,7 @@ class ElectronicCatalogTest extends TestCase
      }
       $this->assertTrue($valid);
   }//test
-  public function testfindElectronicSpecificationTest(){
+  public function testfindElectronicSpecification(){
     $electronicSpecification = new ElectronicSpecification();
     $electronicItem1 = new ElectronicItem();
     $electronicItem2 = new ElectronicItem();
@@ -251,7 +237,7 @@ class ElectronicCatalogTest extends TestCase
     $modelFoundBool=$electronicCatalog->findElectronicSpecification($testModelNumber);
     $this->assertTrue($modelFoundBool);
   }
-  public function testdeleteElectronicItemTest(){
+  public function testdeleteElectronicItem(){
     $electronicSpecification = new ElectronicSpecification();
     $electronicItem1 = new ElectronicItem();
     $electronicItem2 = new ElectronicItem();
@@ -313,7 +299,7 @@ class ElectronicCatalogTest extends TestCase
 
     $this->assertTrue($sizeElectronicCatalogBefore!==$sizeElectronicCatalogAfter);
   }
-  public function testSetTest(){
+  public function testSetGet(){
 
     $electronicSpecification = new ElectronicSpecification();
     $electronicItem1 = new ElectronicItem();
