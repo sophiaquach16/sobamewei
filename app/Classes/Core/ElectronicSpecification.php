@@ -109,8 +109,14 @@ class ElectronicSpecification {
         if (isset($data->displaySize)) {
             $this->displaySize = $data->displaySize;
         }
-        //dd($data->electronicItems);
+
         if (isset($data->electronicItems)) {
+          //must delete current list of items, otherwise
+          //the modifyElectronicSpecification will add the existing items again
+          //even if you haven't modified their values
+          foreach ($this->electronicItems as $electronicItemIndex => $singleItem) {
+              $this->deleteElectronicItem($this->electronicItems[$electronicItemIndex]->getId());
+          }
             foreach ($data->electronicItems as $key => $value) {
                 $this->addElectronicItem($data->electronicItems[$key]);
             }
