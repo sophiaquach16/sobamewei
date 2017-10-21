@@ -57,3 +57,5 @@ Temporary Items
 Vagrantfile
 after.sh
 aliases
+composer.json
+composer.lock
