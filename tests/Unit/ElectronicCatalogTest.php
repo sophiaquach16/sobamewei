@@ -52,9 +52,6 @@ class ElectronicCatalogTest extends TestCase
     $electronicCatalog->modifyElectronicSpecification($electronicData->id, $electronicData);
 
     $catalogList=$electronicCatalog->getEsList();
-    dump('hello');
-    dump($catalogList);
-    dump('hello');
     $catalogListJson = json_decode(json_encode($catalogList),true);
     $electronicDataJson = json_decode(json_encode($electronicData),true);
 
