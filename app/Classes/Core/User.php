@@ -17,6 +17,8 @@ use Notifiable;
     private $admin;
     private $physicalAddress;
     private $password;
+    public $table = "user";
+    public $timestamps = false;
 
 	//source for multiple constructors: http://www.webtrafficexchange.com/multiple-constructors-php
 
@@ -31,7 +33,7 @@ use Notifiable;
                 break;
          }
     }
- 
+
     function __construct1($data) {
 		$this->set($data);
     }
@@ -46,10 +48,10 @@ use Notifiable;
         $this->physicalAddress = $data->physicalAddress;
         $this->password = $data->password;
     }
-    
+
     public function get(){
         $returnData = new \stdClass();
-        
+
         $returnData->id = $this->id;
         $returnData->firstName = $this->firstName;
         $returnData->lastName = $this->lastName;
@@ -58,7 +60,7 @@ use Notifiable;
         $returnData->admin = $this->admin;
         $returnData->physicalAddress = $this->physicalAddress;
         $returnData->password = $this->password;
-        
+
         return $returnData;
     }
 
