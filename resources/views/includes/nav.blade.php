@@ -15,6 +15,7 @@
                   <li><a href="/registration">Register<span class="sr-only">(current)</span></a></li>
 				@if( !Auth::check() )
                     <li><a href="/login">Log In<span class="sr-only">(current)</span></a></li>
+                    <li><a href="/register">Register<span class="sr-only">(current)</span></a></li>
 				@else
                     <li><a href="add-items">Add Items</a></li>
                     <li><a href="inventory">Inventory</a></li>
