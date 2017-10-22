@@ -49,3 +49,11 @@ Route::get('/add-items', array(
 Route::post('add-items', array(
     'uses' => 'AdminController@doAddItems'
 ));
+
+Route::get('registration', array(
+    'uses' => 'MainController@showRegistration'
+));
+
+Route::post('registration', array(
+    'uses' => 'MainController@doRegistration'
+));

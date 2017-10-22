@@ -16,12 +16,13 @@ use Illuminate\Http\Request;
 use App\Classes\TDG\ElectronicTDG;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
+use App\Classes\Core\User;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
-    
+
     private $userCatalogMapper;
-    
+
     public function __construct() {
         $this->userCatalogMapper = new UserCatalogMapper();
     }
@@ -50,9 +51,9 @@ class MainController extends BaseController {
                         'email' => $request->input('email'),
                         'password' => $request->input('password')
                     ))) {
-                
+
                 $this->userCatalogMapper->makeLoginLog($request->user()->id);
-                
+
                 Session::flash('success_msg', "Successfully logged in.");
                 return Redirect::to('');
             } else {
@@ -63,4 +64,32 @@ class MainController extends BaseController {
         }
     }
 
+    public function showRegistration() {
+        return view('pages.registration');
+    }
+
+
+    public function doRegistration(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+          'firstName'=> 'required',
+          'lastName'=> 'required',
+          'email'=> 'required',
+          'password'=> 'required',
+          'phone'=> 'required',
+          'physicalAddress'=> 'required',
+       ]);
+       
+        $user = new User;
+        $user->firstName = $request->input('firstName');
+        $user->lastName = $request->input('lastName');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password');
+        $user->phone = $request->input('phone');
+        $user->physicalAddress = $request->input('physicalAddress');
+        $user->save();
+        return redirect('/')->with('response', 'Register Successfully');
+
+
+}
 }
