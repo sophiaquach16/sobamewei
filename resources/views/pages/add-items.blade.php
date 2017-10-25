@@ -15,22 +15,22 @@
             <option value="laptop">Laptop</option>
             <option value="monitor">Monitor</option>
             <option value="tablet">Tablet</option>
-            <option value="tv">Television</option>
+            <!-- <option value="tv">Television</option> **/ -->
         </select>
     </div>
 
-    <div class="container">
+    <!-- <div class="container">
 
         <div class="col-sm-2"></div>
 
         <form id="televisionform" class="form-horizontal col-sm-8  text-center television-form" action="/add-items" method="POST">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            
-            <div id="formLoad">
+
+            <div id="formLoad"> -->
 				<!-- The form will be loaded here, please see the the file add-items.js in the public/javascript folder to see the html -->
-            </div>
+            <!-- </div>
         </form>
         <div class="col-sm-2"></div>
-    </div>
+    </div> -->
 </div>
 @stop

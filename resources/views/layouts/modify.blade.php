@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <head>
         @include('includes.head')
@@ -31,4 +31,4 @@
             </div>
         </div>
     </body>
-</html>
+</html> -->
