@@ -141,10 +141,10 @@ class ElectronicSpecification {
                     $this->ElectronicType_name = 'Tablet';
                     $this->ElectronicType_displaySizeUnit = 'cm';
                     break;
-                case 5:
-                    $this->ElectronicType_name = 'Television';
-                    $this->ElectronicType_displaySizeUnit = 'cm';
-                    break;
+                // case 5:
+                //     $this->ElectronicType_name = 'Television';
+                //     $this->ElectronicType_displaySizeUnit = 'cm';
+                //     break;
             }
         }
     }

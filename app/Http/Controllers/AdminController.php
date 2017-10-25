@@ -54,9 +54,9 @@ class AdminController extends BaseController {
                 case "4":
                     return view('pages.modify.tablet', ['eSToModify' => $eSToModify]);
                     break;
-                case "5":
-                    return view('pages.modify.television', ['eSToModify' => $eSToModify]);
-                    break;
+                // case "5":
+                //     return view('pages.modify.television', ['eSToModify' => $eSToModify]);
+                //     break;
             }
             return view('', ['eSToModify' => $eSToModify]);
         } else {

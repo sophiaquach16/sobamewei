@@ -1,4 +1,4 @@
-@extends('layouts.modify')
+<!-- @extends('layouts.modify')
 @section('content')
 <div class="row">
     <div class="items text-center"><span class="blueTitle">MODIFY TELEVISION</span></div>
@@ -44,4 +44,4 @@
 
 <button type="submit" class="btn btn-success btn-block">Submit</button>
 </br>
-@stop
+@stop -->
