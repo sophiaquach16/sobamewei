@@ -16,7 +16,7 @@ class ElectronicCatalogTDG {
      */
     public function find($parameters) {
 
-        $queryString = 'SELECT id, dimension, weight, modelNumber, brandName, hdSize, price, processorType, ramSize, cpuCores, batteryInfo, os, camera, touchScreen, Electronictype_id
+        $queryString = 'SELECT *
             FROM ElectronicSpecification
             WHERE ';
         
