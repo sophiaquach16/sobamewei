@@ -71,24 +71,47 @@ class MainController extends BaseController {
 
     public function doRegistration(Request $request) {
 
-        $validator = Validator::make($request->all(), [
-          'firstName'=> 'required',
-          'lastName'=> 'required',
-          'email'=> 'required',
-          'password'=> 'required',
-          'phone'=> 'required',
-          'physicalAddress'=> 'required',
-       ]);
-       
-        $user = new User;
-        $user->firstName = $request->input('firstName');
-        $user->lastName = $request->input('lastName');
-        $user->email = $request->input('email');
-        $user->password = $request->input('password');
-        $user->phone = $request->input('phone');
-        $user->physicalAddress = $request->input('physicalAddress');
-        $user->save();
-        return redirect('/')->with('response', 'Register Successfully');
+      //   $validator = Validator::make($request->all(), [
+      //     'firstName'=> 'required',
+      //     'lastName'=> 'required',
+      //     'email'=> 'required',
+      //     'password'=> 'required',
+      //     'phone'=> 'required',
+      //     'physicalAddress'=> 'required',
+      //  ]);
+
+        // $user = new User();
+        // $user->firstName = $request->input('firstName');
+        // $user->lastName = $request->input('lastName');
+        // $user->email = $request->input('email');
+        // $user->password = $request->input('password');
+        // $user->phone = $request->input('phone');
+        // $user->physicalAddress = $request->input('physicalAddress');
+        // $user->save();
+        // return redirect('/')->with('response', 'Register Successfully');
+
+        // $inputs = array(
+        //   $user->firstName = $request->input('firstName'),
+        //   $user->lastName = $request->input('lastName'),
+        //   $user->email = $request->input('email'),
+        //   $user->password = $request->input('password'),
+        //   $user->phone = $request->input('phone'),
+        //   $user->physicalAddress = $request->input('physicalAddress')
+        // );
+        //
+        // $rules = array(
+        //   'firstName'=> 'required',
+        //   'lastName'=> 'required',
+        //   'email'=> 'required',
+        //   'password'=> 'required',
+        //   'phone'=> 'required',
+        //   'physicalAddress'=> 'required',
+        // );
+
+          var_dump($request);
+          $this->userCatalogMapper->makeNewCustomer($request);
+          redirect('/')->with('response', 'Register Successfully');
+
 
 
 }
