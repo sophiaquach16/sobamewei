@@ -96,11 +96,6 @@ class UserCatalogTDG {
 
       $localConn->execute();
 
-      // if (count($localConn->fetchAll(PDO::FETCH_OBJ)) > 0) {
-      //     return true;
-      // }
-      //
-      // return false;
     }
 
 

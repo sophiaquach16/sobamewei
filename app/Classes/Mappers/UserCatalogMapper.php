@@ -11,6 +11,8 @@ class UserCatalogMapper {
 
     private $userCatalog;
     private $userCatalogTDG;
+    private $unitOfWork;
+    private $identityMap;
 
     function __construct() {
         $argv = func_get_args();
@@ -26,6 +28,10 @@ class UserCatalogMapper {
         $this->userCatalog = new userCatalog($this->userCatalogTDG->findAll());
     }
 
+    function saveUser($user) {
+        return $this->userCatalogTDG->add($user);
+    }
+
     function makeLoginLog($id) {
         date_default_timezone_set('EST');
         $timestamp = date("Y-m-d H:i:s");
@@ -38,12 +44,19 @@ class UserCatalogMapper {
 
     if (!$emailExists) {
         //Add to userList of the catalog
-        $user = $this->userCatalog->makeNewCustomer($userData);
+        $id=sizeOf($this->userCatalog->getUserList())+1;
+        $userData->id = $id;
+        $userData->admin = 'false';
 
+        $user = $this->userCatalog->makeCustomer($userData);
+
+        // ob_start();
+        // var_dump("Var_dump output in a string");
+        // $out = ob_get_clean();
+        // echo $out;
         //Add to database
-        $this->unitOfWork->registerNew($user);
+        $this->unitOfWork->registerUserNew($user);
         $this->unitOfWork->commit();
-        //?    $electronicItemData = new \stdClass();
 
           $this->userCatalogTDG->add($userData);
 

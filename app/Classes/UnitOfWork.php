@@ -13,16 +13,23 @@ class UnitOfWork {
     private $changedList;
     private $deletedList;
     private $electronicCatalogMapper;
-
-    function __construct($electronicCatalogMapper){
+    private $userCatalogMapper;
+    private $newUserList;
+    function __construct0($electronicCatalogMapper, $userCatalogMapper){
         $this->electronicCatalogMapper = $electronicCatalogMapper;
+        $this->$userCatalogMapper = $userCatalogMapper;
         $this->newList = array();
         $this->changedList = array();
         $this->deletedList = array();
+        $this->newUserList = array();
     }
 
     function registerNew($object){
         array_push($this->newList, $object);
+    }
+
+    function registerUserNew($object){
+        array_push($this->newUserList, $object);
     }
 
     function registerDirty($object){
@@ -48,6 +55,12 @@ class UnitOfWork {
         foreach($this->deletedList as $deleted){
             if($deleted instanceof ElectronicItem){
                 $this->electronicCatalogMapper->deleteEI($deleted);
+            }
+        }
+
+        foreach($this->newList as $new){
+            if($new instanceof User){
+                $this->userCatalogMapper->saveUser($new);
             }
         }
 

@@ -47,6 +47,7 @@ class UserCatalog {
           foreach ($this->userList as $user) {
               if ($user->get()->email === $email) {
                   $emailExists = true;
+                  break;
               }
           }
 

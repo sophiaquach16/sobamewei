@@ -71,7 +71,7 @@ class MainController extends BaseController {
 
     public function doRegistration(Request $request) {
 
-      //   $validator = Validator::make($request->all(), [
+      //   $validator = Validator::create($request->all(), [
       //     'firstName'=> 'required',
       //     'lastName'=> 'required',
       //     'email'=> 'required',
@@ -107,12 +107,46 @@ class MainController extends BaseController {
         //   'phone'=> 'required',
         //   'physicalAddress'=> 'required',
         // );
+        //
+        //   $validator = Validator::make($inputs, $rules);
+        //
+        //
+        // if ($validator->fails()) {
+        //     return Redirect::to('registration')->withErrors($validator);
+        // } else {
+        //       if (Guest::attempt(array(
+        //                     $firstName=Input::get('firstName')
+        //                 // 'firstName' => $request->input('firstName'),
+        //                 //  'lastName' => $request->input('lastName'),
+        //                 //  'email' => $request->input('email'),
+        //                 //  'password' => $request->input('password'),
+        //                 //  'phone' => $request->input('phone'),
+        //                 //  'physicalAddress' => $request->input('physicalAddress')
+        //               ))) {
 
-          var_dump($request);
-          $this->userCatalogMapper->makeNewCustomer($request);
-          redirect('/')->with('response', 'Register Successfully');
+
+                                 if ($this->userCatalogMapper->makeNewCustomer((object)$request->input())) {
+                                     Session::flash('success_msg', "Successfully registered.");
+                                     return Redirect::to('/');
+                                 } else {
+                                     Session::flash('error_msg', "The Email already exists.");
+                                     return Redirect::back()->withInput();
+                                 }
 
 
+              }
+        // $this->validate(request(), [
+        //     'firstName'=> 'required',
+        //     'lastName'=> 'required',
+        //     'email'=> 'required',
+        //     'password'=> 'required',
+        //     'phone'=> 'required',
+        //     'physicalAddress'=> 'required',
+        //  ]);
+        //  $user =User::create(request(['firstName','lastName','email','password','phone','physicalAddress']));
+        //
 
-}
+//(object)$request->input()
+
+
 }
