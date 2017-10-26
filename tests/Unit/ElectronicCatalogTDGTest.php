@@ -140,4 +140,23 @@ class ElectronicCatalogTDGTest extends TestCase {
             'serialNumber' => 'ABC123',
         ]);
     }     
+    
+     public function testDeleteEI() {
+        $electronicCatalogTDG = new ElectronicCatalogTDG();
+         
+        $eIData = new \stdClass();        
+        $eIData->id = 1;
+        $eIData->serialNumber = "ABC123";
+        $eIData->ElectronicSpecification_id = 2;
+        $eI= new ElectronicItem($eIData);
+        
+        $electronicCatalogTDG->deleteElectronicItem($eI);
+         
+        $this->assertDatabaseMissing('ElectronicItem', [
+            'id' => 1,
+            'serialNumber' => 'ABC123',
+        ]);
+         
+     }
+    
 }
