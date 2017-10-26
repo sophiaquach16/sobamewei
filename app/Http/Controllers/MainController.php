@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use App\Classes\TDG\ElectronicTDG;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
-use App\Classes\Core\User;
+
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
@@ -25,6 +25,8 @@ class MainController extends BaseController {
 
     public function __construct() {
         $this->userCatalogMapper = new UserCatalogMapper();
+        $this->middleware('guest');
+
     }
 
     public function showLogin() {

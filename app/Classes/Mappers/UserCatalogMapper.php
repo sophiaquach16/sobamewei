@@ -55,7 +55,7 @@ class UserCatalogMapper {
         // $out = ob_get_clean();
         // echo $out;
         //Add to database
-        $this->unitOfWork->registerUserNew($user);
+        $this->unitOfWork->registerNew($user);
         $this->unitOfWork->commit();
 
           $this->userCatalogTDG->add($userData);

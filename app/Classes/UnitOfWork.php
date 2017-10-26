@@ -7,6 +7,7 @@ use App\Classes\Core\ElectronicSpecification;
 use App\Classes\Core\ElectronicItem;
 use App\Classes\Core\UserCatalog;
 use App\Classes\Mappers\UserCatalogMapper;
+use App\Classes\Core\User;
 
 class UnitOfWork {
     private $newList;
@@ -14,22 +15,18 @@ class UnitOfWork {
     private $deletedList;
     private $electronicCatalogMapper;
     private $userCatalogMapper;
-    private $newUserList;
-    function __construct0($electronicCatalogMapper, $userCatalogMapper){
+
+    function __construct($electronicCatalogMapper, $userCatalogMapper){
         $this->electronicCatalogMapper = $electronicCatalogMapper;
         $this->$userCatalogMapper = $userCatalogMapper;
         $this->newList = array();
         $this->changedList = array();
         $this->deletedList = array();
-        $this->newUserList = array();
+
     }
 
     function registerNew($object){
         array_push($this->newList, $object);
-    }
-
-    function registerUserNew($object){
-        array_push($this->newUserList, $object);
     }
 
     function registerDirty($object){
@@ -45,7 +42,11 @@ class UnitOfWork {
         foreach($this->newList as $new){
             if($new instanceof ElectronicSpecification){
                 $this->electronicCatalogMapper->saveES($new);
+              }
+            if($new instanceof User){
+                $this->userCatalogMapper->saveUser($new);
             }
+
         }
         foreach($this->changedList as $changed){
             if($changed instanceof ElectronicSpecification){
@@ -58,11 +59,6 @@ class UnitOfWork {
             }
         }
 
-        foreach($this->newList as $new){
-            if($new instanceof User){
-                $this->userCatalogMapper->saveUser($new);
-            }
-        }
 
         $this->newList = array();
         $this->changedList = array();
