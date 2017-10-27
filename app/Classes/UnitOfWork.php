@@ -31,13 +31,25 @@ class UnitOfWork {
     //       }
     //     }
 
-    function __construct($userCatalogMapper){
-      $this->userCatalogMapper = $userCatalogMapper;
-      $this->newList = array();
-      $this->changedList = array();
-      $this->deletedList = array();
+    function __construct($type, $bool){
 
+        $this->newList = array();
+        $this->changedList = array();
+        $this->deletedList = array();
+        if($bool == true){
+          $this->electronicCatalogMapper = $type;
+        }else if($bool == false){
+          $this->userCatalogMapper = $type;
+        }
     }
+
+    // function __construct($userCatalogMapper){
+    //   $this->userCatalogMapper = $userCatalogMapper;
+    //   $this->newList = array();
+    //   $this->changedList = array();
+    //   $this->deletedList = array();
+
+  //  }
     //
     // function __construct1($electronicCatalogMapper){
     //     $this->electronicCatalogMapper = $electronicCatalogMapper;

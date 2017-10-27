@@ -26,7 +26,7 @@ class ElectronicCatalogMapper {
     function __construct0() {
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
-        $this->unitOfWork = new UnitOfWork($this);
+        $this->unitOfWork = new UnitOfWork($this, true);
         $this->identityMap = new IdentityMap();
     }
 

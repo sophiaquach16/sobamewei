@@ -26,7 +26,7 @@ class UserCatalogMapper {
     function __construct0() {
         $this->userCatalogTDG = new userCatalogTDG();
         $this->userCatalog = new userCatalog($this->userCatalogTDG->findAll());
-        $this->unitOfWork = new UnitOfWork($this);
+        $this->unitOfWork = new UnitOfWork($this, false);
         $this->identityMap = new IdentityMap();
     }
 
