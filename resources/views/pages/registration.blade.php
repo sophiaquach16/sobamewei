@@ -46,7 +46,6 @@
           <div class="text-center">
             <a href="/login">Existing User?</a>
           </div>
-
   	</form>
   </div>
 
