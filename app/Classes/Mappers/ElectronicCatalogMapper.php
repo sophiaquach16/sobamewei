@@ -193,52 +193,28 @@ class ElectronicCatalogMapper {
         $array = $this->electronicCatalog->getESList();
 
 
-        foreach ($criteriaArray as $criteria) { // filter out
-            switch ($criteria) {
-
-                case "desktop":
+        foreach ($criteriaArray as $criteriaKey => $criteriaValue) { // filter out
+            switch ($criteriaKey) {
+                case "eSType":
                     foreach ($array as $key => $value) {
-                        if ($array[$key]->ElectronicType_name !== 'Desktop') {
+                        if ($array[$key]->ElectronicType_name !== $criteriaValue) {
                             unset($array[$key]);
                         }
                     }
                     break;
 
-                case "laptop":
-                    foreach ($array as $key => $value) {
-                        if ($array[$key]->ElectronicType_name !== 'Laptop') {
-                            unset($array[$key]);
+                case "sortBy":
+                    if ($criteriaValue === "priceAscending") {
+                        usort($array, function($a, $b) {
+                            return $a->price <=> $b->price;
+                        });
+                    } else {
+                        if ($criteriaValue === "priceDescending") {
+                            usort($array, function($a, $b) {
+                                return $b->price <=> $a->price;
+                            });
                         }
                     }
-                    break;
-
-                case "monitor":
-                    foreach ($array as $key => $value) {
-                        if ($array[$key]->ElectronicType_name !== 'Monitor') {
-                            unset($array[$key]);
-                        }
-                    }
-                    break;
-
-                case "tablet":
-                    foreach ($array as $key => $value) {
-                        if ($array[$key]->ElectronicType_name !== 'Tablet') {
-                            unset($array[$key]);
-                        }
-                    }
-                    break;
-
-                case "priceAscending":
-                    usort($array, function($a, $b) {
-                        return $a->price <=> $b->price;
-                    });
-
-                    break;
-
-                case "priceDescending":
-                    usort($array, function($a, $b) {
-                        return $b->price <=> $a->price;
-                    });
 
                     break;
             }

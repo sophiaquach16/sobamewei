@@ -29,10 +29,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div>
                 <ul class="nav navbar-nav">
-                    <li><a href="/?eSType=desktop">Desktop Computers</a></li>
-                    <li><a href="/?eSType=laptop">Laptops</a></li>
-                    <li><a href="/?eSType=monitor">Monitors</a></li>
-                    <li><a href="/?eSType=tablet">Tablets</a></li>
+                    <li><a href="/?eSType=Desktop">Desktop Computers</a></li>
+                    <li><a href="/?eSType=Laptop">Laptops</a></li>
+                    <li><a href="/?eSType=Monitor">Monitors</a></li>
+                    <li><a href="/?eSType=Tablet">Tablets</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort By <b class="caret"></b></a>
                         <ul class="dropdown-menu">
