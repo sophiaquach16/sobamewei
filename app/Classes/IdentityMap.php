@@ -18,7 +18,7 @@ class IdentityMap {
             array_push($this->map[$objectClass], $object);
         }
     }
-    
+
     function delete($objectClass, $objectProperty, $objectPropertyValue) {
         if (isset($this->map[$objectClass])) {
             foreach ($this->map[$objectClass] as $key => $value) {

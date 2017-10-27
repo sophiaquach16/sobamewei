@@ -3,7 +3,7 @@
 
 <div class="pageContainer container-fluid">
   <div class="pageContainer container-fluid">
-    <form method="post" action=" /register" name="registerForm" id = "registerForm">
+    <form method="post" action=" /registration" name="registerForm" id = "registerForm">
       {{ csrf_field() }}
   		<div class ="form-group">
   			<label for="firstName">First name:</label>
