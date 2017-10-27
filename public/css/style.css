@@ -29,7 +29,7 @@ h1 {
     font-weight: bold;
     font-size: 40px;
     line-height: 250%;
-  
+
 }
 
 .rectangular {
@@ -48,7 +48,7 @@ table {
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
-   
+
 }
 th, td {
     padding: 5px;
