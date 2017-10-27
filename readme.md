@@ -6,9 +6,18 @@
 
 [www.conushop.com](http://conushop.com/)
 
-**Admin Account:**
+**Admin Accounts:**
 
-- Username: ```admin@conushop.com```
+*Admin 1:*
+- Username: ```admin1@conushop.com```
+- Password: ```admin```
+
+*Admin 2:*
+- Username: ```admin2@conushop.com```
+- Password: ```admin```
+
+*Admin 3:*
+- Username: ```admin3@conushop.com```
 - Password: ```admin```
 
 ## Team 9 Members
