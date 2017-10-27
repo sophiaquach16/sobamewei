@@ -13,9 +13,9 @@
 
 use App\ElectronicTDG;
 
-Route::get('/', function () {
-    return view('pages.index');
-});
+Route::get('/', array(
+    'uses' => 'MainController@showElectronicCatalog'
+));
 
 Route::get('login', array(
     'as' => 'login',

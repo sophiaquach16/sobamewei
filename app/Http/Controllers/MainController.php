@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Classes\TDG\ElectronicTDG;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
+use App\Classes\Mappers\ElectronicCatalogMapper;
 
 
 
@@ -23,11 +24,11 @@ use App\Classes\Mappers\UserCatalogMapper;
 class MainController extends BaseController {
 
     private $userCatalogMapper;
+    private $electronicCatalogMapper;
 
     public function __construct() {
         $this->userCatalogMapper = new UserCatalogMapper();
-        $this->middleware('guest');
-
+        $this->electronicCatalogMapper = new ElectronicCatalogMapper();
     }
 
     public function showLogin() {
@@ -65,6 +66,14 @@ class MainController extends BaseController {
                 return view('pages.login', ['email' => $request->input('email'), 'error_msg' => 'Wrong email or password.']);
             }
         }
+    }
+    
+    public function showElectronicCatalog(Request $request) {
+        $inputs = $request->all();
+        
+        $electronicSpecifications = $this->electronicCatalogMapper->getESFilteredAndSortedByCriteria($inputs);
+        
+        return view('pages.index', ['electronicSpecifications' => $electronicSpecifications]);
     }
 
     public function showRegistration() {
