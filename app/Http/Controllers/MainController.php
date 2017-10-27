@@ -18,8 +18,6 @@ use Session;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 
-
-
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
 
@@ -67,31 +65,29 @@ class MainController extends BaseController {
             }
         }
     }
-    
+
     public function showElectronicCatalog(Request $request) {
         $inputs = $request->all();
-        
+
         $electronicSpecifications = $this->electronicCatalogMapper->getESFilteredAndSortedByCriteria($inputs);
-        
-        return view('pages.index', ['electronicSpecifications' => $electronicSpecifications]);
+
+        return view('pages.index', ['electronicSpecifications' => $electronicSpecifications, 'lastInputs' => $inputs]);
     }
 
     public function showRegistration() {
         return view('pages.registration');
     }
 
-
     public function doRegistration(Request $request) {
-  // $this->authorize('doRegistration', $request);
-      //   $validator = Validator::create($request->all(), [
-      //     'firstName'=> 'required',
-      //     'lastName'=> 'required',
-      //     'email'=> 'required',
-      //     'password'=> 'required',
-      //     'phone'=> 'required',
-      //     'physicalAddress'=> 'required',
-      //  ]);
-
+        // $this->authorize('doRegistration', $request);
+        //   $validator = Validator::create($request->all(), [
+        //     'firstName'=> 'required',
+        //     'lastName'=> 'required',
+        //     'email'=> 'required',
+        //     'password'=> 'required',
+        //     'phone'=> 'required',
+        //     'physicalAddress'=> 'required',
+        //  ]);
         // $user = new User();
         // $user->firstName = $request->input('firstName');
         // $user->lastName = $request->input('lastName');
@@ -101,7 +97,6 @@ class MainController extends BaseController {
         // $user->physicalAddress = $request->input('physicalAddress');
         // $user->save();
         // return redirect('/')->with('response', 'Register Successfully');
-
         // $inputs = array(
         //   $user->firstName = $request->input('firstName'),
         //   $user->lastName = $request->input('lastName'),
@@ -137,28 +132,25 @@ class MainController extends BaseController {
         //               ))) {
 
 
-                                 if ($this->userCatalogMapper->makeNewCustomer((object)$request->input())) {
-                                     Session::flash('success_msg', "Successfully registered.");
-                                     return Redirect::to('/');
-                                 } else {
-                                     Session::flash('error_msg', "The Email already exists.");
-                                     return Redirect::back()->withInput();
-                                 }
+        if ($this->userCatalogMapper->makeNewCustomer((object) $request->input())) {
+            Session::flash('success_msg', "Successfully registered.");
+            return Redirect::to('/');
+        } else {
+            Session::flash('error_msg', "The Email already exists.");
+            return Redirect::back()->withInput();
+        }
+    }
 
-
-              }
-        // $this->validate(request(), [
-        //     'firstName'=> 'required',
-        //     'lastName'=> 'required',
-        //     'email'=> 'required',
-        //     'password'=> 'required',
-        //     'phone'=> 'required',
-        //     'physicalAddress'=> 'required',
-        //  ]);
-        //  $user =User::create(request(['firstName','lastName','email','password','phone','physicalAddress']));
-        //
+    // $this->validate(request(), [
+    //     'firstName'=> 'required',
+    //     'lastName'=> 'required',
+    //     'email'=> 'required',
+    //     'password'=> 'required',
+    //     'phone'=> 'required',
+    //     'physicalAddress'=> 'required',
+    //  ]);
+    //  $user =User::create(request(['firstName','lastName','email','password','phone','physicalAddress']));
+    //
 
 //(object)$request->input()
-
-
 }
