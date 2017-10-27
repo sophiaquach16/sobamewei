@@ -79,58 +79,6 @@ class MainController extends BaseController {
     }
 
     public function doRegistration(Request $request) {
-        // $this->authorize('doRegistration', $request);
-        //   $validator = Validator::create($request->all(), [
-        //     'firstName'=> 'required',
-        //     'lastName'=> 'required',
-        //     'email'=> 'required',
-        //     'password'=> 'required',
-        //     'phone'=> 'required',
-        //     'physicalAddress'=> 'required',
-        //  ]);
-        // $user = new User();
-        // $user->firstName = $request->input('firstName');
-        // $user->lastName = $request->input('lastName');
-        // $user->email = $request->input('email');
-        // $user->password = $request->input('password');
-        // $user->phone = $request->input('phone');
-        // $user->physicalAddress = $request->input('physicalAddress');
-        // $user->save();
-        // return redirect('/')->with('response', 'Register Successfully');
-        // $inputs = array(
-        //   $user->firstName = $request->input('firstName'),
-        //   $user->lastName = $request->input('lastName'),
-        //   $user->email = $request->input('email'),
-        //   $user->password = $request->input('password'),
-        //   $user->phone = $request->input('phone'),
-        //   $user->physicalAddress = $request->input('physicalAddress')
-        // );
-        //
-        // $rules = array(
-        //   'firstName'=> 'required',
-        //   'lastName'=> 'required',
-        //   'email'=> 'required',
-        //   'password'=> 'required',
-        //   'phone'=> 'required',
-        //   'physicalAddress'=> 'required',
-        // );
-        //
-        //   $validator = Validator::make($inputs, $rules);
-        //
-        //
-        // if ($validator->fails()) {
-        //     return Redirect::to('registration')->withErrors($validator);
-        // } else {
-        //       if (Guest::attempt(array(
-        //                     $firstName=Input::get('firstName')
-        //                 // 'firstName' => $request->input('firstName'),
-        //                 //  'lastName' => $request->input('lastName'),
-        //                 //  'email' => $request->input('email'),
-        //                 //  'password' => $request->input('password'),
-        //                 //  'phone' => $request->input('phone'),
-        //                 //  'physicalAddress' => $request->input('physicalAddress')
-        //               ))) {
-
 
         if ($this->userCatalogMapper->makeNewCustomer((object) $request->input())) {
             Session::flash('success_msg', "Successfully registered.");
@@ -141,16 +89,4 @@ class MainController extends BaseController {
         }
     }
 
-    // $this->validate(request(), [
-    //     'firstName'=> 'required',
-    //     'lastName'=> 'required',
-    //     'email'=> 'required',
-    //     'password'=> 'required',
-    //     'phone'=> 'required',
-    //     'physicalAddress'=> 'required',
-    //  ]);
-    //  $user =User::create(request(['firstName','lastName','email','password','phone','physicalAddress']));
-    //
-
-//(object)$request->input()
 }

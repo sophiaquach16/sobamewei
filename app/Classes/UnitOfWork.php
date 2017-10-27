@@ -15,21 +15,7 @@ class UnitOfWork {
     private $deletedList;
     private $electronicCatalogMapper;
     private $userCatalogMapper;
-    //
-    // function __construct() {
-    //       $this->eSList = array();
-    //       $argv = func_get_args();
-    //       switch (func_num_args()) {
-    //           case 0:
-    //               self::__construct0();
-    //               break;
-    //           case 1:
-    //               self::__construct1($argv[0]);
-    //               break;
-    //
-    //
-    //       }
-    //     }
+
 
     function __construct($type, $bool){
 
@@ -42,23 +28,6 @@ class UnitOfWork {
           $this->userCatalogMapper = $type;
         }
     }
-
-    // function __construct($userCatalogMapper){
-    //   $this->userCatalogMapper = $userCatalogMapper;
-    //   $this->newList = array();
-    //   $this->changedList = array();
-    //   $this->deletedList = array();
-
-  //  }
-    //
-    // function __construct1($electronicCatalogMapper){
-    //     $this->electronicCatalogMapper = $electronicCatalogMapper;
-    //     $this->newList = array();
-    //     $this->changedList = array();
-    //     $this->deletedList = array();
-    //
-    // }
-
 
     function registerNew($object){
         array_push($this->newList, $object);

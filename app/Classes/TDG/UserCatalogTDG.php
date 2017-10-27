@@ -92,7 +92,7 @@ class UserCatalogTDG {
       }
 
   $parameters = (object) $objectData;
-  //   $parameters = new User($user);
+
       $queryString = 'INSERT INTO User SET ';
 
 
@@ -106,7 +106,7 @@ class UserCatalogTDG {
               //We delete the last useless ' , '
               $queryString = substr($queryString, 0, -2);
 
-      //  dd($parameters);
+
         return $this->conn->query($queryString, $parameters);
 
     }
