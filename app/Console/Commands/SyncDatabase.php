@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Classes\TDG\MySQLConnection;
+use PDO;
 
 class SyncDatabase extends Command
 {
@@ -41,8 +42,12 @@ class SyncDatabase extends Command
      */
     public function handle()
     {
+        $conn = new PDO('mysql:host=localhost;charset=utf8', 'root', 'isY2metT');
+        
         $queryString = file_get_contents('databaseScript.sql');
+        
+        $stmt = $conn->prepare($queryString);
 
-        $this->conn->directQuery($queryString);
+        $stmt->execute();
     }
 }
