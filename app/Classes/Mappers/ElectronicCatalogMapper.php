@@ -177,7 +177,7 @@ class ElectronicCatalogMapper {
         $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c'); //set file pointer
         flock($this->lockFilePointer, LOCK_EX); //lock file
     }
-    
+
     private function checkLock() {
         flock($this->lockFilePointer, LOCK_NB);
     }
@@ -186,5 +186,52 @@ class ElectronicCatalogMapper {
         flock($this->lockFilePointer, LOCK_UN); //unlock file
         fclose($this->lockFilePointer); //close file
     }
+
+    function getESFilteredAndSortedByCriteria($criteriaArray) {
+      // parameter is an array of criterion to be applied to the initial array: "$array"
+
+      $array = $this->electronicCatalog->getESList();
+
+      foreach($criteriaArray as $criteria){ // filter out
+
+      switch($criteria) {
+
+        case "desktop":
+          foreach($array as $key => $value) {
+            if($value != 'desktop') {
+              unset($array[$key]);
+            }
+          }
+          break;
+
+        case "monitor":
+        foreach($array as $key => $value) {
+          if($value != 'monitor') {
+            unset($array[$key]);
+          }
+        }
+        break;
+
+        case "tablet":
+        foreach($array as $key => $value) {
+          if($value != 'tablet') {
+            unset($array[$key]);
+          }
+        }
+        break;
+
+        case "priceAscending":
+
+        case "priceDescending":
+
+        case "ascendingSize":
+
+        case "descending size":
+
+    }
+  }
+
+
+}
 
 }
