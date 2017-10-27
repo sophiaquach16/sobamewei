@@ -69,10 +69,10 @@
         @foreach ($electronicSpecifications as $eS)
 
         <div class="col-md-2">
-            @if ( $eS->brandName ) 
+            @if ( $eS->brandName )
             {{$eS->brandName}}
             @endif
-            @if ( $eS->ElectronicType_name ) 
+            @if ( $eS->ElectronicType_name )
             {{$eS->ElectronicType_name}}
             @endif
             <br/>
@@ -80,7 +80,7 @@
             Model {{$eS->modelNumber}}
             @endif
             <br/>
-            @if ( $eS->price ) 
+            @if ( $eS->price )
             Price: ${{$eS->price}}
             @endif
         </div>
@@ -91,6 +91,55 @@
     </div>
 
 </div>
+
+<div class="container-fluid">
+ <nav class="navbar navbar-inverse navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="container-fluid">
+     <nav class="navbar navbar-inverse navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Desktop Computers</a></li>
+            <li><a href="#">Laptops</a></li>
+            <li><a href="#">Monitors</a></li>
+            <li><a href="#">Tablets</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort By <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Price Ascending</a></li>
+                <li><a href="#">Price Descending</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    </div><!-- end container -->
 
 
 <!--
