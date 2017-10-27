@@ -128,7 +128,7 @@ REPLACE INTO ElectronicType (id, name) values (1, "Desktop");
 REPLACE INTO ElectronicType (id, name) values (2, "Laptop");
 REPLACE INTO ElectronicType (id, name) values (3, "Monitor");
 REPLACE INTO ElectronicType (id, name) values (4, "Tablet");
-REPLACE INTO ElectronicType (id, name) values (5, "Television");
+/**REPLACE INTO ElectronicType (id, name) values (5, "Television");**/
 
 REPLACE INTO User (id, email, password, admin) values (1, 'admin1@conushop.com', '$2y$10$CCdVyhydRyjluMY7/39VL.A1atziI7EAdRHhWyFkZyMKOfMlFl3GW', 1);
 REPLACE INTO User (id, email, password, admin) values (2, 'admin2@conushop.com', '$2y$10$CCdVyhydRyjluMY7/39VL.A1atziI7EAdRHhWyFkZyMKOfMlFl3GW', 1);

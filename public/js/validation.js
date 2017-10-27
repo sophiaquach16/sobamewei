@@ -166,29 +166,29 @@ $(document).ready(function ()
             });
 
 
-            $('#televisionform').validate({ // initialize the plugin
-                rules:
-                {
-                    dimension: {
-                        required: true,
-                    },
-                    weight: {
-                        required: true,
-                        number: true,
-                    },
-                    brandName: {
-                        required: true,
-                    },
-                    modelNumber: {
-                        required: true,
-                    },
-                    price: {
-                        required: true,
-                        number: true,
-                    },
-                    message: {
-                    },
-                }
-            });
+            // $('#televisionform').validate({ // initialize the plugin
+            //     rules:
+            //     {
+            //         dimension: {
+            //             required: true,
+            //         },
+            //         weight: {
+            //             required: true,
+            //             number: true,
+            //         },
+            //         brandName: {
+            //             required: true,
+            //         },
+            //         modelNumber: {
+            //             required: true,
+            //         },
+            //         price: {
+            //             required: true,
+            //             number: true,
+            //         },
+            //         message: {
+            //         },
+            //     }
+            // });
         });
 });
