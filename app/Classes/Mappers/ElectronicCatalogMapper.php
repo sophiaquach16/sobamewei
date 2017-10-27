@@ -13,6 +13,7 @@ class ElectronicCatalogMapper {
     private $electronicCatalogTDG;
     private $unitOfWork;
     private $identityMap;
+    private $lockFilePointer;
 
     function __construct() {
         $argv = func_get_args();
@@ -43,9 +44,13 @@ class ElectronicCatalogMapper {
     }
 
     function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
+        $this->lockDataAccess();
         $modelNumberExists = $this->electronicCatalog->findElectronicSpecification($electronicSpecificationData->modelNumber);
+        $this->unlockDataAccess();
 
         if (!$modelNumberExists) {
+            $this->lockDataAccess();
+
             //Add to eSList of the catalog
             $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
 
@@ -66,6 +71,8 @@ class ElectronicCatalogMapper {
             //Add to identity map
             $this->identityMap->add('ElectronicSpecification', $electronicSpecification);
 
+            $this->unlockDataAccess();
+
             return true;
         } else {
             return false;
@@ -74,10 +81,14 @@ class ElectronicCatalogMapper {
 
     function modifyElectronicSpecification($quantity, $eS, $eSData) {
         $eSId = $eS->id;
+
+        $this->lockDataAccess();
         // verify if the newly entered model number exists
         $newModelNumberExists = $this->electronicCatalog->findElectronicSpecification($eSData->modelNumber);
+        $this->unlockDataAccess();
 
         if (!$newModelNumberExists || $this->electronicCatalog->getElectronicSpecificationById($eSId)->modelNumber === $eSData->modelNumber) {
+            $this->lockDataAccess();
             $electronicSpecification = $this->electronicCatalog->modifyElectronicSpecification($eSId, $eSData);
 
             $this->unitOfWork->registerDirty($electronicSpecification);
@@ -107,6 +118,8 @@ class ElectronicCatalogMapper {
                 }
             }
 
+            $this->unlockDataAccess();
+
             return true;
         } else {
             return false;
@@ -114,6 +127,8 @@ class ElectronicCatalogMapper {
     }
 
     function deleteElectronicItems($eIIds) {
+        $this->lockDataAccess();
+
         foreach ($eIIds as $eIId) {
             $this->identityMap->delete('ElectronicItem', 'id', $eIId);
 
@@ -122,16 +137,26 @@ class ElectronicCatalogMapper {
             $this->unitOfWork->registerDeleted($electronicItem);
         }
         $this->unitOfWork->commit();
+
+        $this->unlockDataAccess();
     }
 
     function getAllElectronicSpecifications() {
+        $this->lockDataAccess();
+
         $electronicSpecifications = $this->electronicCatalog->getESList();
+
+        $this->unlockDataAccess();
 
         return $electronicSpecifications;
     }
 
     function getElectronicSpecification($id) {
+        $this->lockDataAccess();
+
         $electronicSpecification = $this->electronicCatalog->getElectronicSpecificationById($id);
+
+        $this->unlockDataAccess();
 
         return $electronicSpecification;
     }
@@ -146,6 +171,20 @@ class ElectronicCatalogMapper {
         }
 
         return $serialNumber;
+    }
+
+    private function lockDataAccess() {
+        $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c'); //set file pointer
+        flock($this->lockFilePointer, LOCK_EX); //lock file
+    }
+    
+    private function checkLock() {
+        flock($this->lockFilePointer, LOCK_NB);
+    }
+
+    private function unlockDataAccess() {
+        flock($this->lockFilePointer, LOCK_UN); //unlock file
+        fclose($this->lockFilePointer); //close file
     }
 
 }
