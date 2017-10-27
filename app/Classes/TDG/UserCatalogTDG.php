@@ -82,45 +82,22 @@ class UserCatalogTDG {
     }
 
     public function add($user){
-      //$localConn = $this->conn->getPDOConnection();
 
-    //  $localConn->prepare('INSERT INTO User ( firstName, lastName, email, password, phone, physicalAddress ) VALUES ( :firstName, :lastName, :email, :password, :phone, :physicalAddress)');
+      $objectData = (array)( $user->get());
 
+      foreach ($objectData as $key => $value) {
+          if (is_array($objectData[$key]) || is_null($objectData[$key])) {
+              unset($objectData[$key]);
+          }
+      }
 
-
-
-      //$queryString = 'INSERT INTO User ( firstName, lastName, email, password, phone, physicalAddress ) VALUES ( :firstName, :lastName, :email, :password, :phone, :physicalAddress)';
-
-      //  $user = $this->conn->directQuery($queryString);
-
-      // $localConn = $this->conn->getPDOConnection();
-      // var_log(print_r($localConn));
-    //  $queryString = 'INSERT INTO User ( firstName, lastName, email, password, phone, physicalAddress ) VALUES ( :firstName, :lastName, :email, :password, :phone, :physicalAddress)';
-    //return $this->conn->query($queryString, $parameters);
-      //$localConn->prepare('INSERT INTO User ( firstName, lastName, email, password, phone, physicalAddress ) VALUES ( :firstName, :lastName, :email, :password, :phone, :physicalAddress)');
-      //
-
-      // $localConn->bindValue(':firstName', $parameters->firstName);
-      // $localConn->bindValue(':lastName', $parameters->lastName);
-      // $localConn->bindValue(':email', $parameters->email);
-      // $localConn->bindValue(':password', $parameters->password);
-      // $localConn->bindValue(':phone', $parameters->phone);
-      // $localConn->bindValue(':physicalAddress', $parameters->physicalAddress);
-      //
-      // $localConn->execute();
-      // var_dump($localConn->fetchAll(PDO::FETCH_OBJ));
-      // if (count($localConn->fetchAll(PDO::FETCH_OBJ)) > 0) {
-      //     return true;
-      // }
-      //
-
-      // return false;//
-  $parameters = $this->unsetUselessUserProperties($user);
+  $parameters = (object) $objectData;
+  //   $parameters = new User($user);
       $queryString = 'INSERT INTO User SET ';
 
 
-              foreach ($parameters as $key => $value) {
-                  if ($value !== null) {
+              foreach ((array)$parameters as $key => $value) {
+                  if (!empty($value)) {
                       $queryString .= $key . ' = :' . $key;
                       $queryString .= ' , ';
                   }
@@ -129,25 +106,8 @@ class UserCatalogTDG {
               //We delete the last useless ' , '
               $queryString = substr($queryString, 0, -2);
 
-
       //  dd($parameters);
         return $this->conn->query($queryString, $parameters);
 
     }
-
-    public function unsetUselessUserProperties($object){
-        $objectData = (array)$object->get();
-
-        foreach ($objectData as $key => $value) {
-            if (is_array($objectData[$key]) || is_null($objectData[$key])) {
-                unset($objectData[$key]);
-            }
-        }
-
-        $parameters = (object) $objectData;
-
-        return $parameters;
-    }
-
-
 }

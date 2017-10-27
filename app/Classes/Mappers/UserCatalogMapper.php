@@ -60,7 +60,7 @@ class UserCatalogMapper {
         $this->unitOfWork->registerNew($user);
         $this->unitOfWork->commit();
 
-          $this->userCatalogTDG->add($userData);
+          // $this->userCatalogTDG->add($userData);
 
         //Add to identity map
         $this->identityMap->add('User', $user);

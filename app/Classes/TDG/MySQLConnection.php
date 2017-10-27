@@ -15,6 +15,9 @@ class MySQLConnection {
     public function query($query, $bindValues) {
         $localConn = $this->conn;
 
+
+
+
         $stmt = $localConn->prepare($query);
 
         //We bind the values to make sure we are protected from injections
@@ -23,7 +26,8 @@ class MySQLConnection {
         }
 
         try {
-          
+          //dd($stmt);
+
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
