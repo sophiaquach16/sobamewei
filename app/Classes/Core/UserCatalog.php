@@ -21,7 +21,7 @@ class UserCatalog {
 
         $this->setUserList($userListData);
     }
-    
+
     function setUserList($userListData) {
         //dd($userListData);
         foreach ($userListData as $userData) {
@@ -39,4 +39,28 @@ class UserCatalog {
 
         return $users;
     }
+
+    function findUser($email){
+
+          $emailExists = false;
+
+          foreach ($this->userList as $user) {
+              if ($user->get()->email === $email) {
+                  $emailExists = true;
+                  break;
+              }
+          }
+
+          return $emailExists;
+
+    }
+
+    function makeCustomer($userData){
+
+          $user = new User($userData);
+
+          array_push($this->userList, $user);
+          return $user;
+    }
+
 }

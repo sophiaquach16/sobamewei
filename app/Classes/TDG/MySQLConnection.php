@@ -23,6 +23,7 @@ class MySQLConnection {
         }
 
         try {
+          
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
