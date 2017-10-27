@@ -26,6 +26,8 @@ class UserCatalogMapper {
     function __construct0() {
         $this->userCatalogTDG = new userCatalogTDG();
         $this->userCatalog = new userCatalog($this->userCatalogTDG->findAll());
+        $this->unitOfWork = new UnitOfWork($this);
+        $this->identityMap = new IdentityMap();
     }
 
     function saveUser($user) {
@@ -44,9 +46,9 @@ class UserCatalogMapper {
 
     if (!$emailExists) {
         //Add to userList of the catalog
-        $id=sizeOf($this->userCatalog->getUserList())+1;
-        $userData->id = $id;
-        $userData->admin = 'false';
+        // $id=sizeOf($this->userCatalog->getUserList())+1;
+        // $userData->id = "";
+      //  $userData->admin = 'false';
 
         $user = $this->userCatalog->makeCustomer($userData);
 

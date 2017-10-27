@@ -18,6 +18,7 @@ use Session;
 use App\Classes\Mappers\UserCatalogMapper;
 
 
+
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
 
@@ -72,7 +73,7 @@ class MainController extends BaseController {
 
 
     public function doRegistration(Request $request) {
-
+  // $this->authorize('doRegistration', $request);
       //   $validator = Validator::create($request->all(), [
       //     'firstName'=> 'required',
       //     'lastName'=> 'required',
