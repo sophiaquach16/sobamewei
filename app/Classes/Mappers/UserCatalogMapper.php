@@ -45,22 +45,14 @@ class UserCatalogMapper {
     $emailExists = $this->userCatalog->findUser($userData->email);
 
     if (!$emailExists) {
-        //Add to userList of the catalog
-        // $id=sizeOf($this->userCatalog->getUserList())+1;
-        // $userData->id = "";
-      //  $userData->admin = 'false';
+
 
         $user = $this->userCatalog->makeCustomer($userData);
 
-        // ob_start();
-        // var_dump("Var_dump output in a string");
-        // $out = ob_get_clean();
-        // echo $out;
-        //Add to database
+
         $this->unitOfWork->registerNew($user);
         $this->unitOfWork->commit();
 
-          $this->userCatalogTDG->add($userData);
 
         //Add to identity map
         $this->identityMap->add('User', $user);
