@@ -48,3 +48,14 @@
 
 ## Open the website on your local computer
 - Go to ```laravel.dev``` on your browser (if you followed the tutorial in the installation step).
+
+## How to use vagrant
+1) Install virtual box
+2) Install vagrant
+3) add the homestead virtual box
+4) install the plugin from the composer
+5) "cd" into the project then: composer require laravel/homestead --dev
+6) php vendor/bin/homestead make
+
+vagrant up - starts virtual machine
+vagrant halt - power off virtual machine

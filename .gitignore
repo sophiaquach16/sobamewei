@@ -1,3 +1,5 @@
+.gitignore
+
 .bash_profile
 /node_modules
 /public/hot
@@ -52,8 +54,3 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /nbproject/
-
-# Vagrant and VirtualBox
-Vagrantfile
-after.sh
-aliases
