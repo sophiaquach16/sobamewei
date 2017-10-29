@@ -127,23 +127,23 @@ class ElectronicSpecification {
             switch ($data->ElectronicType_id) {
                 case 1:
                     $this->ElectronicType_name = 'Desktop';
-                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    $this->ElectronicType_displaySizeUnit = 'inch';
                     break;
                 case 2:
                     $this->ElectronicType_name = 'Laptop';
-                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    $this->ElectronicType_displaySizeUnit = 'inch';
                     break;
                 case 3:
                     $this->ElectronicType_name = 'Monitor';
-                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    $this->ElectronicType_displaySizeUnit = 'inch';
                     break;
                 case 4:
                     $this->ElectronicType_name = 'Tablet';
-                    $this->ElectronicType_displaySizeUnit = 'cm';
+                    $this->ElectronicType_displaySizeUnit = 'inch';
                     break;
                 // case 5:
                 //     $this->ElectronicType_name = 'Television';
-                //     $this->ElectronicType_displaySizeUnit = 'cm';
+                //     $this->ElectronicType_displaySizeUnit = 'inch';
                 //     break;
             }
         }

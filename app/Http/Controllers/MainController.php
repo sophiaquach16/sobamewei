@@ -69,9 +69,29 @@ class MainController extends BaseController {
     public function showElectronicCatalog(Request $request) {
         $inputs = $request->all();
 
-        $electronicSpecifications = $this->electronicCatalogMapper->getESFilteredAndSortedByCriteria($inputs);
+        $eSFromType = $this->electronicCatalogMapper->getESByType($request->input('eSType'));
+        $electronicSpecifications = $this->electronicCatalogMapper->getESFilteredAndSortedByCriteria($request->input('eSType'), $request->except(['eSType', 'sortBy']), $request->input('sortBy'));
 
-        return view('pages.index', ['electronicSpecifications' => $electronicSpecifications, 'lastInputs' => $inputs]);
+        $brandNames = array();
+        foreach ($eSFromType as $eS) {
+            if (!in_array($eS->brandName, $brandNames)) {
+                array_push($brandNames, $eS->brandName);
+            }
+        }
+        
+        $displaySizes = array();
+        foreach ($eSFromType as $eS) {
+            if (!in_array($eS->displaySize, $displaySizes) && !is_null($eS->displaySize)) {
+                array_push($displaySizes, $eS->displaySize);
+            }
+        }
+        
+        $hasTouchScreen = false;
+        if($request->input('eSType') === 'Laptop'){
+            $hasTouchScreen = true;
+        }
+
+        return view('pages.index', ['electronicSpecifications' => $electronicSpecifications, 'lastInputs' => $inputs, 'brandNames' => $brandNames, 'displaySizes' => $displaySizes, 'hasTouchScreen' => $hasTouchScreen]);
     }
 
     public function showRegistration() {

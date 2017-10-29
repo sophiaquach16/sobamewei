@@ -187,40 +187,151 @@ class ElectronicCatalogMapper {
         fclose($this->lockFilePointer); //close file
     }
 
-    function getESFilteredAndSortedByCriteria($criteriaArray) {
+    function getESFilteredAndSortedByCriteria($eSType, $criteriaArray, $sortBy) {
         // parameter is an array of criterion to be applied to the initial array: "$array"
 
-        $array = $this->electronicCatalog->getESList();
+        $eSArray = $this->electronicCatalog->getESList();
 
-
-        foreach ($criteriaArray as $criteriaKey => $criteriaValue) { // filter out
-            switch ($criteriaKey) {
-                case "eSType":
-                    foreach ($array as $key => $value) {
-                        if ($array[$key]->ElectronicType_name !== $criteriaValue) {
-                            unset($array[$key]);
-                        }
-                    }
-                    break;
-
-                case "sortBy":
-                    if ($criteriaValue === "priceAscending") {
-                        usort($array, function($a, $b) {
-                            return $a->price <=> $b->price;
-                        });
-                    } else {
-                        if ($criteriaValue === "priceDescending") {
-                            usort($array, function($a, $b) {
-                                return $b->price <=> $a->price;
-                            });
-                        }
-                    }
-
-                    break;
+        // Filter By Electronic Type
+        if (!is_null($eSType)) {
+            foreach ($eSArray as $key => $value) {
+                if ($eSArray[$key]->ElectronicType_name !== $eSType) {
+                    unset($eSArray[$key]);
+                }
             }
         }
 
-        return $array;
+        // Filter By Price Range
+        $filteredByPrice = array();
+        $containsPriceRange = false;
+
+        foreach ($criteriaArray as $key => $value) {
+            if (strpos($key, 'priceRange') !== false) {
+                $containsPriceRange = true;
+            }
+        }
+
+        if ($containsPriceRange) {
+            foreach ($criteriaArray as $key => $value) { // filter out
+                if (strpos($key, 'priceRange') !== false) { //if the criteria contains a "-" then it's a criteria
+                    $price = explode("-", $value);
+
+                    foreach ($eSArray as $eS) {
+                        if ($eS->price >= $price[0] && $eS->price < $price[1]) {
+                            array_push($filteredByPrice, $eS);
+                        }
+                    }
+                }
+            }
+        } else {
+            $filteredByPrice = $eSArray;
+        }
+
+        // Filter by Brand Name
+        $filteredByBrandName = array();
+        $containsBrandName = false;
+
+        foreach ($criteriaArray as $key => $value) {
+            if (strpos($key, 'brandName') !== false) {
+                $containsBrandName = true;
+            }
+        }
+
+        if ($containsBrandName) {
+            foreach ($criteriaArray as $key => $value) { // filter out
+                if (strpos($key, 'brandName') !== false) { //if the criteria contains a "-" then it's a criteria
+                    foreach ($filteredByPrice as $eS) {
+                        if ($eS->brandName === $value) {
+                            array_push($filteredByBrandName, $eS);
+                        }
+                    }
+                }
+            }
+        } else {
+            $filteredByBrandName = $filteredByPrice;
+        }
+
+        // Filter by Display Size
+        $filteredByDisplaySize = array();
+        $containsDisplaySize = false;
+
+        foreach ($criteriaArray as $key => $value) {
+            if (strpos($key, 'displaySize') !== false) {
+                $containsDisplaySize = true;
+            }
+        }
+
+        if ($containsDisplaySize) {
+            foreach ($criteriaArray as $key => $value) { // filter out
+                if (strpos($key, 'displaySize') !== false) { //if the criteria contains a "-" then it's a criteria
+                    foreach ($filteredByBrandName as $eS) {
+                        if ($eS->displaySize === $value) {
+                            array_push($filteredByDisplaySize, $eS);
+                        }
+                    }
+                }
+            }
+        } else {
+            $filteredByDisplaySize = $filteredByBrandName;
+        }
+        
+        // Filter by TouchScreen
+        $filteredByTouchScreen = array();
+        $containsTouchScreen = false;
+
+        foreach ($criteriaArray as $key => $value) {
+            if (strpos($key, 'touchScreen') !== false) {
+                $containsTouchScreen = true;
+            }
+        }
+
+        if ($containsTouchScreen) {
+            foreach ($criteriaArray as $key => $value) { // filter out
+                if (strpos($key, 'touchScreen') !== false) { //if the criteria contains a "-" then it's a criteria
+                    foreach ($filteredByDisplaySize as $eS) {
+                        if ($eS->touchScreen === $value) {
+                            array_push($filteredByTouchScreen, $eS);
+                        }
+                    }
+                }
+            }
+        } else {
+            $filteredByTouchScreen = $filteredByDisplaySize;
+        }
+
+        $filteredDone = $filteredByTouchScreen;
+
+        // Sort By
+        if (!is_null($sortBy)) {
+            if ($sortBy === "priceAscending") {
+                usort($filteredDone, function($a, $b) {
+                    return $a->price <=> $b->price;
+                });
+            } else {
+                if ($sortBy === "priceDescending") {
+                    usort($filteredDone, function($a, $b) {
+                        return $b->price <=> $a->price;
+                    });
+                }
+            }
+        }
+
+        return $filteredDone;
+    }
+
+    function getESByType($eSType) {
+
+        $eSArray = $this->electronicCatalog->getESList();
+
+        if (!is_null($eSType)) {
+            foreach ($eSArray as $key => $value) {
+                if ($eSArray[$key]->ElectronicType_name !== $eSType) {
+                    unset($eSArray[$key]);
+                }
+            }
+        }
+
+        return $eSArray;
     }
 
 }
