@@ -85,6 +85,9 @@ class MainController extends BaseController {
             $hasTouchScreen = true;
         }
 
+        $request->session()->put('lastInputs', $inputs);
+        $request->session()->put('electronicSpecifications', $electronicSpecifications);
+
         return view('pages.index', ['electronicSpecifications' => $electronicSpecifications, 'lastInputs' => $inputs, 'brandNames' => $brandNames, 'displaySizes' => $displaySizes, 'hasTouchScreen' => $hasTouchScreen]);
     }
 
@@ -102,13 +105,44 @@ class MainController extends BaseController {
             return Redirect::back()->withInput();
         }
     }
-    
+
     public function showDetails(Request $request) {
         $eS = $this->electronicCatalogMapper->getElectronicSpecification($request->input('id'));
-        
-        //dd($eS);
 
-        return view('pages.details', ['eS' => $eS]);
+        $lastInputs = $request->session()->get('lastInputs');
+        $eSpecifications = $request->session()->get('electronicSpecifications');
+
+        //Determine previous id of the filtered ES list
+        $previousESId = -1;
+        $previousES = null;
+        foreach ($eSpecifications as $eSpecification) {
+            if ($eSpecification->id === $request->input('id') && $previousES !== null) {
+                $previousESId = $previousES->id;
+                break;
+            }
+            $previousES = $eSpecification;
+        }
+
+        //Determine next id of the filtered ES list
+        $nextESId = -1;
+        $backwards = array_reverse($eSpecifications);
+        $nextES = null;
+        foreach ($backwards as $eSpecification) {
+            if ($eSpecification->id === $request->input('id') && $nextES !== null) {
+                $nextESId = $nextES->id;
+                break;
+            }
+            $nextES = $eSpecification;
+        }
+
+        //Create a query string that will be used to return to the catalog with the same filtering results
+        $queryStringBack = "";
+        foreach ($lastInputs as $key => $value) {
+            $queryStringBack .= $key . "=" . $value . "&";
+        }
+        $queryStringBack = rtrim($queryStringBack, '&');
+
+        return view('pages.details', ['eS' => $eS, 'queryStringBack' => $queryStringBack, 'nextESId' => $nextESId, 'previousESId' => $previousESId]);
     }
 
 }
