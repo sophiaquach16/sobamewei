@@ -57,11 +57,3 @@ Route::get('registration', array(
 Route::post('registration', array(
     'uses' => 'MainController@doRegistration'
 ));
-
-Route::get('upload', array(
-  'uses'=>'UploadController@showUpload'
-));
-
-Route::post('upload', array(
-  'uses'=>'UploadController@doUpload'
-));
