@@ -116,7 +116,7 @@
                 @endif
             </td>
             <td>
-                @if ( $eS->camera )
+                @if ( !is_null($eS->camera) )
                 @if ($eS->camera === "1")
                 Yes
                 @else
@@ -127,8 +127,12 @@
                 @endif
             </td>
             <td>
-                @if ( $eS->touchScreen ) 
-                {{$eS->touchScreen}}
+                @if ( !is_null($eS->touchScreen) ) 
+                @if ($eS->camera === "1")
+                Yes
+                @else
+                No
+                @endif
                 @else
                 N/A
                 @endif
