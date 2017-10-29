@@ -4,11 +4,13 @@ namespace App\Classes\Core;
 
 use Hash;
 
-class UserCatalog {
+class UserCatalog
+{
 
     private $userList;
 
-    function __construct() {
+    function __construct()
+    {
         $this->userList = array();
         $argv = func_get_args();
         switch (func_num_args()) {
@@ -18,13 +20,15 @@ class UserCatalog {
         }
     }
 
-    function __construct1($userListData) {
+    function __construct1($userListData)
+    {
         $this->userList = array();
 
         $this->setUserList($userListData);
     }
 
-    function setUserList($userListData) {
+    function setUserList($userListData)
+    {
         //dd($userListData);
         foreach ($userListData as $userData) {
             $user = new User($userData);
@@ -32,7 +36,8 @@ class UserCatalog {
         }
     }
 
-    function getUserList() {
+    function getUserList()
+    {
         $users = array();
 
         foreach ($this->userList as $user) {
@@ -42,41 +47,42 @@ class UserCatalog {
         return $users;
     }
 
-    function checkUser($email, $password){
+    function checkUser($email, $password)
+    {
 
-          $emailExists = false;
+        foreach ($this->userList as $user) {
+            if ($user->get()->email === $email) {
+                if (Hash::check($user->get()->password, $password)) {
+                    return true;
+                }
 
-          foreach ($this->userList as $user) {
-              if ($user->get()->email === $email) {
-                  if(Hash::check($user->get()->password, $password)){
-                      return true;
-                  }
-                  
-                  break;
-              }
-          }
+                break;
+            }
+        }
 
-          return false;
+        return false;
 
     }
-    
-    function findUser($email){
-          $emailExists = false;
-          foreach ($this->userList as $user) {
-              if ($user->get()->email === $email) {
-                  $emailExists = true;
-                  break;
-              }
-          }
-          return $emailExists;
+
+    function findUser($email)
+    {
+        $emailExists = false;
+        foreach ($this->userList as $user) {
+            if ($user->get()->email === $email) {
+                $emailExists = true;
+                break;
+            }
+        }
+        return $emailExists;
     }
 
-    function makeCustomer($userData){
+    function makeCustomer($userData)
+    {
 
-          $user = new User($userData);
+        $user = new User($userData);
 
-          array_push($this->userList, $user);
-          return $user;
+        array_push($this->userList, $user);
+        return $user;
     }
 
 }
