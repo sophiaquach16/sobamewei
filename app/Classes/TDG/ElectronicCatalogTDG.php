@@ -120,7 +120,7 @@ class ElectronicCatalogTDG {
     }
 
     public function unsetUselessESProperties($object){
-        $objectData = (array)$object->get();
+        $objectData = (array) $object->get();
         foreach ($objectData as $key => $value) {
             if (is_array($objectData[$key]) || is_null($objectData[$key])) {
                 unset($objectData[$key]);

@@ -52,8 +52,3 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /nbproject/
-
-# Vagrant and VirtualBox
-Vagrantfile
-after.sh
-aliases
