@@ -82,6 +82,13 @@ function loadForm() {
                     <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="image">Upload product image</label>
+                <div class="col-sm-10">
+                  <input type="file" name="image">
+                </div>
+                </form>
+            </div>
 
             <button type="submit" id="desktop-button" class="btn btn-success btn-block">Submit</button>
             </br>
@@ -94,7 +101,7 @@ function loadForm() {
     </div>
 
 <input type="hidden" name="ElectronicType_id" value=2>
-                    
+
         <div class="form-group">
             <label class="control-label col-sm-2" for="dimension">Dimension <br/> </label>
             <div class="col-sm-10">
@@ -279,7 +286,7 @@ function loadForm() {
                     <input type="text" class="form-control" id="displaySize" placeholder="Enter display size" name="displaySize">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label class="control-label col-sm-2" for="weight">Weight</label>
                 <div class="col-sm-10">
@@ -346,55 +353,6 @@ function loadForm() {
             <br>
         `;
             break;
-
-//         case 'tv':
-//             htmlString += `
-// <div class="row">
-//         <div class="items text-center"><span class="blueTitle">TELEVISION</span></div>
-//     </div>
-//
-// <input type="hidden" name="ElectronicType_id" value=5>
-//
-//         <div class="form-group">
-//             <label class="control-label col-sm-2" for="dimension">Dimension</label>
-//             <div class="col-sm-10">
-//                 <input type="text" class="form-control" id="dimension" placeholder="Enter dimensions size (width x height x depth) " name="dimension">
-//             </div>
-//         </div>
-//
-//         <div class="form-group">
-//             <label class="control-label col-sm-2" for="weight">Weight</label>
-//             <div class="col-sm-10">
-//                 <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
-//             </div>
-//         </div>
-//
-//
-//         <div class="form-group">
-//             <label class="control-label col-sm-2" for="brandName">Brand</label>
-//             <div class="col-sm-10">
-//                 <input type="text" class="form-control" id="brandName" placeholder="Enter brand" name="brandName">
-//             </div>
-//         </div>
-//
-//         <div class="form-group">
-//             <label class="control-label col-sm-2" for="modelNumber">Model</label>
-//             <div class="col-sm-10">
-//                 <input type="text" class="form-control" id="modelNumber" placeholder="Enter model" name="modelNumber">
-//             </div>
-//         </div>
-//
-//         <div class="form-group">
-//             <label class="control-label col-sm-2" for="price">Price</label>
-//             <div class="col-sm-10">
-//                 <input type="number" min=0 class="form-control" id="price" placeholder="Enter price" name="price">
-//             </div>
-//         </div>
-//
-//         <button type="submit" class="btn btn-success btn-block">Submit</button>
-//         </br>
-//         `;
-//             break;
     }
     $("#formLoad").html(htmlString);
 }

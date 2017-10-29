@@ -29,6 +29,20 @@ class AdminController extends BaseController {
 
     public function doAddItems(Request $request) {
         if ($this->electronicCatalogMapper->makeNewElectronicSpecification($request->input('quantity'), (object) $request->except(['_token', 'quantity']))) {
+          if ($request->hasFile('image')){
+            $image = $request->file('image');
+            //image will be saved with timestamp as its name
+            $name = time().'.'.$image->getClientOriginalExtension();
+            //file destination  is in 'app/public/image' folder in laravel project
+            $destinationPath = public_path('/images');
+            //to locally save the image and also access them publicly,
+            //create a simlink that  allow public access to the local images directory with command:
+            //php artisan storage:link
+            //more info: https://laravel.com/docs/5.5/filesystem#the-public-disk
+            $image->move($destinationPath, $name);
+            // direct access to the image with url stored in $url
+            $url=asset('/images/'.$name);
+          }
             Session::flash('success_msg', "Successfully added the electronic specification.");
             return Redirect::to('inventory');
         } else {
