@@ -41,25 +41,34 @@ class UserCatalogMapper {
         $this->userCatalogTDG->insertLoginLog($id, $timestamp);
     }
 
-  function makeNewCustomer($userData){
-    $emailExists = $this->userCatalog->findUser($userData->email);
+    function makeNewCustomer($userData) {
+        $emailExists = $this->userCatalog->findUser($userData->email);
 
-    if (!$emailExists) {
-
-
-        $user = $this->userCatalog->makeCustomer($userData);
+        if (!$emailExists) {
 
 
-        $this->unitOfWork->registerNew($user);
-        $this->unitOfWork->commit();
+            $user = $this->userCatalog->makeCustomer($userData);
 
 
-        //Add to identity map
-        $this->identityMap->add('User', $user);
+            $this->unitOfWork->registerNew($user);
+            $this->unitOfWork->commit();
 
-        return true;
-    } else {
-        return false;
+
+            //Add to identity map
+            $this->identityMap->add('User', $user);
+
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
+    
+    function login($email, $password){
+        if($this->userCatalog->findUser($email, $password)){
+            return true;
+        }else{
+            return $this->userCatalogTDG->login($email, $password);
+        }
+    }
+
 }
