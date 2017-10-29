@@ -17,11 +17,15 @@
                 <li><a href="/login">Log In<span class="sr-only">(current)</span></a></li>
                 <li><a href="/registration">Register<span class="sr-only">(current)</span></a></li>
                 @else
+                @if( Auth::user()->admin === 1 )
                 <li><a href="add-items">Add Items</a></li>
                 <li><a href="inventory">Inventory</a></li>
                 <li><a href="/logout">Log Out</a></li>
+                @else
+                <li><a href="/logout">Log Out</a></li>
+                @endif
+                @endif
             </ul>
-            @endif
         </div>
     </div>
 </nav>

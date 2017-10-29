@@ -107,10 +107,8 @@ class UserCatalogTDG {
 
 
         foreach ((array) $parameters as $key => $value) {
-            if (!empty($value)) {
                 $queryString .= $key . ' = :' . $key;
                 $queryString .= ' , ';
-            }
         }
 
         //We delete the last useless ' , '
