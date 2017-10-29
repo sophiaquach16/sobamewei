@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
 use Redirect;
 use Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +12,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
-use App\Classes\TDG\ElectronicTDG;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Mappers\ElectronicCatalogMapper;
@@ -49,11 +47,7 @@ class MainController extends BaseController {
         if ($validator->fails()) {
             return Redirect::to('login')->withErrors($validator);
         } else {
-            if (Auth::attempt(array(
-                        'email' => $request->input('email'),
-                        'password' => $request->input('password')
-                    ))) {
-
+            if ($this->userCatalogMapper->login($request->input('email'), $request->input('password')) && Auth::attempt($inputs)) {
                 $this->userCatalogMapper->makeLoginLog($request->user()->id);
 
                 Session::flash('success_msg', "Successfully logged in.");
@@ -78,16 +72,16 @@ class MainController extends BaseController {
                 array_push($brandNames, $eS->brandName);
             }
         }
-        
+
         $displaySizes = array();
         foreach ($eSFromType as $eS) {
             if (!in_array($eS->displaySize, $displaySizes) && !is_null($eS->displaySize)) {
                 array_push($displaySizes, $eS->displaySize);
             }
         }
-        
+
         $hasTouchScreen = false;
-        if($request->input('eSType') === 'Laptop'){
+        if ($request->input('eSType') === 'Laptop') {
             $hasTouchScreen = true;
         }
 

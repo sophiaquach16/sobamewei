@@ -100,14 +100,15 @@
     @foreach ($electronicSpecifications as $eS)
 
     <div class="col-md-2">
-        @if ( $eS->displaySize )
-        {{$eS->displaySize}} inch
-        @endif
         @if ( $eS->brandName )
         {{$eS->brandName}}
         @endif
         @if ( $eS->ElectronicType_name )
         {{$eS->ElectronicType_name}}
+        @endif
+        <br/>
+        @if ( $eS->displaySize )
+        {{$eS->displaySize}} inch display 
         @endif
         <br/>
         @if ( $eS->modelNumber )
