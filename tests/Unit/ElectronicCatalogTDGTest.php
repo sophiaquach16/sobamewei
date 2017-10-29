@@ -30,7 +30,7 @@ class ElectronicCatalogTDGTest extends TestCase {
         $eSData->os = 'Windows';
         $eSData->camera = 1;
         $eSData->touchScreen = 1;
-        $eSData->displaySize = '10 x 30';
+        $eSData->displaySize = 10;
         $eSData->ElectronicType_id = 3;
 
         $eS->set($eSData);
@@ -72,7 +72,7 @@ class ElectronicCatalogTDGTest extends TestCase {
         $newESData->os = 'Windows';
         $newESData->camera = 1;
         $newESData->touchScreen = 1;
-        $newESData->displaySize = '20 x 40';
+        $newESData->displaySize = 20;
         $newESData->ElectronicType_id = 3;
         
         $newES->set($newESData);
@@ -94,7 +94,7 @@ class ElectronicCatalogTDGTest extends TestCase {
             'os' => 'Windows',
             'camera' => 1,
             'touchScreen' => 1,
-            'displaySize' => '20 x 40',
+            'displaySize' => 20,
             'ElectronicType_id' => 3,
         ]);
         
@@ -120,7 +120,7 @@ class ElectronicCatalogTDGTest extends TestCase {
         $eSData->os = 'Windows';
         $eSData->camera = 1;
         $eSData->touchScreen = 1;
-        $eSData->displaySize = '10 x 30';
+        $eSData->displaySize = 10;
         $eSData->ElectronicType_id = 3;
 
         $eS->set($eSData);

@@ -6,6 +6,7 @@ use App\Classes\TDG\UserCatalogTDG;
 use App\Classes\Core\UserCatalog;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use Hash;
 
 class UserCatalogMapper {
 
@@ -41,25 +42,35 @@ class UserCatalogMapper {
         $this->userCatalogTDG->insertLoginLog($id, $timestamp);
     }
 
-  function makeNewCustomer($userData){
-    $emailExists = $this->userCatalog->findUser($userData->email);
+    function makeNewCustomer($userData) {
+        $userData->admin = "0";
+        $emailExists = $this->userCatalog->findUser($userData->email);
 
-    if (!$emailExists) {
+        if (!$emailExists) {
+            $userData->password = Hash::make($userData->password);
 
-
-        $user = $this->userCatalog->makeCustomer($userData);
-
-
-        $this->unitOfWork->registerNew($user);
-        $this->unitOfWork->commit();
+            $user = $this->userCatalog->makeCustomer($userData);
 
 
-        //Add to identity map
-        $this->identityMap->add('User', $user);
+            $this->unitOfWork->registerNew($user);
+            $this->unitOfWork->commit();
 
-        return true;
-    } else {
-        return false;
+
+            //Add to identity map
+            $this->identityMap->add('User', $user);
+
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
+    
+    function login($email, $password){
+        if($this->userCatalog->checkUser($email, $password)){
+            return true;
+        }else{
+            return $this->userCatalogTDG->login($email, $password);
+        }
+    }
+
 }

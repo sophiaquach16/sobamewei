@@ -101,7 +101,7 @@ function loadForm() {
     </div>
 
 <input type="hidden" name="ElectronicType_id" value=2>
-
+                    
         <div class="form-group">
             <label class="control-label col-sm-2" for="dimension">Dimension <br/> </label>
             <div class="col-sm-10">
@@ -112,7 +112,7 @@ function loadForm() {
         <div class="form-group">
             <label class="control-label col-sm-2" for="displaySize">Display Size</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="displaySize" placeholder="Enter display size (widthxheight)" name="displaySize">
+                <input type="number" min="0" step="0.1" class="form-control" id="displaySize" placeholder="Enter display size" name="displaySize">
             </div>
         </div>
 
