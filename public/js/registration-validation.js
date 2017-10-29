@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#registerForm').validate({
+  $("form[name='registration']").validate({
     //Validation rules
     rules: {
       firstName: "required",
@@ -8,21 +8,20 @@ $(document).ready(function(){
         required: true,
         email: true
       },
-      password: {
-        required: true
-      },
-      phoneNumber: true,
-      physicalAddress: true
+      password: "required",
+      phone: "required",
+      physicalAddress: "required"
     },
     messages: {
       firstName: "Please enter your first name.",
       lastName: "Please enter your last name.",
       email: "Please enter your email address.",
       password: "Please enter a password.",
-      phoneNumber: "Please enter a phone number.",
+      phone: "Please enter a phone number.",
       physicalAddress: "Please enter an address."
     },
-    submitHandler: function(/register) {
+
+    submitHandler: function(form) {
       form.submit();
     }
   });
