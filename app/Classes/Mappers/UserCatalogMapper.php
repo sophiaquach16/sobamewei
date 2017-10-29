@@ -6,6 +6,7 @@ use App\Classes\TDG\UserCatalogTDG;
 use App\Classes\Core\UserCatalog;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use Hash;
 
 class UserCatalogMapper {
 
@@ -42,10 +43,11 @@ class UserCatalogMapper {
     }
 
     function makeNewCustomer($userData) {
+        $userData->admin = "0";
         $emailExists = $this->userCatalog->findUser($userData->email);
 
         if (!$emailExists) {
-
+            $userData->password = Hash::make($userData->password);
 
             $user = $this->userCatalog->makeCustomer($userData);
 
@@ -64,7 +66,7 @@ class UserCatalogMapper {
     }
     
     function login($email, $password){
-        if($this->userCatalog->findUser($email, $password)){
+        if($this->userCatalog->checkUser($email, $password)){
             return true;
         }else{
             return $this->userCatalogTDG->login($email, $password);

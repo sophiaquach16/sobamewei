@@ -42,7 +42,7 @@ class UserCatalog {
         return $users;
     }
 
-    function findUser($email, $password){
+    function checkUser($email, $password){
 
           $emailExists = false;
 
@@ -58,6 +58,17 @@ class UserCatalog {
 
           return false;
 
+    }
+    
+    function findUser($email){
+          $emailExists = false;
+          foreach ($this->userList as $user) {
+              if ($user->get()->email === $email) {
+                  $emailExists = true;
+                  break;
+              }
+          }
+          return $emailExists;
     }
 
     function makeCustomer($userData){
