@@ -4,37 +4,39 @@
 <script type="text/javascript" src="{{ URL::asset('js/index.js') }}"></script>
 
 <div class="col-md-2">
-    Categories
-    <ul>
-        <li><a href="/?eSType=Desktop">Desktop Computers</a></li>
-        <li><a href="/?eSType=Laptop">Laptops</a></li>
-        <li><a href="/?eSType=Monitor">Monitors</a></li>
-        <li><a href="/?eSType=Tablet">Tablets</a></li>
+  <div class="panel panel-default">
+    <div class="panel-heading">Categories</div>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="/?eSType=Desktop">Desktop Computers</a></li>
+        <li class="list-group-item"><a href="/?eSType=Laptop">Laptops</a></li>
+        <li class="list-group-item"><a href="/?eSType=Monitor">Monitors</a></li>
+        <li class="list-group-item"><a href="/?eSType=Tablet">Tablets</a></li>
     </ul>
     <?php $i = 1; ?>
-    Price Range
-    <ul>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="0-100"> $0 - $100</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="100-200"> $100 - $200</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="200-300"> $200 - $300</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="300-500"> $300 - $400</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="400-600"> $400 - $500</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="500-500"> $500 - $600</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="600-700"> $600 - $700</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="700-800"> $700 - $800</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="800-900"> $800 - $900</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="900-1000"> $900 - $1000</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="1000-1500"> $1000 - $1500</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="1500-2000"> $1500 - $2000</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="2000-3000"> $2000 - $3000</li>
-        <li><input type="checkbox" name="priceRange" id="{{$i++}}" value="3000-2147483647"> More than $3000</li>
-    </ul>
+    <div class="panel-heading">Price Range</div>
+      <ul>
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="0-100"> $0 - $100 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="100-200"> $100 - $200 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="200-300"> $200 - $300 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="300-500"> $300 - $400 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="400-600"> $400 - $500 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="500-500"> $500 - $600 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="600-700"> $600 - $700 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="700-800"> $700 - $800 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="800-900"> $800 - $900 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="900-1000"> $900 - $1000 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="1000-1500"> $1000 - $1500 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="1500-2000"> $1500 - $2000 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="2000-3000"> $2000 - $3000 <br />
+        <input type="checkbox" name="priceRange" id="{{$i++}}" value="3000-2147483647"> More than $3000<br />
+      </ul>
+
 
     @if($brandNames)
-    Brand Names
+    <div class="panel-heading">Brand Names</div>
     <ul>
         @foreach($brandNames as $brandName)
-        <li><input type="checkbox" name="brandName" id="{{$i++}}" value="{{$brandName}}"> {{$brandName}}</li>
+        <input type="checkbox" name="brandName" id="{{$i++}}" value="{{$brandName}}"> {{$brandName}}<br/>
         @endforeach
     </ul>
     @endif
@@ -54,22 +56,23 @@
         <li><input type="checkbox" name="touchScreen" id="{{$i++}}" value=1> TouchScreen</li>
     </ul>
     @endif
-
+ </div>
 </div>
+
 
 
 
 <div class="col-md-10">
 
     <div class="page-header">
-        <div class="row">  
+        <div class="row">
             <div class="col-md-8"><h2>
                     @if(isset($lastInputs['eSType']))
                     {{$lastInputs['eSType']}}
                     @else
                     All Electronics
                     @endif
-                </h2></div> 
+                </h2></div>
 
             <div class="col-md-2">
                 <br/>
@@ -89,7 +92,7 @@
                     <option value="/?{{$stringWithoutSortBy}}sortBy=priceDescending"{{isset($lastInputs['sortBy']) && $lastInputs['sortBy'] === "priceDescending"? "selected" : "" }}>Descending Price</option>
                 </select>
             </div>
-        </div> 
+        </div>
     </div>
 
 
