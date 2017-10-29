@@ -102,5 +102,13 @@ class MainController extends BaseController {
             return Redirect::back()->withInput();
         }
     }
+    
+    public function showDetails(Request $request) {
+        $eS = $this->electronicCatalogMapper->getElectronicSpecification($request->input('id'));
+        
+        //dd($eS);
+
+        return view('pages.details', ['eS' => $eS]);
+    }
 
 }

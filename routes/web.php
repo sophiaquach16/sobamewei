@@ -57,3 +57,7 @@ Route::get('registration', array(
 Route::post('registration', array(
     'uses' => 'MainController@doRegistration'
 ));
+
+Route::get('details', array(
+    'uses' => 'MainController@showDetails'
+));
