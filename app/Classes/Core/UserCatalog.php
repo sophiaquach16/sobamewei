@@ -2,6 +2,8 @@
 
 namespace App\Classes\Core;
 
+use Hash;
+
 class UserCatalog {
 
     private $userList;
@@ -40,18 +42,21 @@ class UserCatalog {
         return $users;
     }
 
-    function findUser($email){
+    function findUser($email, $password){
 
           $emailExists = false;
 
           foreach ($this->userList as $user) {
               if ($user->get()->email === $email) {
-                  $emailExists = true;
+                  if(Hash::check($user->get()->password, $password)){
+                      return true;
+                  }
+                  
                   break;
               }
           }
 
-          return $emailExists;
+          return false;
 
     }
 

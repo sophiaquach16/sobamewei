@@ -49,7 +49,7 @@
 ## Open the website on your local computer
 - Go to ```laravel.dev``` on your browser (if you followed the tutorial in the installation step).
 
-## How to use vagrant
+## How to use vagrant (An alternative to Xampp)
 1) Install virtual box
 2) Install vagrant
 3) add the homestead virtual box

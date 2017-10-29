@@ -2,6 +2,8 @@
 
 namespace App\Classes\TDG;
 
+use Hash;
+
 class UserCatalogTDG {
 
     private $conn;
@@ -63,51 +65,59 @@ class UserCatalogTDG {
         return $this->conn->query($queryString, $parameters);
     }
 
-    public function login($parameters) {
-        $localConn = $this->conn->getPDOConnection();
+    public function login($email, $password) {
+        $parameters = new \stdClass();
+        $parameters->email = $email;
 
-        $localConn->prepare('SELECT id FROM User WHERE email = :email AND password = :password');
+        $queryString = 'SELECT * FROM User WHERE ';
 
-        $localConn->bindValue(':email', $parameters->email);
-        $localConn->bindValue(':password', $parameters->password);
+        //For each key, (ex: id, email, etc.), we build the query
+        foreach ($parameters as $key => $value) {
 
-        $localConn->execute();
-
-        var_dump($localConn->fetchAll(PDO::FETCH_OBJ));
-        if (count($localConn->fetchAll(PDO::FETCH_OBJ)) > 0) {
-            return true;
+            $queryString .= $key . ' = :' . $key;
+            $queryString .= ' AND ';
         }
+        //We delete the last useless ' AND '
+        $queryString = substr($queryString, 0, -5);
 
-        return false;
+        //We send to MySQLConnection the associative array, to bind values to keys
+        //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
+        $array = $this->conn->query($queryString, $parameters);
+
+        if (Hash::check($password, $array[0]->password)) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public function add($user){
+    public function add($user) {
 
-      $objectData = (array)( $user->get());
+        $objectData = (array) ( $user->get());
 
-      foreach ($objectData as $key => $value) {
-          if (is_array($objectData[$key]) || is_null($objectData[$key])) {
-              unset($objectData[$key]);
-          }
-      }
+        foreach ($objectData as $key => $value) {
+            if (is_array($objectData[$key]) || is_null($objectData[$key])) {
+                unset($objectData[$key]);
+            }
+        }
 
-  $parameters = (object) $objectData;
+        $parameters = (object) $objectData;
 
-      $queryString = 'INSERT INTO User SET ';
+        $queryString = 'INSERT INTO User SET ';
 
 
-              foreach ((array)$parameters as $key => $value) {
-                  if (!empty($value)) {
-                      $queryString .= $key . ' = :' . $key;
-                      $queryString .= ' , ';
-                  }
-              }
+        foreach ((array) $parameters as $key => $value) {
+            if (!empty($value)) {
+                $queryString .= $key . ' = :' . $key;
+                $queryString .= ' , ';
+            }
+        }
 
-              //We delete the last useless ' , '
-              $queryString = substr($queryString, 0, -2);
+        //We delete the last useless ' , '
+        $queryString = substr($queryString, 0, -2);
 
 
         return $this->conn->query($queryString, $parameters);
-
     }
+
 }
