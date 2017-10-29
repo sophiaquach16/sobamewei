@@ -58,3 +58,11 @@ th, td {
 .navbar{
     margin-bottom:0px;
 }
+
+.removeBullets{
+    list-style-type:none;
+    margin-left:10px;
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom:15px;
+}

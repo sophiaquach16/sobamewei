@@ -4,6 +4,12 @@ $(document).ready(function () {
     $('input[type="checkbox"]').each(function () {
         checkboxQueryChange($(this));
     });
+
+    $('input[type="button"]').each(function () {
+        $(this).click(function () {
+            //Add ajax here
+        });
+    });
 });
 
 /**
@@ -39,7 +45,7 @@ function checkboxQueryChange(checkboxElement) {
         if (string.charAt(0) !== "?") {
             string = "?" + string;
         }
-        
+
         if (checkboxElement.is(':checked')) { // If the checkbox is checked
             if (!(string[string.length - 1] === "?" || string[string.length - 1] === "&")) {
                 string = string + "&";
@@ -48,12 +54,12 @@ function checkboxQueryChange(checkboxElement) {
         } else {
             string = string.replace(queryVariable + "&", "");
             string = string.replace(queryVariable, "");
-            
-             if (string[string.length - 1] === "&"){
-                 string = string.substring(0, string.length - 1);
-             }
+
+            if (string[string.length - 1] === "&") {
+                string = string.substring(0, string.length - 1);
+            }
         }
-        
+
         window.location.href = string;
     });
 }
