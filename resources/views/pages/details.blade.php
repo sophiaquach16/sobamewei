@@ -13,12 +13,12 @@
     <!--Insert image here!-->
     </div>
     <div class="col-md-4"> <br><br>
-  Dimension: {{$eS->dimension}} cm<br>
-  Weight: {{$eS->weight}} kg<br>
-  RAM size: {{$eS->ramSize}} GB<br>
-  Number of CPU cores: {{$eS->cpuCores}}<br>
-  Hard Drive Size: {{$eS->hdSize}} GB<br>
-  Price: ${{$eS->price}}<br>
+  <b>Dimension</b>: {{$eS->dimension}} cm<br>
+  <b>Weight</b>: {{$eS->weight}} kg<br>
+  <b>RAM size</b>: {{$eS->ramSize}} GB<br>
+  <b>Number of CPU cores</b>: {{$eS->cpuCores}}<br>
+  <b>Hard Drive Size</b>: {{$eS->hdSize}} GB<br>
+  <b>Price</b>: ${{$eS->price}}<br>
     </div>
   </div>
 </div>
@@ -35,10 +35,10 @@
       <!--Insert image here!-->
     </div>
     <div class="col-md-4"> <br><br>
-  Dimension: {{$eS->dimension}} in<br>
-  Weight: {{$eS->weight}} kg<br>
-  RAM size: {{$eS->ramSize}} GB<br>
-  Price: ${{$eS->price}}<br>
+  <b>Dimension</b>: {{$eS->dimension}} in<br>
+  <b>Weight</b>: {{$eS->weight}} kg<br>
+  <b>RAM size</b>: {{$eS->ramSize}} GB<br>
+  <b>Price</b>: ${{$eS->price}}<br>
     </div>
   </div>
 </div>
@@ -54,28 +54,28 @@
         <!--Insert image here!-->
       </div>
       <div class="col-md-4"> <br><br>
-        Dimension: {{$eS->dimension}} cm <br>
-        Display Size: {{$eS->displaySize}} in<br>
-        Weight: {{$eS->weight}} kg<br>
-        RAM size: {{$eS->ramSize}} GB<br>
-        Number of CPU cores: {{$eS->cpuCores}}<br>
-        Hard drive size: {{$eS->hdSize}}<br>
-        Battery information: {{$eS->batteryInfo}}<br>
-        Processor Type: {{$eS->processorType}} <br>
-        Built-in Operation System: {{$eS->os}} <br>
-        Camera:
+        <b>Dimension</b>: {{$eS->dimension}} cm <br>
+        <b>Display Size</b>: {{$eS->displaySize}} in<br>
+        <b>Weight</b>: {{$eS->weight}} kg<br>
+        <b>RAM size</b>: {{$eS->ramSize}} GB<br>
+        <b>Number of CPU cores</b>: {{$eS->cpuCores}}<br>
+        <b>Hard drive size</b>: {{$eS->hdSize}}<br>
+        <b>Battery information</b>: {{$eS->batteryInfo}}<br>
+        <b>Processor Type</b>: {{$eS->processorType}} <br>
+        <b>Built-in Operation System</b>: {{$eS->os}} <br>
+        <b>Camera</b>:
         @if(($eS->camera) === "1")
-          yes
+          Yes
         @elseif(($eS->camera) === "0")
-          no
+          No
         @endif<br>
-        Touchscreen:
+        <b>Touchscreen</b>:
         @if(($eS->touchScreen) === "1")
-          yes
+          Yes
         @elseif(($eS->touchScreen) === "0")
-          no
+          No
         @endif<br>
-        Price: ${{$eS->price}}<br>
+        <b>Price</b>: ${{$eS->price}}<br>
       </div>
     </div>
   </div>
@@ -91,22 +91,22 @@
       <!-- Add image here! -->
     </div>
     <div class="col-md-4"><br><br>
-      Dimension: {{$eS->dimension}} cm<br>
-      Display Size: {{$eS->displaySize}} in<br>
-      Weight: {{$eS->weight}} kg<br>
-      Processor: {{$eS->processorType}}<br>
-      RAM Size: {{$eS->ramSize}} GB<br>
-      CPU Cores: {{$eS->cpuCores}}<br>
-      Hard drive size: {{$eS->hdSize}}<br>
-      Battery Information: {{$eS->batteryInfo}}<br>
-      Operating System: {{$eS->os}}<br>
-      Camera:
+      <b>Dimension</b>: {{$eS->dimension}} cm<br>
+      <b>Display Size</b>: {{$eS->displaySize}} in<br>
+      <b>Weight</b>: {{$eS->weight}} kg<br>
+      <b>Processor</b>: {{$eS->processorType}}<br>
+      <b>RAM Size</b>: {{$eS->ramSize}} GB<br>
+      <b>CPU Cores</b>: {{$eS->cpuCores}}<br>
+      <b>Hard drive size</b>: {{$eS->hdSize}}<br>
+      <b>Battery Information</b>: {{$eS->batteryInfo}}<br>
+      <b>Operating System</b>: {{$eS->os}}<br>
+      <b>Camera</b>:
       @if(($eS->camera) === "1")
-        yes
+        Yes
       @elseif(($eS->camera) === "0")
-        no
+        No
       @endif<br>
-      Price: ${{$eS->price}}
+    <b>Price</b>: ${{$eS->price}}
     </div>
   </div>
 </div>
