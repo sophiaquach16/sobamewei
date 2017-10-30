@@ -66,3 +66,17 @@ th, td {
     padding-top:10px;
     padding-bottom:15px;
 }
+
+.attributes{
+    width:20%;
+    background-color:#c4c8ce;
+    display:inline;
+    float:left;
+}
+
+.values{
+    width:20%;
+    background-color:#bec1c6;
+    display:inline;
+    float:left;
+}
