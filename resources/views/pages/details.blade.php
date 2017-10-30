@@ -4,138 +4,118 @@
 @if( $eS )
 
 @if($eS->ElectronicType_name === "Desktop")
+<div class="text-center">
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<div class="attributes">Dimension:</div>
-<div class="values">{{$eS->dimension}} cm</div>
-<br>
-<div class="attributes">Weight:</div>
-<div class="values">{{$eS->weight}} kg</div>
-<br>
-<div class="attributes">Number of CPU cores:</div>
-<div class="values">{{$eS->cpuCores}}</div>
-<br>
-<div class="attributes">Hard Drive Size:</div>
-<div class="values">{{$eS->hdSize}} GB</div>
-<br>
-<div class="attributes">Price:</div>
-<div class="values">${{$eS->price}}</div>
-<br>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+    <!--Insert image here!-->
+    </div>
+    <div class="col-md-4"> <br><br>
+  Dimension: {{$eS->dimension}} cm<br>
+  Weight: {{$eS->weight}} kg<br>
+  RAM size: {{$eS->ramSize}} GB<br>
+  Number of CPU cores: {{$eS->cpuCores}}<br>
+  Hard Drive Size: {{$eS->hdSize}} GB<br>
+  Price: ${{$eS->price}}<br>
+    </div>
+  </div>
+</div>
+
 @endif
 
 @if($eS->ElectronicType_name === "Monitor")
+<div class="text-center">
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<div class="attributes">Dimension:</div>
-<div class="values">{{$eS->dimension}} cm</div>
-<br>
-<div class="attributes">Weight:</div>
-<div class="values">{{$eS->weight}} kg</div>
-<br>
-<div class="attributes">RAM size:</div>
-<div class="values">{{$eS->ramSize}} GB</div>
-<br>
-<div class="attributes">Price:</div>
-<div class="values">${{$eS->price}}</div>
-<br>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <!--Insert image here!-->
+    </div>
+    <div class="col-md-4"> <br><br>
+  Dimension: {{$eS->dimension}} in<br>
+  Weight: {{$eS->weight}} kg<br>
+  RAM size: {{$eS->ramSize}} GB<br>
+  Price: ${{$eS->price}}<br>
+    </div>
+  </div>
+</div>
 @endif
 
 @if($eS->ElectronicType_name === "Laptop")
+<div class="text-center">
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<div class="attributes">Dimension:</div>
-<div class="values">{{$eS->dimension}} cm</div>
-<br>
-<div class="attributes">Display Size:</div>
-<div class="values">{{$eS->displaySize}} cm</div>
-<br>
-<div class="attributes">Weight:</div>
-<div class="values">{{$eS->weight}} kg</div>
-<br>
-<div class="attributes">RAM size:</div>
-<div class="values">{{$eS->ramSize}} GB</div>
-<br>
-<div class="attributes">Number of CPU cores:</div>
-<div class="values">{{$eS->cpuCores}}</div>
-<br>
-<div class="attributes">Hard Drive Size:</div>
-<div class="values">{{$eS->hdSize}} GB</div>
-<br>
-<div class="attributes">Battery information:</div>
-<div class="values">{{$eS->batteryInfo}}</div>
-<br>
-<div class="attributes">Processor Type:</div>
-<div class="values">{{$eS->processorType}}</div>
-<br>
-<div class="attributes">Built-in Operation System:</div>
-<div class="values">{{$eS->os}}</div>
-<br>
-<div class="attributes">Camera:</div>
-<div class="values">
-  @if(($eS->camera) === "1")
-    yes
-  @elseif(($eS->camera) === "0")
-    no
-  @endif
 </div>
-<br>
-<div class="attributes">Touchscreen:</div>
-<div class="values">
-  @if(($eS->touchScreen) === "1")
-    Yes
-  @elseif(($eS->touchScreen) === "0")
-    No
-  @endif
-</div>
-<br>
-<div class="attributes">Price:</div>
-<div class="values">${{$eS->price}}</div>
-<br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <!--Insert image here!-->
+      </div>
+      <div class="col-md-4"> <br><br>
+        Dimension: {{$eS->dimension}} cm <br>
+        Display Size: {{$eS->displaySize}} in<br>
+        Weight: {{$eS->weight}} kg<br>
+        RAM size: {{$eS->ramSize}} GB<br>
+        Number of CPU cores: {{$eS->cpuCores}}<br>
+        Hard drive size: {{$eS->hdSize}}<br>
+        Battery information: {{$eS->batteryInfo}}<br>
+        Processor Type: {{$eS->processorType}} <br>
+        Built-in Operation System: {{$eS->os}} <br>
+        Camera:
+        @if(($eS->camera) === "1")
+          yes
+        @elseif(($eS->camera) === "0")
+          no
+        @endif<br>
+        Touchscreen:
+        @if(($eS->touchScreen) === "1")
+          yes
+        @elseif(($eS->touchScreen) === "0")
+          no
+        @endif<br>
+        Price: ${{$eS->price}}<br>
+      </div>
+    </div>
+  </div>
 @endif
 
 @if($eS->ElectronicType_name === "Tablet")
+<div class="text-center">
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<div class="attributes">Dimension:</div>
-<div class="values">{{$eS->dimension}} cm</div>
-<br>
-<div class="attributes">Display Size:</div>
-<div class="values">{{$eS->displaySize}} in</div>
-<br>
-<div class="attributes">Weight:</div>
-<div class="values">{{$eS->weight}} kg</div>
-<br>
-<div class="attributes">RAM size:</div>
-<div class="values">{{$eS->ramSize}} GB</div>
-<br>
-<div class="attributes">Number of CPU cores:</div>
-<div class="values">{{$eS->cpuCores}}</div>
-<br>
-<div class="attributes">Hard Drive Size:</div>
-<div class="values">{{$eS->hdSize}} GB</div>
-<br>
-<div class="attributes">Battery information:</div>
-<div class="values">{{$eS->batteryInfo}}</div>
-<br>
-<div class="attributes">Processor Type:</div>
-<div class="values">{{$eS->processorType}}</div>
-<br>
-<div class="attributes">Built-in Operation System:</div>
-<div class="values">{{$eS->os}}</div>
-<br>
-<div class="attributes">Camera:</div>
-<div class="values">
-  @if(($eS->camera) === "1")
-    yes
-  @elseif(($eS->camera) === "0")
-    no
-  @endif
 </div>
-<br>
-<div class="attributes">Price:</div>
-<div class="values">${{$eS->price}}</div>
-<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Add image here! -->
+    </div>
+    <div class="col-md-4"><br><br>
+      Dimension: {{$eS->dimension}} cm<br>
+      Display Size: {{$eS->displaySize}} in<br>
+      Weight: {{$eS->weight}} kg<br>
+      Processor: {{$eS->processorType}}<br>
+      RAM Size: {{$eS->ramSize}} GB<br>
+      CPU Cores: {{$eS->cpuCores}}<br>
+      Hard drive size: {{$eS->hdSize}}<br>
+      Battery Information: {{$eS->batteryInfo}}<br>
+      Operating System: {{$eS->os}}<br>
+      Camera:
+      @if(($eS->camera) === "1")
+        yes
+      @elseif(($eS->camera) === "0")
+        no
+      @endif<br>
+      Price: ${{$eS->price}}
+    </div>
+  </div>
+</div>
+@endif
+<br><br><br><br>
 @endif
 
-@endif
-
-
+<div class="container">
+  <div class="text-center">
 @if($previousESId > 0)
 <a href="/details?id={{$previousESId}}" class="btn btn-info" role="button"> &laquo; Previous Result </a>
 @endif
@@ -147,5 +127,6 @@
 <br/>
 <br/>
 <a href="/?{{$queryStringBack}}" class="btn btn-info" role="button"> Back to Filtering Result </a>
-
+  </div>
+</div>
 @stop
