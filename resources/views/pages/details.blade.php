@@ -5,12 +5,25 @@
 
 @if($eS->ElectronicType_name === "Desktop")
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<!-- Show more details here -->
+<p>
+  Dimension: {{$eS->dimension}}<br>
+  Weight: {{$eS->weight}}<br>
+  RAM size: {{$eS->ramSize}}<br>
+  Number of CPU cores: {{$eS->cpuCores}}<br>
+  Hard Drive Size: {{$eS->hdSize}}<br>
+  Price: {{$eS->price}}<br>
+</p>
+
 @endif
 
 @if($eS->ElectronicType_name === "Monitor")
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<!-- Show more details here -->
+<p>
+  Dimension: {{$eS->dimension}}<br>
+  Weight: {{$eS->weight}}<br>
+  RAM size: {{$eS->ramSize}}<br>
+  Price: {{$eS->price}}<br>
+</p>
 @endif
 
 @if($eS->ElectronicType_name === "Laptop")
