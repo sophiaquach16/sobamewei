@@ -28,12 +28,50 @@
 
 @if($eS->ElectronicType_name === "Laptop")
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<!-- Show more details here -->
+<p>
+  Dimension: {{$eS->dimension}} cm <br>
+  Display Size: {{$eS->displaySize}} in<br>
+  Weight: {{$eS->weight}} kg<br>
+  RAM size: {{$eS->ramSize}} GB<br>
+  Number of CPU cores: {{$eS->cpuCores}}<br>
+  Hard drive size: {{$eS->hdSize}}<br>
+  Battery information: {{$eS->batteryInfo}}<br>
+  Processor Type: {{$eS->processorType}} <br>
+  Built-in Operation System: {{$eS->os}} <br>
+  Camera:
+  @if(($eS->camera) === "1")
+    yes
+  @elseif(($eS->camera) === "0")
+    no
+  @endif<br>
+  Touchscreen:
+  @if(($eS->touchScreen) === "1")
+    yes
+  @elseif(($eS->touchScreen) === "0")
+    no
+  @endif<br>
+  Price: ${{$eS->price}}<br>
+</p>
 @endif
 
 @if($eS->ElectronicType_name === "Tablet")
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
-<!-- Show more details here -->
+Dimension: {{$eS->dimension}} cm<br>
+Display Size: {{$eS->displaySize}} in<br>
+Weight: {{$eS->weight}} kg<br>
+Processor: {{$eS->processorType}}<br>
+RAM Size: {{$eS->ramSize}} GB<br>
+CPU Cores: {{$eS->cpuCores}}<br>
+Hard drive size: {{$eS->hdSize}}<br>
+Battery Information: {{$eS->batteryInfo}}<br>
+Operating System: {{$eS->os}}<br>
+Camera:
+@if(($eS->camera) === "1")
+  yes
+@elseif(($eS->camera) === "0")
+  no
+@endif<br>
+Price: ${{$eS->price}}<br>
 @endif
 
 @endif
