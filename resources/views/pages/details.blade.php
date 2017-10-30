@@ -6,12 +6,12 @@
 @if($eS->ElectronicType_name === "Desktop")
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
 <p>
-  Dimension: {{$eS->dimension}}<br>
-  Weight: {{$eS->weight}}<br>
-  RAM size: {{$eS->ramSize}}<br>
+  Dimension: {{$eS->dimension}} cm<br>
+  Weight: {{$eS->weight}} kg<br>
+  RAM size: {{$eS->ramSize}} GB<br>
   Number of CPU cores: {{$eS->cpuCores}}<br>
-  Hard Drive Size: {{$eS->hdSize}}<br>
-  Price: {{$eS->price}}<br>
+  Hard Drive Size: {{$eS->hdSize}} GB<br>
+  Price: ${{$eS->price}}<br>
 </p>
 
 @endif
@@ -19,10 +19,10 @@
 @if($eS->ElectronicType_name === "Monitor")
 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
 <p>
-  Dimension: {{$eS->dimension}}<br>
-  Weight: {{$eS->weight}}<br>
-  RAM size: {{$eS->ramSize}}<br>
-  Price: {{$eS->price}}<br>
+  Dimension: {{$eS->dimension}} in<br>
+  Weight: {{$eS->weight}} kg<br>
+  RAM size: {{$eS->ramSize}} GB<br>
+  Price: ${{$eS->price}}<br>
 </p>
 @endif
 
