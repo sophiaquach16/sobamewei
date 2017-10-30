@@ -74,8 +74,9 @@ class ElectronicCatalog {
         return null;
     }
 
-    function makeElectronicSpecification($electronicSpecificationData) {
+    function makeElectronicSpecification($electronicSpecificationData, $electronicSpecificationImage) {
         $eS = new ElectronicSpecification($electronicSpecificationData);
+        $eS->addImage($electronicSpecificationImage);
 
         array_push($this->eSList, $eS);
         return $eS;

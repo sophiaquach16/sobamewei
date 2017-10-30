@@ -23,6 +23,7 @@
             <th>Touch Screen</th>
             <th>Display Size</th>
             <th>Electronic Type</th>
+            <th>Product Image</th>
         </tr>
         <tr>
             <td colspan="17">
@@ -39,77 +40,77 @@
 
             </td>
             <td>
-                @if ($eS->dimension ) 
+                @if ($eS->dimension )
                 {{$eS->dimension}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->weight ) 
+                @if ( $eS->weight )
                 {{$eS->weight}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->modelNumber ) 
+                @if ( $eS->modelNumber )
                 {{$eS->modelNumber}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->brandName ) 
+                @if ( $eS->brandName )
                 {{$eS->brandName}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->hdSize ) 
+                @if ( $eS->hdSize )
                 {{$eS->hdSize}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->price ) 
+                @if ( $eS->price )
                 {{$eS->price}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->processorType ) 
+                @if ( $eS->processorType )
                 {{$eS->processorType}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->ramSize ) 
+                @if ( $eS->ramSize )
                 {{$eS->ramSize}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->cpuCores ) 
+                @if ( $eS->cpuCores )
                 {{$eS->cpuCores}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->batteryInfo ) 
+                @if ( $eS->batteryInfo )
                 {{$eS->batteryInfo}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->os ) 
+                @if ( $eS->os )
                 {{$eS->os}}
                 @else
                 N/A
@@ -127,7 +128,7 @@
                 @endif
             </td>
             <td>
-                @if ( !is_null($eS->touchScreen) ) 
+                @if ( !is_null($eS->touchScreen) )
                 @if ($eS->camera === "1")
                 Yes
                 @else
@@ -138,19 +139,30 @@
                 @endif
             </td>
             <td>
-                @if ( $eS->displaySize ) 
+                @if ( $eS->displaySize )
                 {{$eS->displaySize}} {{$eS->ElectronicType_displaySizeUnit}}
                 @else
                 N/A
                 @endif
             </td>
             <td>
-                @if ( $eS->ElectronicType_name ) 
+                @if ( $eS->ElectronicType_name )
                 {{$eS->ElectronicType_name}}
                 @else
                 N/A
                 @endif
             </td>
+            <td>
+              @if ( $eS->image )
+                @if ( $eS->image === "none" )
+                  N/A
+                @else
+                  <img src={{$eS->image}}>
+                @endif
+              @endif
+              N/A
+            </td>
+
         </tr>
         @if ($eS->electronicItems)
         @foreach ($eS->electronicItems as $eI)
@@ -163,8 +175,8 @@
                 <input type="checkbox" name="deleteCheckboxSelections[]" value="{{$eI->id}}">
             </td>
             <td colspan="16">
-                @if ( $eI->serialNumber ) 
-                <b>Serial Number:</b> {{$eI->serialNumber}} 
+                @if ( $eI->serialNumber )
+                <b>Serial Number:</b> {{$eI->serialNumber}}
                 @endif
             </td>
         </tr>
@@ -182,7 +194,7 @@
                 <button type="submit" id="modifyButton" name="submitButton" value="modify">Modify</button>
             </td>
             <td><button type="submit" id="deleteButton" name="submitButton" value="delete">Delete</button></td>
-            <td colspan="15"></td>
+            <td colspan="17"></td>
         </tr>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     </table>

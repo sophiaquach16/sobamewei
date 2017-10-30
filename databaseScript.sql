@@ -73,6 +73,8 @@ CREATE TABLE IF NOT EXISTS `conushop`.`ElectronicSpecification` (
   `touchScreen` TINYINT NULL,
   `ElectronicType_id` INT NULL,
   `displaySize` DOUBLE(5,1) NULL,
+  `image` VARCHAR(45) NULL,
+  
   PRIMARY KEY (`id`),
   INDEX `fk_Electronic_ElectronicType_idx` (`ElectronicType_id` ASC),
   CONSTRAINT `fk_Electronic_ElectronicType`

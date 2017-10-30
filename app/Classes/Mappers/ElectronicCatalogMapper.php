@@ -43,8 +43,10 @@ class ElectronicCatalogMapper {
         return $this->electronicCatalogTDG->deleteElectronicItem($electronicItem);
     }
 
-    function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
+    function makeNewElectronicSpecification($quantity, $electronicSpecificationData, $electronicSpecificationImage) {
         $this->lockDataAccess();
+        //add image path to ESData
+
         $modelNumberExists = $this->electronicCatalog->findElectronicSpecification($electronicSpecificationData->modelNumber);
         $this->unlockDataAccess();
 
@@ -52,7 +54,7 @@ class ElectronicCatalogMapper {
             $this->lockDataAccess();
 
             //Add to eSList of the catalog
-            $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
+            $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData, $electronicSpecificationImage);
 
             //Add to database
             $this->unitOfWork->registerNew($electronicSpecification);
@@ -274,7 +276,7 @@ class ElectronicCatalogMapper {
         } else {
             $filteredByDisplaySize = $filteredByBrandName;
         }
-        
+
         // Filter by TouchScreen
         $filteredByTouchScreen = array();
         $containsTouchScreen = false;
