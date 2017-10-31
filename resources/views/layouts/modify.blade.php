@@ -16,7 +16,7 @@
 
                 <div class="col-sm-2"></div>
 
-                <form id="televisionform" class="form-horizontal col-sm-8  text-center television-form" action="/modify" method="POST">
+                <form id="televisionform" class="form-horizontal col-sm-8  text-center television-form" action="/modify" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <br />
                     <div class="form-group">

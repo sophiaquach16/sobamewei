@@ -68,18 +68,14 @@ class AdminController extends BaseController {
             switch ($eSToModify->ElectronicType_id) {
                 case "1":
                     return view('pages.modify.desktop', ['eSToModify' => $eSToModify]);
-                    break;
                 case "2":
                     return view('pages.modify.laptop', ['eSToModify' => $eSToModify]);
-                    break;
                 case "3":
                     return view('pages.modify.monitor', ['eSToModify' => $eSToModify]);
-                    break;
                 case "4":
                     return view('pages.modify.tablet', ['eSToModify' => $eSToModify]);
-                    break;
             }
-            return view('', ['eSToModify' => $eSToModify]);
+            return view('index', ['eSToModify' => $eSToModify]);
         } else {
             if ($request->input('deleteCheckboxSelections') && $request->input('submitButton') === 'delete') {
                 $this->electronicCatalogMapper->deleteElectronicItems($request->input('deleteCheckboxSelections'));
@@ -93,7 +89,26 @@ class AdminController extends BaseController {
     }
 
     public function doModify(Request $request) {
-        if ($this->electronicCatalogMapper->modifyElectronicSpecification($request->input('quantity'), $request->session()->get('eSToModify'), (object) $request->except(['quantity', 'ElectronicType_id', '_token']))) {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            //image will be saved with timestamp as its name
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            //file destination  is in 'app/public/image' folder in laravel project
+            $destinationPath = public_path('images/' . $name);
+            Image::make($image)->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath);
+
+            // direct access to the image with url stored in $url
+            $url = asset('/images/' . $name);
+        } else {
+            $url = null;
+        }
+        
+        $electronicSpecificationData = (object) $request->except(['quantity', 'ElectronicType_id', '_token']);
+        $electronicSpecificationData->image = $url;
+        
+        if ($this->electronicCatalogMapper->modifyElectronicSpecification($request->input('quantity'), $request->session()->get('eSToModify'), $electronicSpecificationData)) {
             Session::flash('success_msg', "Successfully modified the electronic specification.");
             return Redirect::to('inventory');
         } else {
