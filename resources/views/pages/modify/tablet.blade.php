@@ -87,6 +87,13 @@
     </div>
 </div>
 
+<div class="form-group">
+    <label class="control-label col-sm-2" for="image">Upload product image</label>
+    <div class="col-sm-10">
+        <input type="file" name="image">
+    </div>
+</div>
+
 <button type="submit" class="btn btn-success btn-block">Submit</button>
 <br>
 @stop

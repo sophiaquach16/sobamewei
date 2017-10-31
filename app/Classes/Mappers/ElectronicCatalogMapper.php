@@ -91,6 +91,14 @@ class ElectronicCatalogMapper {
 
         if (!$newModelNumberExists || $this->electronicCatalog->getElectronicSpecificationById($eSId)->modelNumber === $eSData->modelNumber) {
             $this->lockDataAccess();
+
+            //Delete old file
+            $splitLink = explode("/", $eS->image);
+            $fileName = end($splitLink);
+            if (file_exists(public_path('images/' . $fileName))) {
+                unlink(public_path('images/' . $fileName));
+            }
+
             $electronicSpecification = $this->electronicCatalog->modifyElectronicSpecification($eSId, $eSData);
 
             $this->unitOfWork->registerDirty($electronicSpecification);
