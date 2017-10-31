@@ -153,14 +153,11 @@
                 @endif
             </td>
             <td>
-              @if ( $eS->image )
-                @if ( $eS->image === "none" )
-                  N/A
-                @else
+              @if ( $eS->image && $eS->image !== null )
                   <img src={{$eS->image}}>
-                @endif
+                @else
+                  N/A
               @endif
-              N/A
             </td>
 
         </tr>

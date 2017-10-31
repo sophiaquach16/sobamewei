@@ -43,7 +43,7 @@ class ElectronicCatalogMapper {
         return $this->electronicCatalogTDG->deleteElectronicItem($electronicItem);
     }
 
-    function makeNewElectronicSpecification($quantity, $electronicSpecificationData, $electronicSpecificationImage) {
+    function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
         $this->lockDataAccess();
         //add image path to ESData
 
@@ -54,7 +54,7 @@ class ElectronicCatalogMapper {
             $this->lockDataAccess();
 
             //Add to eSList of the catalog
-            $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData, $electronicSpecificationImage);
+            $electronicSpecification = $this->electronicCatalog->makeElectronicSpecification($electronicSpecificationData);
 
             //Add to database
             $this->unitOfWork->registerNew($electronicSpecification);

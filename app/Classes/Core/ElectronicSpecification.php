@@ -195,7 +195,7 @@ class ElectronicSpecification {
         return $this->id;
     }
 
-    public function addImage($image) {
+    public function setImage($image) {
       $this->image=$image;
     }
 
