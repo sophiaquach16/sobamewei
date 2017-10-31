@@ -68,7 +68,7 @@ class ElectronicCatalogTest extends TestCase
         {
           if (  $innerKey != "ElectronicType_displaySizeUnit" && $innerKey != "ElectronicType_dimensionUnit" && $innerKey != "ElectronicType_name")
           {
-            if ($catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
+            if (isset($catalogListJson[$outerKey][$innerKey]) && $catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
               $valuesMatch=true;
             else
             {
@@ -222,7 +222,7 @@ class ElectronicCatalogTest extends TestCase
         {
           if (  $innerKey != "ElectronicType_displaySizeUnit" && $innerKey != "ElectronicType_dimensionUnit" && $innerKey != "ElectronicType_name")
           {
-            if ($catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
+            if (isset($catalogListJson[$outerKey][$innerKey]) && $catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
               $valuesMatch=true;
             else
             {
@@ -310,9 +310,9 @@ class ElectronicCatalogTest extends TestCase
       {
         if (is_array($catalogListJson[$outerKey][$innerKey])==false)
         {
-          if (  $innerKey != "ElectronicType_displaySizeUnit" && $innerKey != "ElectronicType_dimensionUnit" && $innerKey != "ElectronicType_name")
+          if ( $innerKey != "image" &&  $innerKey != "ElectronicType_displaySizeUnit" && $innerKey != "ElectronicType_dimensionUnit" && $innerKey != "ElectronicType_name")
           {
-            if ($catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
+            if (isset($catalogListJson[$outerKey][$innerKey]) && $catalogListJson[$outerKey][$innerKey]==$electronicDataJson[$innerKey])
             {
               //dump($innerKey);
               $valid=true;

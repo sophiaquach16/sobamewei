@@ -112,6 +112,7 @@ class MainController extends BaseController {
         $lastInputs = $request->session()->get('lastInputs');
         $eSpecifications = $request->session()->get('electronicSpecifications');
 
+        if($eSpecifications){
         //Determine previous id of the filtered ES list
         $previousESId = -1;
         $previousES = null;
@@ -141,8 +142,13 @@ class MainController extends BaseController {
             $queryStringBack .= $key . "=" . $value . "&";
         }
         $queryStringBack = rtrim($queryStringBack, '&');
-
+        
         return view('pages.details', ['eS' => $eS, 'queryStringBack' => $queryStringBack, 'nextESId' => $nextESId, 'previousESId' => $previousESId]);
+        }else{
+            return view('pages.details', ['eS' => $eS]);
+        }
+        
+        
     }
 
 }

@@ -45,6 +45,8 @@ class ElectronicCatalogMapper {
 
     function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
         $this->lockDataAccess();
+        //add image path to ESData
+
         $modelNumberExists = $this->electronicCatalog->findElectronicSpecification($electronicSpecificationData->modelNumber);
         $this->unlockDataAccess();
 
@@ -274,7 +276,7 @@ class ElectronicCatalogMapper {
         } else {
             $filteredByDisplaySize = $filteredByBrandName;
         }
-        
+
         // Filter by TouchScreen
         $filteredByTouchScreen = array();
         $containsTouchScreen = false;

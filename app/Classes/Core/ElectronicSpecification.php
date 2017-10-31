@@ -23,6 +23,7 @@ class ElectronicSpecification {
     private $ElectronicType_name;
     private $ElectronicType_dimensionUnit;
     private $ElectronicType_displaySizeUnit;
+    private $image;
     private $electronicItems;
 
     function __construct() {
@@ -50,7 +51,7 @@ class ElectronicSpecification {
         $electronicItem = new ElectronicItem($electronicItemData);
 
         array_push($this->electronicItems, $electronicItem);
-        
+
         return $electronicItem;
     }
 
@@ -109,6 +110,9 @@ class ElectronicSpecification {
         if (isset($data->displaySize)) {
             $this->displaySize = $data->displaySize;
         }
+        if (isset($data->image)) {
+            $this->image = $data->image;
+        }
 
         if (isset($data->electronicItems)) {
           //must delete current list of items, otherwise
@@ -141,10 +145,6 @@ class ElectronicSpecification {
                     $this->ElectronicType_name = 'Tablet';
                     $this->ElectronicType_displaySizeUnit = 'inch';
                     break;
-                // case 5:
-                //     $this->ElectronicType_name = 'Television';
-                //     $this->ElectronicType_displaySizeUnit = 'inch';
-                //     break;
             }
         }
     }
@@ -171,17 +171,18 @@ class ElectronicSpecification {
         $returnData->ElectronicType_name = $this->ElectronicType_name;
         $returnData->ElectronicType_dimensionUnit = $this->ElectronicType_dimensionUnit;
         $returnData->ElectronicType_displaySizeUnit = $this->ElectronicType_displaySizeUnit;
-        
+        $returnData->image = $this->image;
+
         $electronicItemsData = array();
         foreach ($this->electronicItems as $electronicItem) {
             array_push($electronicItemsData, $electronicItem->get());
         }
-        
+
         $returnData->electronicItems = $electronicItemsData;
 
         return $returnData;
     }
-    
+
     public function getElectronicItems(){
         return $this->electronicItems;
     }
@@ -192,6 +193,14 @@ class ElectronicSpecification {
 
     public function getId() {
         return $this->id;
+    }
+
+    public function setImage($image) {
+      $this->image=$image;
+    }
+
+    public function getImage(){
+      return $this->image;
     }
 
 }

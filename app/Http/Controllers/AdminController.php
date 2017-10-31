@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\Classes\Mappers\ElectronicCatalogMapper;
+use Image;
 use Session;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
@@ -27,22 +28,31 @@ class AdminController extends BaseController {
         $this->middleware('CheckAdmin');
     }
 
+    //to locally save the image and also access them publicly,
+    //create a simlink that  allow public access to the local images directory with command:
+    //php artisan storage:link
+    //more info: https://laravel.com/docs/5.5/filesystem#the-public-disk
     public function doAddItems(Request $request) {
-        if ($this->electronicCatalogMapper->makeNewElectronicSpecification($request->input('quantity'), (object) $request->except(['_token', 'quantity']))) {
-          if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             //image will be saved with timestamp as its name
-            $name = time().'.'.$image->getClientOriginalExtension();
+            $name = time() . '.' . $image->getClientOriginalExtension();
             //file destination  is in 'app/public/image' folder in laravel project
-            $destinationPath = public_path('/images');
-            //to locally save the image and also access them publicly,
-            //create a simlink that  allow public access to the local images directory with command:
-            //php artisan storage:link
-            //more info: https://laravel.com/docs/5.5/filesystem#the-public-disk
-            $image->move($destinationPath, $name);
+            $destinationPath = public_path('images/' . $name);
+            Image::make($image)->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath);
+
             // direct access to the image with url stored in $url
-            $url=asset('/images/'.$name);
-          }
+            $url = asset('/images/' . $name);
+        } else {
+            $url = null;
+        }
+        
+        $electronicSpecificationData = (object) $request->except(['_token', 'quantity']);
+        $electronicSpecificationData->image = $url;
+        
+        if ($this->electronicCatalogMapper->makeNewElectronicSpecification($request->input('quantity'), $electronicSpecificationData)) { //
             Session::flash('success_msg', "Successfully added the electronic specification.");
             return Redirect::to('inventory');
         } else {
@@ -68,9 +78,6 @@ class AdminController extends BaseController {
                 case "4":
                     return view('pages.modify.tablet', ['eSToModify' => $eSToModify]);
                     break;
-                // case "5":
-                //     return view('pages.modify.television', ['eSToModify' => $eSToModify]);
-                //     break;
             }
             return view('', ['eSToModify' => $eSToModify]);
         } else {
@@ -86,7 +93,7 @@ class AdminController extends BaseController {
     }
 
     public function doModify(Request $request) {
-        if ($this->electronicCatalogMapper->modifyElectronicSpecification($request->input('quantity'),$request->session()->get('eSToModify'), (object)$request->except(['quantity','ElectronicType_id', '_token']))) {
+        if ($this->electronicCatalogMapper->modifyElectronicSpecification($request->input('quantity'), $request->session()->get('eSToModify'), (object) $request->except(['quantity', 'ElectronicType_id', '_token']))) {
             Session::flash('success_msg', "Successfully modified the electronic specification.");
             return Redirect::to('inventory');
         } else {

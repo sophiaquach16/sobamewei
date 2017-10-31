@@ -80,3 +80,16 @@ th, td {
     display:inline;
     float:left;
 }
+
+
+.detailContainer{
+    padding-bottom:50px;
+}
+
+.row{
+    margin-right:0px;
+}
+
+.catalogRow{
+    padding-bottom:30px;
+}
