@@ -137,6 +137,10 @@ return [
     */
 
     'providers' => [
+        // Go! Aspect Service Provider
+        Go\Laravel\GoAopBridge\GoAopServiceProvider::class,
+        
+        
 
         /*
          * Laravel Framework Service Providers...
@@ -172,6 +176,7 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\AopServiceProvider::class,//Register the AOP service provider
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
