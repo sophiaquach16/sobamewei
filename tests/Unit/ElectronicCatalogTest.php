@@ -10,7 +10,7 @@ use App\Classes\Core\ElectronicSpecification;
 
 class ElectronicCatalogTest extends TestCase {
 
-    /*
+
     public function testmodifyElectronicSpecification() {
         $electronicSpecification = new ElectronicSpecification();
 
@@ -18,15 +18,19 @@ class ElectronicCatalogTest extends TestCase {
         $item1Data->id = 1;
         $item1Data->serialNumber = 123;
         $item1Data->ElectronicSpecification_id = "123";
+        $item1Data->User_id = 123;
+        $item1Data->expiryForUser = date('Y-m-d H:i:s', strtotime('+5 minutes') );
 
         $item2Data = new \stdClass();
         $item2Data->id = 2;
         $item2Data->serialNumber = 456;
-        $item2Data->ElectronicSpecification_id = "456";
+        $item2Data->ElectronicSpecification_id = "123";
+        $item2Data->User_id = 123;
+        $item2Data->expiryForUser = date('Y-m-d H:i:s', strtotime('+5 minutes') );
         $electronicItems = array($item1Data, $item2Data);
 
         $electronicData = new \stdClass();
-        $electronicData->id = '1'; //electronic specification id
+        $electronicData->id = '123'; //electronic specification id
         $electronicData->dimension = '2X3X4';
         $electronicData->weight = '100';
         $electronicData->modelNumber = '123model';
@@ -42,6 +46,7 @@ class ElectronicCatalogTest extends TestCase {
         $electronicData->touchScreen = true;
         $electronicData->displaySize = '1';
         $electronicData->ElectronicType_id = '1';
+        $electronicData->image = 'C:/Users/Mel';
         $electronicData->electronicItems = $electronicItems;
 
         //update the os by overwriting previous os value
@@ -50,6 +55,7 @@ class ElectronicCatalogTest extends TestCase {
         $electronicCatalog = new ElectronicCatalog();
         $electronicCatalog->setESList(array($electronicData));
         $electronicCatalog->modifyElectronicSpecification($electronicData->id, $electronicData);
+
 
         $catalogList = $electronicCatalog->getEsList();
         $catalogListJson = json_decode(json_encode($catalogList), true);
@@ -68,6 +74,9 @@ class ElectronicCatalogTest extends TestCase {
                             $valuesMatch = true;
                         else {
                             $valuesMatch = false;
+                            //if the values don't match for the first values,
+                            //then this is enough to fail the test
+                            //don't execute the rest of the code
                             $this->assertTrue($valuesMatch);
                             break;
                         }//else
@@ -78,21 +87,21 @@ class ElectronicCatalogTest extends TestCase {
         //foreach loop that checks if the ElectronicItems object attributes
         //match electronicData->electronicItems values added at the beginning of
         //the code
-        //dump ($catalogListJson[0]);
+
         foreach ($catalogListJson[0]["electronicItems"] as $itemIndex => $item) {
             foreach ($item as $attributeKey => $attributeValue) {
                 if ($attributeValue == ($electronicDataJson["electronicItems"][$itemIndex][$attributeKey]))
                     $valuesMatch = true;
                 else {
                     $valuesMatch = false;
-                    $this->assertTrue($valuesMatch);
-                    return;
+                    //$this->assertTrue($valuesMatch);
+                    break;
                 }//else
             }//foreach inner
         }//foreach outer
+
         $this->assertTrue($valuesMatch);
     }
-     */
 
 //test end
 
@@ -240,96 +249,89 @@ class ElectronicCatalogTest extends TestCase {
 
 //test 'testmakeElectronicSpecification' end
 
-    /*
+
     public function testgetElectronicSpecificationById() {
-        $electronicSpecification = new ElectronicSpecification();
-        $electronicItem1 = new ElectronicItem();
-        $electronicItem2 = new ElectronicItem();
+      $electronicSpecification = new ElectronicSpecification();
 
-        $item1Data = new \stdClass();
-        $item1Data->id = 1;
-        $item1Data->serialNumber = 123;
-        $item1Data->ElectronicSpecification_id = "123";
+      $item1Data = new \stdClass();
+      $item1Data->id = 1;
+      $item1Data->serialNumber = 123;
+      $item1Data->ElectronicSpecification_id = 123;
+      $item1Data->User_id = 123;
+      $item1Data->expiryForUser = date('Y-m-d H:i:s', strtotime('+5 minutes') );
 
-        $item2Data = new \stdClass();
-        $item2Data->id = 2;
-        $item2Data->serialNumber = 456;
-        $item2Data->ElectronicSpecification_id = "456";
+      $item2Data = new \stdClass();
+      $item2Data->id = 2;
+      $item2Data->serialNumber = 456;
+      $item2Data->ElectronicSpecification_id = 123;
+      $item2Data->User_id = 123;
+      $item2Data->expiryForUser = date('Y-m-d H:i:s', strtotime('+5 minutes') );
+      $electronicItems = array($item1Data, $item2Data);
 
-        $electronicItem1->set($item1Data);
-        $electronicItem2->set($item2Data);
-        $electronicItems = array($electronicItem1, $electronicItem2);
+      $electronicData = new \stdClass();
+      $electronicData->id = 123; //electronic specification id
+      $electronicData->dimension = '2X3X4';
+      $electronicData->weight = '100';
+      $electronicData->modelNumber = '123model';
+      $electronicData->brandName = '123';
+      $electronicData->hdSize = '123';
+      $electronicData->price = '123';
+      $electronicData->processorType = 'intel';
+      $electronicData->ramSize = '16';
+      $electronicData->cpuCores = '4';
+      $electronicData->batteryInfo = 'infinite';
+      $electronicData->os = 'ubuntu';
+      $electronicData->camera = true;
+      $electronicData->touchScreen = true;
+      $electronicData->displaySize = '1';
+      $electronicData->ElectronicType_id = '1';
+      $electronicData->image = 'C:/Users/Mel';
+      $electronicData->electronicItems = $electronicItems;
 
-        $electronicData = new \stdClass();
-        $electronicData->id = '1'; //electronic specification id
-        $electronicData->dimension = '2X3X4';
-        $electronicData->weight = '100';
-        $electronicData->modelNumber = '123model';
-        $electronicData->brandName = '123';
-        $electronicData->hdSize = '123';
-        $electronicData->price = '123';
-        $electronicData->processorType = 'intel';
-        $electronicData->ramSize = '16';
-        $electronicData->cpuCores = '4';
-        $electronicData->batteryInfo = 'infinite';
-        $electronicData->os = 'ubuntu';
-        $electronicData->camera = true;
-        $electronicData->touchScreen = true;
-        $electronicData->displaySize = '1';
-        $electronicData->ElectronicType_id = '1';
-        $electronicData->electronicItems = $electronicItems;
-        $electronicSpecification->set($electronicData);
-        $electronicCatalog = new ElectronicCatalog();
+      $electronicCatalog = new ElectronicCatalog();
+      $electronicCatalog->setESList(array($electronicData));
+      $electronicCatalogbyId=$electronicCatalog->getElectronicSpecificationById(123);
+      $catalogListJson = json_decode(json_encode($electronicCatalogbyId), true);
 
+      $electronicDataJson = json_decode(json_encode($electronicData), true);
+      $valuesMatch = false;
+      var_dump($electronicDataJson);
 
-        $electronicCatalog->setESList(array($electronicData));
-        $electronicCatalog->getElectronicSpecificationById(1);
+      //compare values added from electronicData with the actual
+      //ElectronicSpecification object
+          foreach ($catalogListJson as $key => $value) {
+              if (is_array($catalogListJson[$key]) == false) {
+                  if ($key != "ElectronicType_displaySizeUnit" && $key != "ElectronicType_dimensionUnit" && $key != "ElectronicType_name") {
+                      if (isset($catalogListJson[$key]) && $catalogListJson[$key] == $electronicDataJson[$key])
+                          $valuesMatch = true;
+                      else {
+                          $valuesMatch = false;
+                          //if the values don't match for the first values,
+                          //then this is enough to fail the test
+                          //don't execute the rest of the code
+                          $this->assertTrue($valuesMatch);
+                          break;
+                      }//else
+                  }//if2
+              }//if is_array is false
+          }//foreach2
 
-        $catalogList = $electronicCatalog->getESList();
-        $catalogListJson = json_decode(json_encode($catalogList), true);
-        $electronicDataJson = json_decode(json_encode($electronicData), true);
-        $valid = false;
-        //for each loop to check values of electronicSpecification against
-        //electronic Data, skipping the array of items.
-        foreach ($catalogListJson as $outerKey => $outerValue) {
-            //dump($outerKey);
-            foreach ($outerValue as $innerKey => $innerValue) {
-                if (is_array($catalogListJson[$outerKey][$innerKey]) == false) {
-                    if ($innerKey != "image" && $innerKey != "ElectronicType_displaySizeUnit" && $innerKey != "ElectronicType_dimensionUnit" && $innerKey != "ElectronicType_name") {
-                        if (isset($catalogListJson[$outerKey][$innerKey]) && $catalogListJson[$outerKey][$innerKey] == $electronicDataJson[$innerKey]) {
-                            //dump($innerKey);
-                            $valid = true;
-                        } else {
-                            $valid = false;
-                            break;
-                        }//else
-                    }//if2
-                }//if
-            }//foreach2
-        }//foreach
-        $catalogList = $electronicCatalog->getESList();
-        $catalogListJson = json_decode(json_encode($catalogList), true);
-        $electronicItemsJson = $catalogListJson[0]["electronicItems"];
-        $electronicCount = 0;
-        //compare electronicData item created int his test with
-        // electronicItems from $catalogList->getESList
-        foreach ($electronicItems as $electronitArray => $innerArray) {
-            $tempArray = array($innerArray->getId(), $innerArray->getSerialNumber(), $innerArray->getElectronicSpecification_id());
-            $tempArray = array_values($tempArray);
-            $count = 0;
-
-            foreach ($electronicItemsJson[$electronicCount] as $innerKey => $innerValue) {
-                if ($tempArray[$count] != $innerValue) {
-                    $valid = false;
-                    break;
-                }
-                $count++;
-            }
-            $electronicCount++;
-        }
-        $this->assertTrue($valid);
-    }
-    */
+      //foreach loop that checks if the ElectronicItems object attributes
+      //match electronicData->electronicItems values added at the beginning of
+      //the code
+        foreach ($catalogListJson["electronicItems"] as $itemIndex => $item) {
+          foreach ($item as $attributeKey => $attributeValue) {
+              if ($attributeValue == ($electronicDataJson["electronicItems"][$itemIndex][$attributeKey]))
+                  $valuesMatch = true;
+              else {
+                  $valuesMatch = false;
+                  $this->assertTrue($valuesMatch);
+                  break;
+              }//else
+          }//foreach inner
+      }//foreach outer
+      $this->assertTrue($valuesMatch);
+   }
 
 //test
 
