@@ -203,7 +203,6 @@ class ElectronicSpecification {
         return $this->image;
     }
 
-    /* New method Helen */
 
     public function reserveFirstAvailableEI($userId, $expiry) {
         $eI = $this->findNextAvailableEI();
@@ -219,7 +218,8 @@ class ElectronicSpecification {
 
     /**
      * Helper function to find next available EI of the electronic specification
-     * @return type
+     * 
+     * return type
      */
     private function &findNextAvailableEI() {
         foreach ($this->electronicItems as &$eI) {
@@ -228,7 +228,9 @@ class ElectronicSpecification {
             }
         }
         
-        return null;
+        $result = null;
+        
+        return $result;
     }
 
 }

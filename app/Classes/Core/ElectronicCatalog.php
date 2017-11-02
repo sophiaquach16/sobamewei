@@ -102,7 +102,6 @@ class ElectronicCatalog {
         return null;
     }
 
-       /* New Method Helen */
     function reserveFirstEIFromES($eSId, $userId, $expiry) {
         $firstAvailableEI = null;
         

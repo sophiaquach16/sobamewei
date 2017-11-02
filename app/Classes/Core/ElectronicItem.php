@@ -34,7 +34,6 @@ class ElectronicItem {
             $this->ElectronicSpecification_id = $data->ElectronicSpecification_id;
         }
         
-        /*New Helen*/
         if (isset($data->User_id)){
             $this->User_id = $data->User_id;
         }
@@ -50,7 +49,6 @@ class ElectronicItem {
         $returnData->id = $this->id;
         $returnData->serialNumber = $this->serialNumber;
         $returnData->ElectronicSpecification_id = $this->ElectronicSpecification_id;
-        /*New Helen*/
         $returnData->User_id = $this->User_id;
         $returnData->expiryForUser= $this->expiryForUser;
         return $returnData;
@@ -71,7 +69,6 @@ class ElectronicItem {
         return $this->ElectronicSpecification_id;
     }
 
-    /* New method Helen*/
     function getUserId(){
         return $this->User_id;
     }

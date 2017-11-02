@@ -139,6 +139,10 @@
 
 <div class="row">
     <div class="text-center">
+        <a href="/add-to-cart?eSId={{$eS->id}}" class="btn btn-success btn-lg" role="button"> Add To Cart </a>
+        <br/>
+        <br/>
+        
         @if(isset($previousESId) && $previousESId > 0)
         <a href="/details?id={{$previousESId}}" class="btn btn-info" role="button"> &laquo; Previous Result </a>
         @endif
