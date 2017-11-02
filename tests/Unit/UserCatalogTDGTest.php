@@ -16,7 +16,7 @@ use App\Classes\Mappers\UserCatalogMapper;
 
 class UserCatalogTDGTest extends TestCase {
 
-//Test the add and login methods to see if user infos got recorded onto the database
+//Test the add method in UserCatalogTDG to see if user got added into the database
 	public function testAdd(){
 		$userCatalogTDG = new UserCatalogTDG();
 		
@@ -39,5 +39,11 @@ class UserCatalogTDGTest extends TestCase {
         ]);
 	}
 
-	
+	//Test the login method in UserCatalogTDG to see if user has been logged in succesfully
+	public function testLogin(){
+		
+		$userCatalogMapper = new UserCatalogMapper();
+	    
+		$this->assertTrue($userCatalogMapper->login('admin1@conushop.com','admin'));
+	}
 }
