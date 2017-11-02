@@ -154,7 +154,7 @@
             </td>
             <td>
               @if ( $eS->image && $eS->image !== null )
-                  <img src={{$eS->image}}>
+                  <img src="{{$eS->image}}" width="300" height="auto">
                 @else
                   N/A
               @endif

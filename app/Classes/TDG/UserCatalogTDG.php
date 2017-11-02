@@ -84,10 +84,12 @@ class UserCatalogTDG {
         //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
         $array = $this->conn->query($queryString, $parameters);
 
-        if (Hash::check($password, $array[0]->password)) {
-            return true;
-        }else{
-            return false;
+        if (isset($array[0])) {
+            if (Hash::check($password, $array[0]->password)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -107,8 +109,8 @@ class UserCatalogTDG {
 
 
         foreach ((array) $parameters as $key => $value) {
-                $queryString .= $key . ' = :' . $key;
-                $queryString .= ' , ';
+            $queryString .= $key . ' = :' . $key;
+            $queryString .= ' , ';
         }
 
         //We delete the last useless ' , '

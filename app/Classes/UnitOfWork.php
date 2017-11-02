@@ -10,55 +10,65 @@ use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Core\User;
 
 class UnitOfWork {
+
     private $newList;
     private $changedList;
     private $deletedList;
     private $electronicCatalogMapper;
     private $userCatalogMapper;
+    private $shoppingCartMapper;
 
-
-    function __construct($type, $bool){
-
+    function __construct($mappers) {
         $this->newList = array();
         $this->changedList = array();
         $this->deletedList = array();
-        if($bool == true){
-          $this->electronicCatalogMapper = $type;
-        }else if($bool == false){
-          $this->userCatalogMapper = $type;
+        
+        if (isset($mappers['electronicCatalogMapper'])) {
+            $this->electronicCatalogMapper = $mappers['electronicCatalogMapper'];
         }
+        
+        if (isset($mappers['userCatalogMapper'])) {
+            $this->userCatalogMapper = $mappers['userCatalogMapper'];
+        }
+        
+        if (isset($mappers['shoppingCartMapper'])) {
+            $this->shoppingCartMapper = $mappers['shoppingCartMapper'];
+        }
+        
     }
 
-    function registerNew($object){
+    function registerNew($object) {
         array_push($this->newList, $object);
     }
 
-    function registerDirty($object){
+    function registerDirty($object) {
         array_push($this->changedList, $object);
     }
 
-    function registerDeleted($object){
+    function registerDeleted($object) {
         array_push($this->deletedList, $object);
     }
 
-    function commit(){
+    function commit() {
 
-        foreach($this->newList as $new){
-            if($new instanceof ElectronicSpecification){
+        foreach ($this->newList as $new) {
+            if ($new instanceof ElectronicSpecification) {
                 $this->electronicCatalogMapper->saveES($new);
-              }
-            if($new instanceof User){
+            }
+            if ($new instanceof User) {
                 $this->userCatalogMapper->saveUser($new);
             }
-
         }
-        foreach($this->changedList as $changed){
-            if($changed instanceof ElectronicSpecification){
+        foreach ($this->changedList as $changed) {
+            if ($changed instanceof ElectronicSpecification) {
                 $this->electronicCatalogMapper->updateES($changed);
             }
+            if ($changed instanceof ElectronicItem) {
+                $this->shoppingCartMapper->updateEI($changed);
+            }
         }
-        foreach($this->deletedList as $deleted){
-            if($deleted instanceof ElectronicItem){
+        foreach ($this->deletedList as $deleted) {
+            if ($deleted instanceof ElectronicItem) {
                 $this->electronicCatalogMapper->deleteEI($deleted);
             }
         }
