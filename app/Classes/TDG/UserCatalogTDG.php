@@ -84,12 +84,10 @@ class UserCatalogTDG {
         //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
         $array = $this->conn->query($queryString, $parameters);
 
-        if (isset($array[0])) {
-            if (Hash::check($password, $array[0]->password)) {
-                return true;
-            } else {
-                return false;
-            }
+        if (count($array) > 0 && Hash::check($password, $array[0]->password)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
