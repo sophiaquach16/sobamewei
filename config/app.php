@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Montreal',
 
     /*
     |--------------------------------------------------------------------------
@@ -137,7 +137,8 @@ return [
     */
 
     'providers' => [
-
+        Go\Laravel\GoAopBridge\GoAopServiceProvider::class,
+        
         /*
          * Laravel Framework Service Providers...
          */
@@ -177,7 +178,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
+        App\Providers\AopServiceProvider::class
+        
     ],
 
     /*
