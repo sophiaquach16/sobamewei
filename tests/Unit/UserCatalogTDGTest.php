@@ -46,4 +46,28 @@ class UserCatalogTDGTest extends TestCase {
 	    
 		$this->assertTrue($userCatalogMapper->login('admin1@conushop.com','admin'));
 	}
+
+	//Test the find method in UserCatalogTDG, to make sure that a particular user is saved in the database
+	public function testFind(){
+		$userCatalogTDG = new UserCatalogTDG();
+		$userData = new \stdClass();
+        
+		//create user with all its parameters
+		$userData->firstName = 'Eric';
+		$userData->lastName = 'Watson';
+		$userData->email = 'ewat@aol.com';
+		$userData->phone = '443-885-3424';
+		$userData->physicalAddress = '150 Whatsit Avenue';
+		$userData->password = '1e2r3ic';
+
+		$user= new User($userData);
+		$userCatalogTDG->add($user);
+
+		// Make sure we don't search with information we shouldn't have.
+		unset($userData->password);
+
+		// Make sure we only have one result.
+		$this->assertTrue(count($userCatalogTDG->find($userData)) == 1);
+	}
+
 }
