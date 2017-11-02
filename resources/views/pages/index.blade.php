@@ -32,7 +32,7 @@
         </ul>
 
 
-        @if($brandNames)
+        @if(isset($brandNames))
         <div class="panel-heading">Brand Names</div>
         <ul class="removeBullets">
             @foreach($brandNames as $brandName)
@@ -41,7 +41,7 @@
         </ul>
         @endif
 
-        @if($displaySizes)
+        @if(isset($displaySizes))
         <div class="panel-heading">Display Sizes</div>
         <ul class="removeBullets">
             @foreach($displaySizes as $displaySize)
@@ -50,7 +50,7 @@
         </ul>
         @endif
 
-        @if($hasTouchScreen)
+        @if(isset($hasTouchScreen))
         <div class="panel-heading">Option</div>
         <ul class="removeBullets">
             <li><input type="checkbox" name="touchScreen" id="{{$i++}}" value=1> TouchScreen</li>
@@ -129,7 +129,7 @@
                 <br/>
                 @endif
             </a>
-            <input type="button" id="addToCartButton{{$eS->id}}" value="Add To Cart">
+            <a href="/add-to-cart?eSId={{$eS->id}}" class="btn btn-info" role="button"> Add To Cart </a>
         </div>
          <?php $k++ ?>
         @if($k % 5 == 0)

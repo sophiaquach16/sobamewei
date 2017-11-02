@@ -115,12 +115,12 @@ class ElectronicSpecification {
         }
 
         if (isset($data->electronicItems)) {
-          //must delete current list of items, otherwise
-          //the modifyElectronicSpecification will add the existing items again
-          //even if you haven't modified their values
-          foreach ($this->electronicItems as $electronicItemIndex => $singleItem) {
-              $this->deleteElectronicItem($this->electronicItems[$electronicItemIndex]->getId());
-          }
+            //must delete current list of items, otherwise
+            //the modifyElectronicSpecification will add the existing items again
+            //even if you haven't modified their values
+            foreach ($this->electronicItems as $electronicItemIndex => $singleItem) {
+                $this->deleteElectronicItem($this->electronicItems[$electronicItemIndex]->getId());
+            }
             foreach ($data->electronicItems as $key => $value) {
                 $this->addElectronicItem($data->electronicItems[$key]);
             }
@@ -183,7 +183,7 @@ class ElectronicSpecification {
         return $returnData;
     }
 
-    public function getElectronicItems(){
+    public function getElectronicItems() {
         return $this->electronicItems;
     }
 
@@ -196,11 +196,41 @@ class ElectronicSpecification {
     }
 
     public function setImage($image) {
-      $this->image=$image;
+        $this->image = $image;
     }
 
-    public function getImage(){
-      return $this->image;
+    public function getImage() {
+        return $this->image;
+    }
+
+
+    public function reserveFirstAvailableEI($userId, $expiry) {
+        $eI = $this->findNextAvailableEI();
+        
+        if($eI!=null){
+        $eI->setUserId($userId);
+        $eI->setExpiryForUser($expiry);
+        }
+
+        
+        return $eI;
+    }
+
+    /**
+     * Helper function to find next available EI of the electronic specification
+     * 
+     * return type
+     */
+    private function &findNextAvailableEI() {
+        foreach ($this->electronicItems as &$eI) {
+            if (($eI->getExpiryForUser() === null) || ($eI->getUserId() === null) || (strtotime($eI->getExpiryForUser()) < strtotime(date("Y-m-d H:i:s")))) {
+                return $eI;
+            }
+        }
+        
+        $result = null;
+        
+        return $result;
     }
 
 }

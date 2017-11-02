@@ -13,6 +13,8 @@
 
 use App\ElectronicTDG;
 
+date_default_timezone_set('America/Montreal');
+
 Route::get('/', array(
     'uses' => 'MainController@showElectronicCatalog'
 ));
@@ -60,4 +62,8 @@ Route::post('registration', array(
 
 Route::get('details', array(
     'uses' => 'MainController@showDetails'
+));
+
+Route::get('add-to-cart',array(
+    'uses'=>'CustomerController@doAddToCart'
 ));

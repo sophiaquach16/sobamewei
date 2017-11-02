@@ -16,7 +16,7 @@ class CheckAdmin
     public function handle($request, Closure $next)
     {
         if ($request->user()->admin !== 1) {
-            return redirect('login');
+            return response('Unauthorized action. You must be an administrator.', 403);
         }
 
         return $next($request);
