@@ -1,6 +1,6 @@
 <?php
 
-/* New Class Helen */
+
 
 namespace App\Classes\Mappers;
 
@@ -10,6 +10,7 @@ use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\TDG\ElectronicCatalogTDG;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use PhpDeal\Annotation as Contract;
 
 class ShoppingCartMapper {
 
@@ -20,16 +21,7 @@ class ShoppingCartMapper {
     private $unitOfWork;
     private $identityMap;
 
-    function __construct() {
-        $argv = func_get_args();
-        switch (func_num_args()) {
-            case 1:
-                self::__construct1($argv[0]);
-                break;
-        }
-    }
-
-    function __construct1($userId) {
+    function __construct($userId) {
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
         $this->shoppingCart = ShoppingCart::getInstance();
@@ -40,20 +32,25 @@ class ShoppingCartMapper {
         $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
     }
 
-    /* New method Helen */
-
+    /**
+     * //@Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7")
+     */
     function addToCart($eSId, $userId, $expiry) {
-        $eI = $this->electronicCatalog->reserveFirstEIFromES($eSId, $userId, $expiry);
+        if (count($this->shoppingCart->getEIList()) < 7) {
+            $eI = $this->electronicCatalog->reserveFirstEIFromES($eSId, $userId, $expiry);
 
-        if ($eI != null) {
-            $this->shoppingCart->addEIToCart($eI);
-            
-            $this->unitOfWork->registerDirty($eI);
-            $this->unitOfWork->commit();
-            
-            return true;
+            if ($eI != null) {
+                $this->shoppingCart->addEIToCart($eI);
+
+                $this->unitOfWork->registerDirty($eI);
+                $this->unitOfWork->commit();
+                
+                return 'itemAddedToCart';
+            } else {
+                return 'itemOutOfStock';
+            }
         } else {
-            return false;
+            return 'shoppingCartFull';
         }
     }
 

@@ -26,12 +26,17 @@ class CustomerController extends Controller {
     }
 
     public function doAddToCart(Request $request) {
-        if ($this->shoppingCartMapper->addToCart($request->input('eSId'), Auth::user()->id, date("Y/m/d H:i:s", strtotime("+5 minutes")))) {
+        $result = $this->shoppingCartMapper->addToCart($request->input('eSId'), Auth::user()->id, date("Y/m/d H:i:s", strtotime("+5 minutes")));
+        
+        if ($result === 'itemAddedToCart') {
             $request->session()->flash('success_msg', 'The item is added to the shopping cart.');
-        } else {
+        } else if($result === 'itemOutOfStock') {
             $request->session()->flash('error_msg', 'Out of stock');
+        } else if($result === 'shoppingCartFull'){
+            $request->session()->flash('error_msg', 'Your shopping cart is full. Could not add the item.');
         }
-        return Redirect::to('/');
+        
+        return Redirect::back();
     }
 
 }

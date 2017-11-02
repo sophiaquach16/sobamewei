@@ -1,12 +1,15 @@
 <?php
-/*New Class Helen*/
+
 namespace App\Classes\Core;
 
 use PhpDeal\Annotation as Contract;
 use App\Classes\Core\ElectronicItem;
 
 
-
+/**
+ * shopping cart class
+ * @Contract\Invariant("count($this->eIList) >= 0 && count($this->eIList) <= 7")
+ */
 class ShoppingCart {
     private static  $instance= null;
     private $eIList;
@@ -71,6 +74,6 @@ class ShoppingCart {
             
         }
         $this->size= count($this->eIList);
-    }    
+    }
     
 }

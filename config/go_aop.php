@@ -68,7 +68,8 @@ return [
      | leave it empty if you want AOP to be applied to all files in the appDir
      */
     'includePaths' => [
-        app_path('Classes/Core/ShoppingCart')
+        app_path('Classes/Core/ShoppingCart'),
+        app_path('Classes/Mappers/ShoppingCartMapper')
     ],
 
     /*
