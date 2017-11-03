@@ -87,5 +87,8 @@ return [
      |
      | This option can be useful for extension and fine-tuning of services
      */
-    'containerClass' => GoAspectContainer::class,
+    'containerClass' => [
+            GoAspectContainer::class,
+            LoggingAspect::class,
+        ]
 ];
