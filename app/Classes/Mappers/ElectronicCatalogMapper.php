@@ -95,7 +95,7 @@ class ElectronicCatalogMapper {
             //Delete old file
             $splitLink = explode("/", $eS->image);
             $fileName = end($splitLink);
-            if (file_exists(public_path('images/' . $fileName))) {
+            if ($fileName !== "" && file_exists(public_path('images/' . $fileName))) {
                 unlink(public_path('images/' . $fileName));
             }
 
