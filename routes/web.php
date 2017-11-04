@@ -67,3 +67,6 @@ Route::get('details', array(
 Route::get('add-to-cart',array(
     'uses'=>'CustomerController@doAddToCart'
 ));
+Route::get('shopping-cart', array(
+    'uses' => 'CustomerController@doViewCart'
+));

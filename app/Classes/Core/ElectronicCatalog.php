@@ -115,6 +115,21 @@ class ElectronicCatalog {
         }
         return $firstAvailableEI;
     }
-    
+
+    function getESListFromEIList($eIList){
+
+        $ESList = array();
+        foreach ($eIList as $eI){
+            //dd($eIList);
+            $eS = new ElectronicSpecification();
+            $eSData = $this->getElectronicSpecificationById($eI->get()->ElectronicSpecification_id);
+            $eS->set($eSData);
+            array_push($ESList, $eS);
+            //$eSData = null;
+            //$eS->set(null);
+        }
+        //dd($ESList);
+        return $ESList;
+    }
 
 }
