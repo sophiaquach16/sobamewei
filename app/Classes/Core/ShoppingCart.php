@@ -61,6 +61,7 @@ class ShoppingCart {
      * 
      */
     public function getEIList(){
+        $this->removeOutdatedEI();
         return $this->eIList;
     }
 
@@ -75,5 +76,15 @@ class ShoppingCart {
         }
         $this->size= count($this->eIList);
     }
-    
+
+    //helper method to remove the outdated EI in the eIList
+    private function removeOutdatedEI(){
+        foreach($this->eIList as $key => $value){
+            if(strtotime($this->eIList[$key]->get()->expiryForUser) < strtotime(date("Y-m-d H:i:s"))){
+                unset($this->eIList[$key]);
+            }
+        }
+
+    }
+
 }

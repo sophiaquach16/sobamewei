@@ -58,4 +58,8 @@ class ShoppingCartMapper {
         $this->shoppingCartTDG->updateEI($eI);
     }
 
+    function viewCart(){
+        return $this->electronicCatalog->getESListFromEIList($this->shoppingCart->getEIList());
+    }
+
 }
