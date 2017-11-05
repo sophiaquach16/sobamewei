@@ -47,4 +47,10 @@ class CustomerController extends Controller {
 
     }
 
+    public function doRemove(Request $request){
+        $message = $this->shoppingCartMapper->removeFromCart($request->input('eSId'), Auth::user()->id);
+        $request->session()->flash('success_msg', $message);
+        return Redirect::back();
+    }
+
 }

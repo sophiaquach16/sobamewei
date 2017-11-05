@@ -70,3 +70,6 @@ Route::get('add-to-cart',array(
 Route::get('shopping-cart', array(
     'uses' => 'CustomerController@doViewCart'
 ));
+Route::get('remove-from-cart',array(
+    'uses' => 'CustomerController@doRemove'
+));

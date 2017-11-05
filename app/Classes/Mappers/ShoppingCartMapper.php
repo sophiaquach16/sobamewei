@@ -41,7 +41,6 @@ class ShoppingCartMapper {
 
             if ($eI != null) {
                 $this->shoppingCart->addEIToCart($eI);
-
                 $this->unitOfWork->registerDirty($eI);
                 $this->unitOfWork->commit();
                 
@@ -60,6 +59,14 @@ class ShoppingCartMapper {
 
     function viewCart(){
         return $this->electronicCatalog->getESListFromEIList($this->shoppingCart->getEIList());
+    }
+
+    function removeFromCart($eSId, $userId){
+        $removedEI = $this->electronicCatalog->unsetUserAndExpiryFromEI($eSId, $userId);
+        $this->unitOfWork->registerDirty($removedEI);
+        $this->unitOfWork->commit();
+        $this->shoppingCart->updateEIList();
+        return 'Item Removed';
     }
 
 }
