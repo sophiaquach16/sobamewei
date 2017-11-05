@@ -29,6 +29,7 @@
                     Price: ${{$eS->get()->price}}
                     <br/>
                 @endif
+                <a href="/remove-from-cart?eSId={{$eS->get()->id}}" class="btn btn-info" role="button"> Remove </a>
                 <hr>
             @endforeach
         @else

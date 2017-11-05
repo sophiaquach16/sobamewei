@@ -120,16 +120,23 @@ class ElectronicCatalog {
 
         $ESList = array();
         foreach ($eIList as $eI){
-            //dd($eIList);
             $eS = new ElectronicSpecification();
             $eSData = $this->getElectronicSpecificationById($eI->get()->ElectronicSpecification_id);
             $eS->set($eSData);
             array_push($ESList, $eS);
-            //$eSData = null;
-            //$eS->set(null);
         }
-        //dd($ESList);
         return $ESList;
+    }
+
+    function unsetUserAndExpiryFromEI($eSId, $userId){
+        $removedEI = null;
+        foreach ($this->eSList as $eS){
+            if($eS->get()->id == $eSId){
+                $removedEI = $eS->unsetUserAndExpiry($userId);
+                break;
+            }
+        }
+        return $removedEI;
     }
 
 }

@@ -45,11 +45,10 @@ class ShoppingCart {
      * 
      */
     public function addEIToCart($eI){
+
         array_push($this->eIList, $eI);
-        $this->size++;
-        /*New */
+        $this->size = count($this->eIList);
         $lastEIPushed= $this->eIList[count($this->eIList)-1] ;
-        
         return $lastEIPushed;
         
     }
@@ -84,7 +83,17 @@ class ShoppingCart {
                 unset($this->eIList[$key]);
             }
         }
+        $this->size= count($this->eIList);
+    }
 
+    //remove removed items in eIList
+    public function updateEIList(){
+        foreach($this->eIList as $key => $value){
+            if(strtotime($this->eIList[$key]->get()->expiryForUser) == null && $this->eIList[$key]->get()->userId == null){
+                unset($this->eIList[$key]);
+            }
+        }
+        $this->size= count($this->eIList);
     }
 
 }

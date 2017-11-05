@@ -21,7 +21,7 @@ class ShoppingCartTDG {
     
     function updateEI($eI) {
         $queryString = "UPDATE ElectronicItem SET User_id = " . $eI->get()->User_id . ", expiryForUser= '" . $eI->get()->expiryForUser . "' WHERE id= " . $eI->get()->id;
-        
+
         return $this->conn->directQuery($queryString);
     }
 

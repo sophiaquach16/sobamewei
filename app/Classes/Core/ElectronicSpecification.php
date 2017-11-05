@@ -233,4 +233,18 @@ class ElectronicSpecification {
         return $result;
     }
 
+    function unsetUserAndExpiry($userId){
+        $eIToRemove = null;
+
+        foreach ($this->electronicItems as $eI){
+            if($eI->getUserId() == $userId){
+                $eIToRemove = $eI;
+                break;
+            }
+        }
+
+        $eIToRemove->setUserId("null");
+        $eIToRemove->setExpiryForUser(null);
+        return $eIToRemove;
+    }
 }
