@@ -6,6 +6,7 @@ use Doctrine\Common\Annotations\Reader;
 use Go\Core\AspectContainer;
 use Illuminate\Contracts\Foundation\Application;
 use App\Aspect\LoggingAspect;
+use App\Aspect\IdentityMapAspect;
 use Illuminate\Support\ServiceProvider;
 use PhpDeal\Aspect\InvariantCheckerAspect;
 use PhpDeal\Aspect\PostconditionCheckerAspect;
@@ -24,6 +25,8 @@ class AopServiceProvider extends ServiceProvider
         //
     }
 
+    
+    
     /**
      * Register the application services.
      *
@@ -34,6 +37,30 @@ class AopServiceProvider extends ServiceProvider
         $this->app->singleton(LoggingAspect::class, function (Application $app) {
             return new LoggingAspect($app->make(LoggerInterface::class));
         });
+
+        $this->app->tag([LoggingAspect::class], 'goaop.aspect');
+    }
+    
+    
+    
+    
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    
+    /*
+    public function register()
+    {
+        $this->app->singleton(LoggingAspect::class, function (Application $app) {
+            return new LoggingAspect($app->make(LoggerInterface::class));
+        });
+        
+        $this->app->singleton(IdentityMapAspect::class, function (Application $app) {
+            return new IdentityMapAspect($app->make(Reader::class));
+        });
+        
         
         $this->app->singleton(Reader::class, function (Application $app) {
             $container = $app->make(AspectContainer::class);
@@ -53,11 +80,12 @@ class AopServiceProvider extends ServiceProvider
         $this->app->tag(
             [
                 LoggingAspect::class,
+                IdentityMapAspect::class,
                 InvariantCheckerAspect::class,
                 PreconditionCheckerAspect::class,
                 PostconditionCheckerAspect::class
             ],
             'goaop.aspect'
         );
-    }
+    }*/
 }

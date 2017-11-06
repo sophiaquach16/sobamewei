@@ -29,7 +29,8 @@ class LoggingAspect implements Aspect
      * @Before("execution(public **->*(*))")
      */
     public function beforeMethod(MethodInvocation $invocation)
-    {
+    {        
+        //$i = 1 / 0;
         $this->logger->info($invocation, $invocation->getArguments());
     }
 }

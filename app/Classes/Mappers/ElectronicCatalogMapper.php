@@ -14,6 +14,8 @@ class ElectronicCatalogMapper {
     private $unitOfWork;
     private $identityMap;
     private $lockFilePointer;
+    
+    private $electronicSpecification;
 
     function __construct() {
         $argv = func_get_args();
@@ -71,7 +73,8 @@ class ElectronicCatalogMapper {
             }
 
             //Add to identity map
-            $this->identityMap->add('ElectronicSpecification', $electronicSpecification);
+            $this->electronicSpecification = $electronicSpecification;
+            //$this->identityMap->add('ElectronicSpecification', $electronicSpecification);
 
             $this->unlockDataAccess();
 
