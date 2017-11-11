@@ -20,7 +20,7 @@
 
 ## Team 9 Members
 - Batoul Yehia
-- Sophia Quach
+- Sophia Quach*
 - Melissa Duong
 - Wei He
 
