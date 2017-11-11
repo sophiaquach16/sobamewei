@@ -4,8 +4,6 @@
 
 ## Website Info
 
-[www.conushop.com](http://conushop.com/)
-
 **Admin Accounts:**
 
 *Admin 1:*
@@ -21,14 +19,9 @@
 - Password: ```admin```
 
 ## Team 9 Members
-- Jean-Michel Laliberté
-- Alex Zhang
-- Helen Zhang
 - Batoul Yehia
-- Yufeng Ding
 - Sophia Quach
 - Melissa Duong
-- Karine Zhang
 - Wei He
 
 ## Installation (do once)
