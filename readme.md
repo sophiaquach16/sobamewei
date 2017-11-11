@@ -18,7 +18,7 @@
 - Username: ```admin3@conushop.com```
 - Password: ```admin```
 
-## Team 9 Members
+## Team 9.2 Members
 - Batoul Yehia
 - Sophia Quach*
 - Melissa Duong
