@@ -1,9 +1,3 @@
-/**
- * Created by PhpStorm.
- * User: Mel
- * Date: 2017-11-12
- * Time: 3:00 PM
- */
 @extends('layouts.default')
 @section('content')
 <div class="pageContainer container-fluid">
@@ -21,16 +15,9 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="purchase-history">Purchase History</label>
-                    <div class="col-sm-10">
-                        <input type="number" min=0 class="form-control" id="weight" placeholder="Enter weight" name="weight">
-                    </div>
-                </div>
-
+               </div>
+            </div>
         </form>
-    </div>
-
-    </br>
-        <div class="col-sm-2"></div>
     </div>
 </div>
 @stop
