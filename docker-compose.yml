@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  mariadb:
+    image: bitnami/mariadb:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_DATABASE=${DB_DATABASE}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+
+  conushop:
+    tty: true
+    image: 'bitnami/laravel:latest'
+    labels:
+      kompose.service.type: nodeport
+    environment:
+      - DB_HOST=mariadb
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PASSWORD =${DB_PASSWORD}
+    depends_on:
+      - mariadb
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
