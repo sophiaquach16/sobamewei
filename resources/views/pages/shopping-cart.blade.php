@@ -31,6 +31,8 @@
                 @endif
                 <a href="/remove-from-cart?eSId={{$eS->get()->id}}" class="btn btn-info" role="button"> Remove </a>
                 <hr>
+                <a href="/my-account" class="btn btn-info" role="button"> Purchase </a>
+                <hr>
             @endforeach
         @else
             <h3>You have no items in your cart</h3>

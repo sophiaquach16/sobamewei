@@ -73,3 +73,6 @@ Route::get('shopping-cart', array(
 Route::get('remove-from-cart',array(
     'uses' => 'CustomerController@doRemove'
 ));
+Route::post('shopping-cart',array(
+    'uses' => 'CustomerController@doPurchase'
+));
