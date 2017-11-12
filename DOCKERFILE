@@ -1,3 +1,4 @@
 FROM bitnami/laravel:latest
 COPY . /app
 RUN sudo chmod -R 777 /app
+RUN mkdir -p /app/storage/app/aspect
