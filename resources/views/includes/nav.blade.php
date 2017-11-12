@@ -23,6 +23,7 @@
                         <li><a href="inventory">Inventory</a></li>
                         <li><a href="/logout">Log Out</a></li>
                     @else
+                        <li><a href="my-account">My Account</a></li>
                         <li><a href="/logout">Log Out</a></li>
                         <li><a href="/shopping-cart">View Cart<span class="sr-only">(current)</span></a></li>
                     @endif
