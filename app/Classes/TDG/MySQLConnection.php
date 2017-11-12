@@ -9,7 +9,13 @@ class MySQLConnection {
     private $conn;
 
     public function __construct() {
-        $this->conn = new PDO('mysql:host=localhost;dbname=conushop;charset=utf8', 'root', 'isY2metT');
+        $connectionString =
+          'mysql:host='.env('DB_HOST').';dbname'.env('DB_DATABASE').';charset=utf8';
+        $this->conn = new PDO(
+          $connectionString,
+          env('DB_USERNAME'),
+          env('DB_PASSWORD')
+        );
     }
 
     public function query($query, $bindValues) {
