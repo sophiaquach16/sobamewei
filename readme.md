@@ -23,6 +23,25 @@
 - Sophia Quach*
 - Melissa Duong
 - Wei He
+## How to setup the debugger on phpStorm (if you already have Xdebug installed AND Xdebug helper on your chrome browser
+1) Run > Run/Debug Configurations
+2) Click on the "+" , then choose PHP Web Application
+3) For Name, set it to anything you want, doesn't matter
+4) For Server, click on the "..." to add a Server.
+5) For Name, set it to anything you want
+6) Host is set to laravel.dev, port 80, Debugger Xdebug
+7) **DO NOT CHECK THE BOX** next to Use path mapping, since you are only using a localhost as server
+8) Click ok
+9) For Start URL, keep as is (you should have a single "/" in the field, and right below the url http://laravel.dev)
+10) Click Apply
+11) Click OK
+
+## How to run the debugger
+1) Set a breakpoint/+ where you would like to debug (click on the right of the row number, and a red circle should appear). Or you can do Run > Toggle line Breakpoint 
+1) Run > Debug 'laravel.dev'
+2) The web browser should start up, you should see the index.php page
+3) If you click on the Debugger tab at the bottom of your screen, you should see a stack of method calls, and variable names and values.
+4) To continue the debugging, use the arrows in the debug section (step into, over, etc)
 
 ## Installation (do once)
 1) We recommend that you use Xampp to run the Laravel framework app by following [this tutorial](https://www.codementor.io/magarrent/how-to-install-laravel-5-xampp-windows-du107u9ji).
