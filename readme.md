@@ -3,6 +3,7 @@
 # ConUShop [![Build Status](https://travis-ci.com/z-alex/ConUShop.svg?token=epYMsfdC5GNowz3V2jMd&branch=master)](https://travis-ci.com/z-alex/ConUShop)
 
 ## Website Info
+sobamewei-shop.site
 
 **Admin Accounts:**
 
@@ -34,7 +35,7 @@
 2) Go to the project repository folder.
 3) Type ```php artisan database:sync``` and press enter.
 
-## Dependencies Synchronization (do everytime the dependecy list changes)
+## Dependencies Synchronization (do everytime the dependency list changes)
 1) Open the terminal.
 2) Go to the project repository folder.
 3) Type ```composer update --no-scripts``` and press enter.
@@ -42,13 +43,15 @@
 ## Open the website on your local computer
 - Go to ```laravel.dev``` on your browser (if you followed the tutorial in the installation step).
 
-## How to use vagrant (An alternative to Xampp)
-1) Install virtual box
-2) Install vagrant
-3) add the homestead virtual box
-4) install the plugin from the composer
-5) "cd" into the project then: composer require laravel/homestead --dev
-6) php vendor/bin/homestead make
+## How to use docker
+1) Install docker
+2) — FOR DEV —
+// DISONNECT FROM THE SERVER DOCKER-MACHINE
 
-vagrant up - starts virtual machine
-vagrant halt - power off virtual machine
+eval $(docker-machine env --unset)
+
+// Dev commands
+docker-compose up
+docker-compose up -d
+docker-compose exec mariadb mysql -u root < databaseScript.sql
+docker-compose stop
