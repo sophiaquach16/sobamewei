@@ -1,0 +1,1 @@
+<?php return unserialize('a:1:{i:0;O:25:"PhpDeal\\Annotation\\Ensure":1:{s:5:"value";s:27:"$this->size == $__old->size";}}');
