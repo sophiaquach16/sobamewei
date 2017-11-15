@@ -39,7 +39,7 @@ return [
      |
      | AOP engine will put all transformed files and caches in that directory
      */
-    'cacheDir' => storage_path('app/aspect'),
+    'cacheDir' => storage_path('aop'),
 
     /*
      |--------------------------------------------------------------------------
@@ -68,8 +68,8 @@ return [
      | leave it empty if you want AOP to be applied to all files in the appDir
      */
     'includePaths' => [
-        app_path('Classes/Core/ShoppingCart'),
-        app_path('Classes/Mappers/ShoppingCartMapper')
+        app_path('Http/Controllers/AdminController'),
+        app_path('Http/Controllers/MainController')
     ],
 
     /*
@@ -80,8 +80,7 @@ return [
      | AOP will check this list to disable AOP for selected directories
      */
     'excludePaths' => [
-        //app_path()
-        ],
+    ],
 
     /*
      |--------------------------------------------------------------------------
