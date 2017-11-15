@@ -2,24 +2,23 @@ version: '2'
 
 services:
   mariadb:
-    image: bitnami/mariadb:latest
+    build: docker/mariadb
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=${DB_USERNAME}
-      - MARIADB_DATABASE=${DB_DATABASE}
-      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
 
-  conushop:
-    tty: true
+
+  laravel:
     build: .
-    labels:
-      kompose.service.type: nodeport
-    environment:
-      - DB_HOST=mariadb
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_PASSWORD =${DB_PASSWORD}
-    depends_on:
-      - mariadb
     ports:
-      - 80:3000
+        - 80:80
+    links:
+        - mariadb
+    environment:
+        - DB_HOST:mariadb
+        - DB_DATABASE:${DB_DATABASE}
+        - DB_USERNAME:${DB_USERNAME}
+        - DB_PASSWORD:${DB_PASSWORD}
+        - DB_CONNECTION:mysql
