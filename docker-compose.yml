@@ -6,7 +6,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./databaseScript.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_USER=${DB_USERNAME}
