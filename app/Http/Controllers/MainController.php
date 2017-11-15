@@ -107,7 +107,7 @@ class MainController extends BaseController {
     }
 
     public function showDetails(Request $request) {
-        $eS = $this->electronicCatalogMapper->getElectronicSpecification($request->input('id'));
+        $eS = $this->electronicCatalogMapper->getElectronicSpecification($request->itemId);
 
         $lastInputs = $request->session()->get('lastInputs');
         $eSpecifications = $request->session()->get('electronicSpecifications');
@@ -142,13 +142,13 @@ class MainController extends BaseController {
             $queryStringBack .= $key . "=" . $value . "&";
         }
         $queryStringBack = rtrim($queryStringBack, '&');
-        
+
         return view('pages.details', ['eS' => $eS, 'queryStringBack' => $queryStringBack, 'nextESId' => $nextESId, 'previousESId' => $previousESId]);
         }else{
             return view('pages.details', ['eS' => $eS]);
         }
-        
-        
+
+
     }
 
 }
