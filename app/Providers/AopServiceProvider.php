@@ -6,6 +6,7 @@ use Doctrine\Common\Annotations\Reader;
 use Go\Core\AspectContainer;
 use Illuminate\Contracts\Foundation\Application;
 use App\Aspect\LoggingAspect;
+use App\Aspect\GetESAspect;
 use Illuminate\Support\ServiceProvider;
 use PhpDeal\Aspect\InvariantCheckerAspect;
 use PhpDeal\Aspect\PostconditionCheckerAspect;
@@ -34,7 +35,10 @@ class AopServiceProvider extends ServiceProvider
         $this->app->singleton(LoggingAspect::class, function (Application $app) {
             return new LoggingAspect($app->make(LoggerInterface::class));
         });
-        
+        $this->app->singleton(GetESAspect::class, function (Application $app) {
+            return new GetESAspect();
+        });
+
         $this->app->singleton(Reader::class, function (Application $app) {
             $container = $app->make(AspectContainer::class);
 
@@ -53,6 +57,7 @@ class AopServiceProvider extends ServiceProvider
         $this->app->tag(
             [
                 LoggingAspect::class,
+                GetESAspect::class,
                 InvariantCheckerAspect::class,
                 PreconditionCheckerAspect::class,
                 PostconditionCheckerAspect::class
