@@ -37,6 +37,33 @@ CREATE TABLE IF NOT EXISTS `conushop`.`User` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `conushop`.`Purchase`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `conushop`.`Purchase` ;
+
+CREATE TABLE IF NOT EXISTS `conushop`.`Purchase` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ElectronicSpec_id` INT NULL,
+  `serialNumber` VARCHAR(45) NULL,
+  `timestamp` VARCHAR(45) NULL, 
+  `customer_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Electronic_Spec2_idx` (`ElectronicSpec_id` ASC),
+  INDEX `fk_ElectronicItem_User2_idx` (`customer_id` ASC),
+  CONSTRAINT `fk_Electronic_Spec2`
+    FOREIGN KEY (`ElectronicSpec_id`)
+    REFERENCES `conushop`.`ElectronicSpecification` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ElectronicItem_User2`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `conushop`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `conushop`.`ElectronicType`
