@@ -33,6 +33,7 @@ sobamewei-shop.site
 3) On the homepage, click on the new connection, enter the password (the one we always use)
 4) File > Run Script the init.sql in app/docker/mariadb
 5) It should be successful including for : GRANT ALL ON conushop.* TO conushop@localhost IDENTIFIED BY 'isY2metT';
+6) Also, if you click on the LHS panel Server Status , you should see on the RHS a button saying Server  Status Running
 6) To test the connection to mariaddb in cmd run : 
   ping mariadb. 
 7) If it says Ping request could not find mariadb, this means you have not set mariadb  as host
