@@ -53,4 +53,8 @@ class CustomerController extends Controller {
         return Redirect::back();
     }
 
+    public function showAccount(Request $request){
+        return view('pages.my-account');
+    }
+
 }

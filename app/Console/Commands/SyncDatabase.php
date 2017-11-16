@@ -9,7 +9,7 @@ use PDO;
 class SyncDatabase extends Command
 {
     private $conn;
-    
+
     /**
      * The name and signature of the console command.
      *
@@ -42,10 +42,15 @@ class SyncDatabase extends Command
      */
     public function handle()
     {
-        $conn = new PDO('mysql:host=localhost;charset=utf8', 'root', 'isY2metT');
-        
-        $queryString = file_get_contents('databaseScript.sql');
-        
+        $connectionString = 'mysql:host='.env('DB_HOST').';dbname='.env('DB_DATABASE').';charset=utf8';
+        $conn = new PDO(
+            $connectionString,
+            env('DB_USERNAME'),
+            env('DB_PASSWORD')
+        );
+
+        $queryString = file_get_contents('docker/mariadb/init.sql');
+
         $stmt = $conn->prepare($queryString);
 
         $stmt->execute();
