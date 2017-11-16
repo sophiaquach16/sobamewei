@@ -24,11 +24,11 @@ class ShoppingCartTest extends TestCase
 
         $item1Data->id = "1";
         $item1Data->serialNumber = 123;
-        $item1Data->ElectronicSpecification_id = "123abc";
+        $item1Data->ElectronicSpecification_id = "1";
 
         $item2Data->id = "2";
         $item2Data->serialNumber = 456;
-        $item2Data->ElectronicSpecification_id = "456abc";
+        $item2Data->ElectronicSpecification_id = "1";
 
         $electronicItems = array($item1Data, $item2Data);
         $electronicItem1->set($item1Data);
@@ -63,7 +63,7 @@ class ShoppingCartTest extends TestCase
         $item3Data = new \stdClass();
         $item3Data->id = "3";
         $item3Data->serialNumber = 789;
-        $item3Data->ElectronicSpecification_id = "789abc";
+        $item3Data->ElectronicSpecification_id = "2";
 
         $electronicItem3->set($item3Data);
 
@@ -104,17 +104,17 @@ class ShoppingCartTest extends TestCase
         $item1Data = new \stdClass();
         $item1Data->id = "123";
         $item1Data->serialNumber = 123;
-        $item1Data->ElectronicSpecification_id = "123abc";
+        $item1Data->ElectronicSpecification_id = "1";
 
         $item2Data = new \stdClass();
         $item2Data->id = "456";
         $item2Data->serialNumber = 456;
-        $item2Data->ElectronicSpecification_id = "456abc";
+        $item2Data->ElectronicSpecification_id = "2";
 
         $item3Data = new \stdClass();
         $item3Data->id = "789";
         $item3Data->serialNumber = 789;
-        $item3Data->ElectronicSpecification_id = "789abc";
+        $item3Data->ElectronicSpecification_id = "2";
 
         $electronicItem1->set($item1Data);
         $electronicItem2->set($item2Data);
@@ -174,14 +174,7 @@ class ShoppingCartTest extends TestCase
 
 
 
-    public function testRemoveOutdatedEI(){
-
-    }
-
-    public function testUpdateEIList(){
-
-    }
-
+  
 
 
 }
