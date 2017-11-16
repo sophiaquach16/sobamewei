@@ -17,6 +17,7 @@ DROP SCHEMA IF EXISTS `conushop` ;
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `conushop` DEFAULT CHARACTER SET utf8 ;
 USE `conushop` ;
+GRANT ALL ON conushop.* TO conushop@localhost IDENTIFIED BY 'isY2metT';
 
 -- -----------------------------------------------------
 -- Table `conushop`.`User`
