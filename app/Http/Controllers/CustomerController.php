@@ -54,7 +54,8 @@ class CustomerController extends Controller {
     }
 
     public function doPurchase(Request $request){
-        $message = $this->shoppingCartMapper->purchase(Auth::user()->id,$TIME); //(TODO)
+        $request['time']=date("Y-m-d h:i:s a", time());
+        $message = $this->shoppingCartMapper->purchase(Auth::user()->id,$request['time']);
         $request->session()->flash('success_msg', $message);
         //return view('pages.shopping-cart', ['eSList' => $eSList]);
         return Redirect::to('/');

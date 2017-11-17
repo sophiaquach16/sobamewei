@@ -27,7 +27,7 @@ class Transaction
     private function __construct()
     {
         //   $this->eIList = array();
-        $this->timeStamp = 0;
+        $this->timeStamp = null;
         $this->customerId = 0;
 //        $this->itemId = 0;
 //        $this->serialNumber = 0;
