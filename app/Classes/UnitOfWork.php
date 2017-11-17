@@ -58,6 +58,10 @@ class UnitOfWork {
             if ($new instanceof User) {
                 $this->userCatalogMapper->saveUser($new);
             }
+            if ($new instanceof ElectronicItem) {
+                $this->shoppingCartMapper->saveTransactionList($new);
+
+            }
         }
         foreach ($this->changedList as $changed) {
             if ($changed instanceof ElectronicSpecification) {
