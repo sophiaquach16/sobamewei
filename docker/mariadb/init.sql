@@ -45,6 +45,7 @@ DROP TABLE IF EXISTS `conushop`.`Purchase` ;
 CREATE TABLE IF NOT EXISTS `conushop`.`Purchase` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ElectronicSpec_id` INT NULL,
+  `item_id` INT NULL,
   `serialNumber` VARCHAR(45) NULL,
   `timestamp` VARCHAR(45) NULL, 
   `customer_id` INT NULL,
