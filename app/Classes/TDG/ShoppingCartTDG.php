@@ -51,15 +51,16 @@ class ShoppingCartTDG
 
     function addTransaction($transaction, $timeStamp)
     {
-        $item = Array
-        (
-            [ElectronicSpecification_id] => $transaction->get()->ElectronicSpecification_id,
-            [item_id] => $transaction->get()->id,
-            [SerialNumber] => $transaction->get()->SerialNumber,
-            [timestamp] => $timeStamp,
-            [customer_id] => $transaction->get()->User_id,
-        );
 
+        $item = array
+        (
+            "ElectronicSpecification_id" => $transaction->get()->ElectronicSpecification_id,
+            "item_id" => $transaction->get()->id,
+            "SerialNumber" => $transaction->get()->serialNumber,
+            "timestamp" => $timeStamp,
+            "customer_id" => $transaction->get()->User_id,
+        );
+        $parameters = (object) $item;
         $queryString = 'INSERT INTO Purchase SET ';
         foreach ($item as $key => $value) {
             if ($value !== null) {
@@ -67,6 +68,11 @@ class ShoppingCartTDG
                 $queryString .= ' , ';
             }
         }
+//We delete the last useless ' , '
+        $queryString = substr($queryString, 0, -2);
+
+
+        return $this->conn->query($queryString, $parameters);
     }
 }
 ?>

@@ -8,6 +8,7 @@ use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\TDG\ElectronicCatalogTDG;
+use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
 use PhpDeal\Annotation as Contract;
@@ -17,6 +18,7 @@ class ShoppingCartMapper {
     private $electronicCatalog;
     private $electronicCatalogTDG;
     private $shoppingCart;
+    private $transaction;
     private $shoppingCartTDG;
     private $unitOfWork;
     private $identityMap;
@@ -28,7 +30,7 @@ class ShoppingCartMapper {
         $this->shoppingCartTDG = new ShoppingCartTDG();
         $this->unitOfWork = new UnitOfWork(['shoppingCartMapper' => $this]);
         $this->identityMap = new IdentityMap();
-
+        $this->transaction = new transaction();
         $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
     }
 

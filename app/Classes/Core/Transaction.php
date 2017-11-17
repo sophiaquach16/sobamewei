@@ -24,7 +24,7 @@ class Transaction
     private $transactionItems;
     // private $ElectronicSpecification_id;
 
-    private function __construct()
+    public function __construct()
     {
         //   $this->eIList = array();
         $this->timeStamp = null;
@@ -32,28 +32,30 @@ class Transaction
 //        $this->itemId = 0;
 //        $this->serialNumber = 0;
 //        $this->ElectronicSpecification_id=0;
-        $this->transactionItems = new arrayList();
+        $this->transactionItems = array();
 
     }
 
     public function purchase($userId)
     {
-        $EIList = new ShoppingCart();
+        $EIList =  ShoppingCart::getInstance();
         $shoppingList = $EIList->getEIList();
 
-        foreach ($shoppingList as $ei) {
-            $tempItem = new \stdClass();
-            $tempItem->customerId = $userId;
-            $tempItem->itemId = $ei->getId();
-            $tempItem->serialNumber = $ei->getSerialNumber();
-            $tempItem->ElectronicSpecification_id = $ei->getElectronicSpecification_id();
-            $tempItem->timeStamp =$this->timeStamp;
-            array_push($transactionItems, $tempItem);
-            //get the electronic specification for each electronic item, and unset the items for that specification
-            //$ei = new ElectronicItem();
-        }
+//        foreach ($shoppingList as $ei) {
+//            $tempItem = new \stdClass();
+//            $tempItem->customerId = $userId;
+//            $tempItem->itemId = $ei->getId();
+//            $tempItem->serialNumber = $ei->getSerialNumber();
+//            $tempItem->ElectronicSpecification_id = $ei->getElectronicSpecification_id();
+//            $tempItem->timeStamp =$this->timeStamp;
+//            array($tempItem);
+//            $str_tempItem=json_decode(json_encode($tempItem), true);
+//            array_push($transactionItems, $str_tempItem);
+//            //get the electronic specification for each electronic item, and unset the items for that specification
+//            //$ei = new ElectronicItem();
+//        }
 
-        return $transactionItems;
+        return $shoppingList;
     }
 
     public function setTimeStamp($time){

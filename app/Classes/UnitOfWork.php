@@ -59,7 +59,7 @@ class UnitOfWork {
                 $this->userCatalogMapper->saveUser($new);
             }
             if ($new instanceof ElectronicItem) {
-                $this->shoppingCartMapper->saveTransactionList($new);
+                $this->shoppingCartMapper->saveTransaction($new);
 
             }
         }
