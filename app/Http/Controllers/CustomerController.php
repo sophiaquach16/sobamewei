@@ -53,8 +53,10 @@ class CustomerController extends Controller {
         return Redirect::back();
     }
 
-    public function showAccount(Request $request){
-        return view('pages.my-account');
+    public function doPurchase(Request $request){
+        $message = $this->shoppingCartMapper->purchase(Auth::user()->id,$TIME); //(TODO)
+        $request->session()->flash('success_msg', $message);
+        //return view('pages.shopping-cart', ['eSList' => $eSList]);
+        return Redirect::to('/');
     }
-
 }

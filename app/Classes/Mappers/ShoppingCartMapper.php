@@ -68,5 +68,27 @@ class ShoppingCartMapper {
         $this->shoppingCart->updateEIList();
         return 'Item Removed';
     }
+    function purchase($userId, $timeStamp){
+        $this->transaction->setTimeStamp($timeStamp);
+        $purchaseList = $this->viewCart();
+        if($purchaseList !=null){
+            $list= $this->transaction->purchase($userId);
+            foreach($list as $ei) {
+                $this->unitOfWork->registerNew($ei);
+                $this->unitOfWork->commit();
+            }
+            //TODO delete the ei from the catalog
+            return 'Your order is successfully placed';
+        }
+        else{
+            return 'The shoppingCart is empty';
+        }
+    }
+
+    function saveTransaction($transaction) {
+
+        $timeStamp = $this->transaction->getTimeStamp();
+        return $this->shoppingCartTDG->addTransaction($transaction, $timeStamp);
+    }
 
 }

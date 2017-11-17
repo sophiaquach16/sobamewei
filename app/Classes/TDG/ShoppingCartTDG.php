@@ -43,7 +43,21 @@ class ShoppingCartTDG {
         
         return $eIsData;
     }
-    
+    function addTransaction($transaction, $timeStamp){
+
+
+        foreach($transaction as $key => $value){
+
+        }
+
+
+        $queryString = 'INSERT INTO Purchase SET ';
+        foreach ($parameters as $key => $value) {
+            if ($value !== null) {
+                $queryString .= $key . ' = :' . $key;
+                $queryString .= ' , ';
+            }
+    }
 }
 
 ?>
