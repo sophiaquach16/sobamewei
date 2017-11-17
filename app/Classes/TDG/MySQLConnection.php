@@ -47,7 +47,7 @@ class MySQLConnection {
         $localConn = $this->conn;
 
         $stmt = $localConn->prepare($query);
-
+//var_dump($stmt);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
