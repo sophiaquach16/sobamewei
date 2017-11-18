@@ -75,6 +75,9 @@ class UnitOfWork {
             if ($deleted instanceof ElectronicItem) {
                 $this->electronicCatalogMapper->deleteEI($deleted);
             }
+            if ($deleted instanceof User) {
+                $this->userCatalogMapper->deleteCurrentUser($deleted);
+            }
         }
 
 
