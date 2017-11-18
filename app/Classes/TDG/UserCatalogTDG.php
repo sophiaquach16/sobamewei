@@ -118,4 +118,29 @@ class UserCatalogTDG {
         return $this->conn->query($queryString, $parameters);
     }
 
+    public function deleteUser($user){
+
+            $queryString = 'DELETE FROM User WHERE ';
+            $queryString .= 'id' . ' = :' . 'id';
+
+            $parameters = new \stdClass();
+            $parameters->id = $user->get()->id;
+            $userId = $parameters->id;
+
+            $this->deleteLoginLog($userId);
+
+           // $queryString = substr($queryString, 0, -2);
+            return $this->conn->query($queryString, $parameters);
+
+        }
+
+    public function deleteLoginLog($userId){
+            $queryString = 'DELETE FROM loginlog WHERE ';
+            $queryString .= 'user_id' . ' = :' . 'user_id';
+
+            $parameters = new \stdClass();
+            $parameters->user_id = $userId;
+
+            return $this->conn->query($queryString, $parameters);
+        }
 }

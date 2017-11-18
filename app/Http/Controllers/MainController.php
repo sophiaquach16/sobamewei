@@ -151,4 +151,9 @@ class MainController extends BaseController {
 
     }
 
+    public function deleteUser(Request $request){
+        $message = $this->userCatalogMapper->deleteUser(Auth::user()->id);
+        $request->session()->flash('success_msg', "Your account has been deleted");
+        return Redirect::to('/');
+    }
 }

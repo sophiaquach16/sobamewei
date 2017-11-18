@@ -82,3 +82,6 @@ Route::get('my-account', array(
 Route::post('show-registered-user', array(
     'uses' => 'AdminController@showUser'
 ));
+Route::post('my-account', array(
+    'uses' => 'MainController@deleteUser'
+));

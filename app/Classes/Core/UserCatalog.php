@@ -85,4 +85,13 @@ class UserCatalog
         return $user;
     }
 
+    function getDeleteUserInfo($userId){
+        foreach ($this->userList as $user) {
+            if ($user->get()->id === $userId) {
+
+                break;
+            }
+        }
+        return $user;
+    }
 }
