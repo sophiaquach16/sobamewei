@@ -38,11 +38,11 @@ CREATE TABLE IF NOT EXISTS `conushop`.`User` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `conushop`.`Purchase`
+-- Table `conushop`.`Transaction`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `conushop`.`Purchase` ;
+DROP TABLE IF EXISTS `conushop`.`Transaction` ;
 
-CREATE TABLE IF NOT EXISTS `conushop`.`Purchase` (
+CREATE TABLE IF NOT EXISTS `conushop`.`Transaction` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ElectronicSpec_id` INT NULL,
   `item_id` INT NULL,
