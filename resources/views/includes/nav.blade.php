@@ -26,6 +26,7 @@
                     @else
                         <li><a href="/logout">Log Out</a></li>
                         <li><a href="/shopping-cart">View Cart<span class="sr-only">(current)</span></a></li>
+                        <li><a href="my-account">My account</a></li>
                     @endif
                 @endif
             </ul>
