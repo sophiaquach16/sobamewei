@@ -60,4 +60,9 @@ class CustomerController extends Controller {
         //return view('pages.shopping-cart', ['eSList' => $eSList]);
         return Redirect::to('/');
     }
+
+    public function showAccount() {
+        return view('pages.my-account');
+    }
+
 }
