@@ -58,7 +58,7 @@ class ShoppingCartTDG
         $parameters->SerialNumber=$transaction->getSerialNumber();
         $parameters->timestamp=$timeStamp;
         $parameters->customer_id=$transaction->getUserId();
-        $queryString = 'INSERT INTO Purchase SET ';
+        $queryString = 'INSERT INTO Transaction SET ';
         foreach ($parameters as $key => $value) {
             if ($value !== null) {
                 $queryString .= $key . ' = :' . $key;

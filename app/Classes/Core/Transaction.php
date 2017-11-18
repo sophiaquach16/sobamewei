@@ -21,39 +21,19 @@ class Transaction
     private $customerId;
     private $timeStamp;
     // private $serialNumber;
-    private $transactionItems;
+   // private $transactionItems;
     // private $ElectronicSpecification_id;
 
     public function __construct()
     {
-        //   $this->eIList = array();
         $this->timeStamp = null;
         $this->customerId = 0;
-//        $this->itemId = 0;
-//        $this->serialNumber = 0;
-//        $this->ElectronicSpecification_id=0;
-        $this->transactionItems = array();
-
     }
 
     public function purchase($userId)
     {
         $EIList =  ShoppingCart::getInstance();
         $shoppingList = $EIList->getEIList();
-
-//        foreach ($shoppingList as $ei) {
-//            $tempItem = new \stdClass();
-//            $tempItem->customerId = $userId;
-//            $tempItem->itemId = $ei->getId();
-//            $tempItem->serialNumber = $ei->getSerialNumber();
-//            $tempItem->ElectronicSpecification_id = $ei->getElectronicSpecification_id();
-//            $tempItem->timeStamp =$this->timeStamp;
-//            array($tempItem);
-//            $str_tempItem=json_decode(json_encode($tempItem), true);
-//            array_push($transactionItems, $str_tempItem);
-//            //get the electronic specification for each electronic item, and unset the items for that specification
-//            //$ei = new ElectronicItem();
-//        }
 
         return $shoppingList;
     }
@@ -65,9 +45,5 @@ class Transaction
     public function getTimeStamp(){
         return $this->timeStamp;
     }
-
-
-
-
 
 }
