@@ -79,3 +79,6 @@ Route::post('shopping-cart',array(
 Route::get('my-account', array(
     'uses' => 'CustomerController@showAccount'
 ));
+Route::post('show-registered-user', array(
+    'uses' => 'AdminController@showUser'
+));
