@@ -21,7 +21,7 @@
                     @if( Auth::user()->admin === 1 )
                         <li><a href="add-items">Add Items</a></li>
                         <li><a href="inventory">Inventory</a></li>
-                        <li><a href="Show-registered-user">Show Registered User</a></li>
+                        <li><a href="show-registered-users">Show Registered Users</a></li>
                         <li><a href="/logout">Log Out</a></li>
                     @else
                         <li><a href="/logout">Log Out</a></li>

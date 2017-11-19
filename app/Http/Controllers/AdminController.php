@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\Classes\Mappers\ElectronicCatalogMapper;
+use App\Classes\Mappers\UserCatalogMapper;
 use Image;
 use Session;
 
@@ -24,6 +25,7 @@ class AdminController extends BaseController {
 
     public function __construct() {
         $this->electronicCatalogMapper = new ElectronicCatalogMapper();
+        $this->UserCatalogMapper = new UserCatalogMapper();
         $this->middleware('auth');
         $this->middleware('CheckAdmin');
     }
@@ -125,6 +127,10 @@ class AdminController extends BaseController {
 
     public function showAddItems() {
         return view('pages.add-items');
+    }
+    public function showRegisteredUsers(){
+        $users =$this->UserCatalogMapper->getAllUsers();
+        return view('pages.show-registered-users', ['user' => $users]);
     }
 
 }
