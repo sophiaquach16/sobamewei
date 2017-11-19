@@ -10,41 +10,50 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-success btn-block">Delete Account</button>
             <div id="formLoad">
-                {{--<div class="row">--}}
-                    {{--<div class="items text-center"><span class="blueTitle"></span></div>--}}
-
-                {{--</div>--}}
-
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="purchase-history">Purchase History</label>
-               </div>
+                <div class="row">
+                    <div class="items text-center"><span class="blueTitle">Purchase History</span></div>
+                </div>
                 <table>
                     <tr>
-                        {{--<th>Brand Name</th>--}}
                         {{--<th>Display Size</th>--}}
                         {{--<th>Model Number</th>--}}
                         {{--<th>Price</th>--}}
-                        <th>ElectronicSpec_id</th>
-                        <th>serialNumber</th>
-                        <th>TimeStamp</th>
-                        <th> </th>
+                        <th>Electronic Item Type</th>
+                        <th>Serial Number</th>
+                        <th>Purchase Date</th>
+                        <th>Brand Name</th>
+                        <th>Price</th>
                     </tr>
-                    <tr>
+                    <tr >
                         <td colspan="17">
-
                         </td>
                     </tr>
-                    @if (! empty($transaction))
-                        @foreach ($transaction as $tr)
+                    @if (! empty($purchaseList))
+                        @foreach ($purchaseList as $tr)
 
                                 <tr bgcolor="#cce6ff">
 
                                     <td>
-                                        @if ($tr->electronicSpec_id )
-                                            {{$tr->electronicSpec_id}}
-                                        @else
+                                        @switch($tr->ElectronicType_id)
+                                            @case('1')
+                                            Desktop
+                                            @break
+
+                                            @case('2')
+                                            Laptop
+                                            @break
+
+                                            @case('3')
+                                            Monitor
+                                            @break
+
+                                            @case('4')
+                                            Tablet
+                                            @break
+
+                                            @default
                                             N/A
-                                        @endif
+                                        @endswitch
                                     </td>
                                     <td>
                                         @if ( $tr->serialNumber )
@@ -60,7 +69,23 @@
                                             N/A
                                         @endif
                                     </td>
-                                    <td><th> <button type="submit" class="btn btn-info btn-block">Return</button></th></td>
+                                    <td>
+                                        @if ( $tr->modelNumber )
+                                            {{$tr->modelNumber}}
+                                            @else
+                                                N/A
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ( $tr->price )
+                                            ${{$tr->price}}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <th> <button type="submit" class="btn btn-info btn-block">Return</button></th>
+                                    </td>
 
                                 </tr>
                                 <tr #cce6ff>

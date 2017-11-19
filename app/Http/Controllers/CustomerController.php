@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Classes\Mappers\ShoppingCartMapper;
+use App\Classes\Mappers\TransactionMapper;
 use Auth;
 use Redirect;
 
 class CustomerController extends Controller {
 
     private $shoppingCartMapper;
+    private $transactionMapper;
 
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('CheckCustomer');
-
+        $this->transactionMapper = new TransactionMapper();
         $this->middleware(function ($request, $next) {
             $this->shoppingCartMapper = new ShoppingCartMapper(auth()->user()->id);
 
@@ -62,7 +64,10 @@ class CustomerController extends Controller {
     }
 
     public function showAccount() {
-        return view('pages.my-account');
+        $purchaseList = $this->transactionMapper->getAllElectronicSpecifications(Auth::user()->id);
+        //dd($purchaseList);
+        //dd('hello');
+        return view('pages.my-account', ['purchaseList' => $purchaseList]);
     }
 
 }
