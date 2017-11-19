@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Mappers\ElectronicCatalogMapper;
+use App\Aspect\Annotations\RetrieveSpecification;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
@@ -22,6 +23,7 @@ class MainController extends BaseController {
     private $userCatalogMapper;
     private $electronicCatalogMapper;
 
+    // want to remove these
     public function __construct() {
         $this->userCatalogMapper = new UserCatalogMapper();
         $this->electronicCatalogMapper = new ElectronicCatalogMapper();
@@ -106,18 +108,22 @@ class MainController extends BaseController {
         }
     }
 
+    /**
+     * @RetrieveSpecification(from="id")
+     */
     public function showDetails(Request $request) {
-        $eS = $this->electronicCatalogMapper->getElectronicSpecification($request->itemId);
-
+        $es = $request->object;
+        //if ($es == null) 0/0;
         $lastInputs = $request->session()->get('lastInputs');
         $eSpecifications = $request->session()->get('electronicSpecifications');
 
         if($eSpecifications){
+
         //Determine previous id of the filtered ES list
         $previousESId = -1;
         $previousES = null;
         foreach ($eSpecifications as $eSpecification) {
-            if ($eSpecification->id === $request->input('id') && $previousES !== null) {
+            if ($eSpecification->id === $es->id && $previousES !== null) {
                 $previousESId = $previousES->id;
                 break;
             }
@@ -129,7 +135,7 @@ class MainController extends BaseController {
         $backwards = array_reverse($eSpecifications);
         $nextES = null;
         foreach ($backwards as $eSpecification) {
-            if ($eSpecification->id === $request->input('id') && $nextES !== null) {
+            if ($eSpecification->id === $es->id && $nextES !== null) {
                 $nextESId = $nextES->id;
                 break;
             }
@@ -143,9 +149,9 @@ class MainController extends BaseController {
         }
         $queryStringBack = rtrim($queryStringBack, '&');
 
-        return view('pages.details', ['eS' => $eS, 'queryStringBack' => $queryStringBack, 'nextESId' => $nextESId, 'previousESId' => $previousESId]);
+        return view('pages.details', ['eS' => $es, 'queryStringBack' => $queryStringBack, 'nextESId' => $nextESId, 'previousESId' => $previousESId]);
         }else{
-            return view('pages.details', ['eS' => $eS]);
+            return view('pages.details', ['eS' => $es]);
         }
 
 
