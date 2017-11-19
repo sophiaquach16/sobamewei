@@ -10,12 +10,68 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-success btn-block">Delete Account</button>
             <div id="formLoad">
-                <div class="row">
-                    <div class="items text-center"><span class="blueTitle"></span></div>
-                </div>
+                {{--<div class="row">--}}
+                    {{--<div class="items text-center"><span class="blueTitle"></span></div>--}}
+
+                {{--</div>--}}
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="purchase-history">Purchase History</label>
                </div>
+                <table>
+                    <tr>
+                        {{--<th>Brand Name</th>--}}
+                        {{--<th>Display Size</th>--}}
+                        {{--<th>Model Number</th>--}}
+                        {{--<th>Price</th>--}}
+                        <th>ElectronicSpec_id</th>
+                        <th>serialNumber</th>
+                        <th>TimeStamp</th>
+                        <th> </th>
+                    </tr>
+                    <tr>
+                        <td colspan="17">
+
+                        </td>
+                    </tr>
+                    @if (! empty($transaction))
+                        @foreach ($transaction as $tr)
+
+                                <tr bgcolor="#cce6ff">
+
+                                    <td>
+                                        @if ($tr->electronicSpec_id )
+                                            {{$tr->electronicSpec_id}}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ( $tr->serialNumber )
+                                            {{$tr->serialNumber}}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ( $tr->timestamp )
+                                            {{$tr->timestamp}}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td><th> <button type="submit" class="btn btn-info btn-block">Return</button></th></td>
+
+                                </tr>
+                                <tr #cce6ff>
+                                    <td colspan="17">
+
+                                    </td>
+                                </tr>
+
+                        @endforeach
+                    @endif
+                </table>
             </div>
         </form>
     </div>
