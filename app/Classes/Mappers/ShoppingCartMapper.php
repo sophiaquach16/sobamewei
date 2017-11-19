@@ -8,18 +8,22 @@ use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\TDG\ElectronicCatalogTDG;
+use App\Classes\Mappers\ElectronicCatalogMapper;
+use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
 use PhpDeal\Annotation as Contract;
 
 class ShoppingCartMapper {
 
-    private $electronicCatalog;
     private $electronicCatalogTDG;
     private $shoppingCart;
+    private $transaction;
     private $shoppingCartTDG;
     private $unitOfWork;
     private $identityMap;
+    private $electronicSpecification;
+    private $ElectronicCatalogMapper;
 
     function __construct($userId) {
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
@@ -28,8 +32,9 @@ class ShoppingCartMapper {
         $this->shoppingCartTDG = new ShoppingCartTDG();
         $this->unitOfWork = new UnitOfWork(['shoppingCartMapper' => $this]);
         $this->identityMap = new IdentityMap();
-
+        $this->transaction = new transaction();
         $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
+        $this->ElectronicCatalogMapper = new ElectronicCatalogMapper();
     }
 
     /**
@@ -67,6 +72,48 @@ class ShoppingCartMapper {
         $this->unitOfWork->commit();
         $this->shoppingCart->updateEIList();
         return 'Item Removed';
+    }
+    function purchase($userId, $timeStamp){
+        $this->transaction->setTimeStamp($timeStamp);
+        $purchaseList = $this->viewCart();
+
+     //   $this->electronicSpecification ->unsetUserAndExpiry($userId);
+
+        if($purchaseList !=null){
+            $list= $this->transaction->purchase($userId);
+
+            foreach($list as $ei) {
+                $this->unitOfWork->registerNew($ei);
+
+               // $this->unitOfWork->registerDeleted($ei);
+                $this->unitOfWork->commit();
+
+            }
+            //TODO delete the ei from the catalog
+            $this->deleteEI($list);
+            return 'Your order is successfully placed';
+        }
+        else{
+            return 'The shoppingCart is empty';
+        }
+    }
+
+    function saveTransaction($transaction) {
+
+        $timeStamp = $this->transaction->getTimeStamp();
+        return $this->shoppingCartTDG->addTransaction($transaction, $timeStamp);
+    }
+
+    private function deleteEI($purchaseList){
+        $ids=array();
+        foreach($purchaseList as $ei) {
+            $id=$ei->getId();
+           // dd($ei);
+            array_push($ids, $id);
+
+        }
+
+        $this->ElectronicCatalogMapper->deleteElectronicItems($ids);
     }
 
 }

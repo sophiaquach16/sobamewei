@@ -1,6 +1,9 @@
 @extends('layouts.default')
 @section('content')
+
     <div class="container">
+        <form method="post" action="/shopping-cart" name="shopping-cart" id = "shopping-cart">
+            {{ csrf_field() }}
         @if (!empty($eSList))
             <h3>Here are the items in your Cart</h3>
             <br>
@@ -35,6 +38,9 @@
         @else
             <h3>You have no items in your cart</h3>
         @endif
+        <button type="submit" class="btn btn-info">Purchase</button>
         <a href="/" class="btn btn-info" role="button"> Continue Shopping </a>
+    </form>
     </div>
+
 @stop

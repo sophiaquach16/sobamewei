@@ -44,9 +44,9 @@ class SyncDatabase extends Command
     {
         $connectionString = 'mysql:host='.env('DB_HOST').';dbname='.env('DB_DATABASE').';charset=utf8';
         $conn = new PDO(
-          $connectionString,
-          env('DB_USERNAME'),
-          env('DB_PASSWORD')
+            $connectionString,
+            env('DB_USERNAME'),
+            env('DB_PASSWORD')
         );
 
         $queryString = file_get_contents('docker/mariadb/init.sql');

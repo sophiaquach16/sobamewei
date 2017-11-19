@@ -73,3 +73,17 @@ Route::get('shopping-cart', array(
 Route::get('remove-from-cart',array(
     'uses' => 'CustomerController@doRemove'
 ));
+Route::post('shopping-cart',array(
+    'uses' => 'CustomerController@doPurchase'
+));
+Route::get('my-account', array(
+    'uses' => 'CustomerController@showAccount'
+));
+
+Route::post('my-account', array(
+    'uses' => 'MainController@deleteUser'
+));
+
+Route::get('show-registered-users', array(
+    'uses' => 'AdminController@showRegisteredUsers'
+));

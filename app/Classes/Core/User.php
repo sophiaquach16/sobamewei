@@ -79,5 +79,4 @@ use Notifiable;
 
         return $returnData;
     }
-
 }

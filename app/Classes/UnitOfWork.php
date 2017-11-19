@@ -58,6 +58,10 @@ class UnitOfWork {
             if ($new instanceof User) {
                 $this->userCatalogMapper->saveUser($new);
             }
+            if ($new instanceof ElectronicItem) {
+                $this->shoppingCartMapper->saveTransaction($new);
+
+            }
         }
         foreach ($this->changedList as $changed) {
             if ($changed instanceof ElectronicSpecification) {
@@ -70,6 +74,9 @@ class UnitOfWork {
         foreach ($this->deletedList as $deleted) {
             if ($deleted instanceof ElectronicItem) {
                 $this->electronicCatalogMapper->deleteEI($deleted);
+            }
+            if ($deleted instanceof User) {
+                $this->userCatalogMapper->deleteCurrentUser($deleted);
             }
         }
 

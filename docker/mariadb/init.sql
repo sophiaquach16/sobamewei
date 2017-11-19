@@ -17,6 +17,7 @@ DROP SCHEMA IF EXISTS `conushop` ;
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `conushop` DEFAULT CHARACTER SET utf8 ;
 USE `conushop` ;
+GRANT ALL ON conushop.* TO conushop@localhost IDENTIFIED BY 'isY2metT';
 
 -- -----------------------------------------------------
 -- Table `conushop`.`User`
@@ -34,6 +35,34 @@ CREATE TABLE IF NOT EXISTS `conushop`.`User` (
   `password` VARCHAR(255) NULL,
   `remember_token` VARCHAR(100) NULL,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `conushop`.`Transaction`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `conushop`.`Transaction` ;
+
+CREATE TABLE IF NOT EXISTS `conushop`.`Transaction` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ElectronicSpec_id` INT NULL,
+  `item_id` INT NULL,
+  `serialNumber` VARCHAR(45) NULL,
+  `timestamp` VARCHAR(45) NULL, 
+  `customer_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Electronic_Spec2_idx` (`ElectronicSpec_id` ASC),
+  INDEX `fk_ElectronicItem_User2_idx` (`customer_id` ASC),
+  CONSTRAINT `fk_Electronic_Spec2`
+    FOREIGN KEY (`ElectronicSpec_id`)
+    REFERENCES `conushop`.`ElectronicSpecification` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ElectronicItem_User2`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `conushop`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
 ENGINE = InnoDB;
 
 
