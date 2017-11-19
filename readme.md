@@ -25,24 +25,28 @@ sobamewei-shop.site
 - Melissa Duong
 - Wei He
 ## How to setup the database connection to run the website
-1) Setup your connection with mySQL
+1) Create a new connection if you don't have an existing one
+  Go to the home page (click on the home icon on top LHS of page). You should see in the middle of the page 'MySQL Connections'
+  Click on the '+' next to MYSQL Connections
+2) Setup your connection with mySQL 
   Connection Method: Standard (TCP/IP)
   Hostname: localhost Port:3306
   Username: root
-2) Click Test connecton. A message should appear: " A successful mySQL connection was made with the parameters defined for this connection" 
-3) On the homepage, click on the new connection, enter the password (the one we always use)
-4) File > Run Script the init.sql in app/docker/mariadb
-5) It should be successful including for : GRANT ALL ON conushop.* TO conushop@localhost IDENTIFIED BY 'isY2metT';
-6) Also, if you click on the LHS panel Server Status , you should see on the RHS a button saying Server  Status Running
-6) To test the connection to mariaddb in cmd run : 
+3) Click Test connecton. A message should appear: " A successful mySQL connection was made with the parameters defined for this connection" 
+4) On the homepage, click on the new connection, enter the password (the one we always use)
+5) File > Run Script > Select the init.sql in app/docker/mariadb (in your laravel project directory)
+6) It should be successful including for : GRANT ALL ON conushop.* TO conushop@localhost IDENTIFIED BY 'isY2metT';
+7) Also, if you click on the LHS panel Server Status , you should see on the RHS a button saying Server  Status Running
+8) To test the connection to mariaddb in cmd run : 
   ping mariadb. 
-7) If it says Ping request could not find mariadb, this means you have not set mariadb  as host
-8) Use Notepad and right-click , run as Administrator and find file C:\Windows\System32\drivers\etc\host
-9) Edit by adding a new host:
+9) If it says Ping request could not find mariadb, this means you have not set mariadb  as host
+10) Use Notepad and right-click , run as Administrator and find file C:\Windows\System32\drivers\etc\host
+11) Edit by adding a new host:
   127.0.0.1    mariadb
-10) Then rerun: ping mariadb
-11) You should receive a message containing Reply from 127.0.0.1 (meaning the connection works)
-12) Run laravel.dev
+12) Then rerun: ping mariadb
+13) You should receive a message containing Reply from 127.0.0.1 (meaning the connection works)
+14) Re rerun the SQL script in case. Click on File > Run Script > Select the init.sql in app/docker/mariadb (in your laravel project directory)
+14) Run laravel.dev
 ## How to setup the debugger on phpStorm (if you already have Xdebug installed AND Xdebug helper on your chrome browser
 1) Run > Run/Debug Configurations
 2) Click on the "+" , then choose PHP Web Application
