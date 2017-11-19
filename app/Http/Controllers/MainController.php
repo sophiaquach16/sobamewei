@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Mappers\ElectronicCatalogMapper;
+use App\Aspect\Annotations\RetrieveObject;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
 class MainController extends BaseController {
@@ -106,6 +107,9 @@ class MainController extends BaseController {
         }
     }
 
+    /**
+     * @RetrieveObject(kind="electronicSpecifications", from="input")
+     */
     public function showDetails(Request $request) {
         $eS = $this->electronicCatalogMapper->getElectronicSpecification($request->itemId);
 
