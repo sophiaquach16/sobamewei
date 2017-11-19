@@ -15,7 +15,7 @@ use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Mappers\UserCatalogMapper;
-use App\Aspect\Annotations\RetrieveObject;
+use App\Aspect\Annotations\RetrieveSpecification;
 use Image;
 use Session;
 
@@ -65,7 +65,7 @@ class AdminController extends BaseController {
     }
 
     /**
-     * @RetrieveObject(from="modifyRadioSelection")
+     * @RetrieveSpecification(from="modifyRadioSelection")
      */
     public function doModifyOrDelete(Request $request) {
         if ($request->object !== null && $request->input('submitButton') === 'modify') {

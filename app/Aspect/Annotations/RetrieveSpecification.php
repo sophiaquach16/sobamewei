@@ -13,7 +13,7 @@ use Go\Lang\Annotation\Before;
  * @Annotation
  * @Target("METHOD")
  */
-class RetrieveObject extends Annotation {
+class RetrieveSpecification extends Annotation {
 
   /**
    * @Required

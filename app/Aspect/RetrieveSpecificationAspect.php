@@ -8,14 +8,14 @@ use Doctrine\Common\Annotations\Reader;
 use Go\Aop\Aspect;
 use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\Before;
-use App\Aspect\RetrieveObjectAspect;
-use App\Aspect\Annotations\RetrieveObject;
+use App\Aspect\RetrieveSpecificationAspect;
+use App\Aspect\Annotations\RetrieveSpecification;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 
 /**
  * Application logging aspect (Example provided by goaop-laravel-bridge)
  */
-class RetrieveObjectAspect implements Aspect
+class RetrieveSpecificationAspect implements Aspect
 {
     private $mapper;
 
@@ -32,7 +32,7 @@ class RetrieveObjectAspect implements Aspect
    */
   public function beforeMethod(MethodInvocation $invocation)
   {
-    $retrieveObj = $invocation->getMethod()->getAnnotation(RetrieveObject::class);
+    $retrieveObj = $invocation->getMethod()->getAnnotation(RetrieveSpecification::class);
     if ($retrieveObj === null) return;
     $request = $invocation->getArguments()[0];
 

@@ -8,7 +8,7 @@ use Go\Core\AspectContainer;
 use Illuminate\Contracts\Foundation\Application;
 use App\Aspect\LoggingAspect;
 use App\Aspect\GetESAspect;
-use App\Aspect\RetrieveObjectAspect;
+use App\Aspect\RetrieveSpecificationAspect;
 use Illuminate\Support\ServiceProvider;
 use PhpDeal\Aspect\InvariantCheckerAspect;
 use PhpDeal\Aspect\PostconditionCheckerAspect;
@@ -40,8 +40,8 @@ class AopServiceProvider extends ServiceProvider
         $this->app->singleton(GetESAspect::class, function (Application $app) {
             return new GetESAspect();
         });
-        $this->app->singleton(RetrieveObjectAspect:: class, function (Application $app){
-          return new RetrieveObjectAspect();
+        $this->app->singleton(RetrieveSpecificationAspect:: class, function (Application $app){
+          return new RetrieveSpecificationAspect();
         });
 
         $this->app->singleton(Reader::class, function (Application $app) {
@@ -63,7 +63,7 @@ class AopServiceProvider extends ServiceProvider
             [
                 LoggingAspect::class,
                 GetESAspect::class,
-                RetrieveObjectAspect::class,
+                RetrieveSpecificationAspect::class,
                 InvariantCheckerAspect::class,
                 PreconditionCheckerAspect::class,
                 PostconditionCheckerAspect::class
