@@ -14,12 +14,6 @@ use Go\Lang\Annotation\Before;
  * @Target("METHOD")
  */
 class RetrieveObject extends Annotation {
-  /**
-   * @Required
-   *
-   * @var string
-   */
-  public $kind;
 
   /**
    * @Required

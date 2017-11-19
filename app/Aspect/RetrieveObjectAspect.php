@@ -17,8 +17,11 @@ use App\Classes\Mappers\ElectronicCatalogMapper;
  */
 class RetrieveObjectAspect implements Aspect
 {
+    private $mapper;
+
     public function __construct()
     {
+      $this->mapper = new ElectronicCatalogMapper();
     }
 
   /**
@@ -33,23 +36,13 @@ class RetrieveObjectAspect implements Aspect
     if ($retrieveObj === null) return;
     $request = $invocation->getArguments()[0];
 
-    $id = $this->getId($retrieveObj->from, $request);
-    $request->object = $this->getObject($retrieveObj->kind, $id);
-  }
-
-    // from query string or input get the id of object you're trying to get
-  public function getId($from, $request) {
-    if ($from == "querystring") return $request->input('id');
+    $id = $request->input($retrieveObj->from);
+    if ($id !== null) $request->object = $this->getObject($id);
   }
 
   // from kind return the right mapper, one of the 3
-  public function getObject($kind, $id) {
-    if ($kind == "electronic") {
-      $mapper = new ElectronicCatalogMapper();
-      return $mapper->getElectronicSpecification($id);
-    }
-    if ($kind == 2) return ShoppingCartMapper;
-    if ($kind == 3) return UserCatalogMapper;
+  public function getObject($id) {
+    return $this->mapper->getElectronicSpecification($id);
   }
 
 

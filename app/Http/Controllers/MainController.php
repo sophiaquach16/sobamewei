@@ -109,7 +109,7 @@ class MainController extends BaseController {
     }
 
     /**
-     * @RetrieveObject(kind="electronic", from="querystring")
+     * @RetrieveObject(from="id")
      */
     public function showDetails(Request $request) {
         $es = $request->object;
