@@ -83,4 +83,11 @@ class UserCatalogMapper {
     function deleteCurrentUser($user){
         return $this->userCatalogTDG->deleteUser($user);
     }
+
+    function getAllUsers(){
+
+        $users = $this->userCatalog->getUserList();
+
+        return $users;
+    }
 }

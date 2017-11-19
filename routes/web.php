@@ -79,9 +79,11 @@ Route::post('shopping-cart',array(
 Route::get('my-account', array(
     'uses' => 'CustomerController@showAccount'
 ));
-Route::post('show-registered-user', array(
-    'uses' => 'AdminController@showUser'
-));
+
 Route::post('my-account', array(
     'uses' => 'MainController@deleteUser'
+));
+
+Route::get('show-registered-users', array(
+    'uses' => 'AdminController@showRegisteredUsers'
 ));
