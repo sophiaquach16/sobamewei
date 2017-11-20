@@ -1,38 +1,31 @@
 <?php
+
 namespace App\Classes\TDG;
-class TransactionTDG{
+
+use Hash;
+
+class TransactionTDG {
+
     private $conn;
+
     public function __construct() {
         $this->conn = new MySQLConnection();
     }
 
-public function findAllTransactions(){
+    /**
+     *
+     * @param type $parameters "Associative array with the SQL field and the wanted value. Ex: $parameter['id'] = 4; $parameter['email'] = 'admin@admin.com';
+     */
 
-    $queryString = 'SELECT * FROM Transaction';
-    $eIPurchasedDataList = $this->conn->directQuery($queryString);
-    return $eIPurchasedDataList;
-}
 
-    public function findAll($userId){
-        $queryString = 'SELECT *
-            FROM Transaction
-            WHERE ';
-            $parameters = array('customer_id' => $userId);
-            //For each key, (ex: id, email, etc.), we build the query
-            foreach ($parameters as $key => $value)
-            {
-                $queryString .= $key . ' = :' . $key;
-                $queryString .= ' AND ';
-            }
-        //We delete the last useless ' AND '
-        $queryString = substr($queryString, 0, -5);
-        $eIPurchasedDataList = $this->conn->query($queryString, $parameters);
-        //dd($eIPurchasedDataList);
-        $eIPurchasedDataListWithSpec=$this->findAllWithSpec($eIPurchasedDataList);
-        //dd($eIPurchasedDataListWithSpec);
-        return $eIPurchasedDataListWithSpec;
+    public function findAll() {
+
+        $queryString = 'SELECT * FROM Transaction';
+
+        $transactionDataList = $this->conn->directQuery($queryString);
+
+        return $transactionDataList;
     }
-
 
 
 }
