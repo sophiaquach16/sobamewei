@@ -15,6 +15,7 @@ use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Mappers\UserCatalogMapper;
+use App\Aspect\Annotations\RetrieveSpecification;
 use Image;
 use Session;
 
@@ -50,10 +51,10 @@ class AdminController extends BaseController {
         } else {
             $url = null;
         }
-        
+
         $electronicSpecificationData = (object) $request->except(['_token', 'quantity']);
         $electronicSpecificationData->image = $url;
-        
+
         if ($this->electronicCatalogMapper->makeNewElectronicSpecification($request->input('quantity'), $electronicSpecificationData)) { //
             Session::flash('success_msg', "Successfully added the electronic specification.");
             return Redirect::to('inventory');
@@ -63,9 +64,12 @@ class AdminController extends BaseController {
         }
     }
 
+    /**
+     * @RetrieveSpecification(from="modifyRadioSelection")
+     */
     public function doModifyOrDelete(Request $request) {
-        if ($request->input('modifyRadioSelection') && $request->input('submitButton') === 'modify') {
-            $eSToModify = $this->electronicCatalogMapper->getElectronicSpecification($request->input('modifyRadioSelection'));
+        if ($request->object !== null && $request->input('submitButton') === 'modify') {
+            $eSToModify = $request->object;
             $request->session()->put('eSToModify', $eSToModify);
             switch ($eSToModify->ElectronicType_id) {
                 case "1":
@@ -106,10 +110,10 @@ class AdminController extends BaseController {
         } else {
             $url = null;
         }
-        
+
         $electronicSpecificationData = (object) $request->except(['quantity', 'ElectronicType_id', '_token']);
         $electronicSpecificationData->image = $url;
-        
+
         if ($this->electronicCatalogMapper->modifyElectronicSpecification($request->input('quantity'), $request->session()->get('eSToModify'), $electronicSpecificationData)) {
             Session::flash('success_msg', "Successfully modified the electronic specification.");
             return Redirect::to('inventory');

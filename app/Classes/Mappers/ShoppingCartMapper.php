@@ -78,6 +78,7 @@ class ShoppingCartMapper {
         $purchaseList = $this->viewCart();
 
         if($purchaseList !=null){
+
             $list= $this->transaction->purchase($userId);
 
             foreach($list as $ei) {

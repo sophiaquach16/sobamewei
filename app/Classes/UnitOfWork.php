@@ -62,6 +62,10 @@ class UnitOfWork {
                 $this->shoppingCartMapper->saveTransaction($new);
 
             }
+            if ($new instanceof Purchase) {
+                $this->TransactionMapper->savePurchase($new);
+
+            }
         }
         foreach ($this->changedList as $changed) {
             if ($changed instanceof ElectronicSpecification) {

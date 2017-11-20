@@ -81,7 +81,7 @@ Route::get('my-account', array(
 ));
 
 Route::post('my-account', array(
-    'uses' => 'MainController@deleteUser'
+    'uses' => 'MainController@deleteUser'//TODO change the post method for retirm
 ));
 
 Route::get('show-registered-users', array(
