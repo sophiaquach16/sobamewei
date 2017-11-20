@@ -17,16 +17,14 @@ use App\Classes\Core\ShoppingCart;
 
 class Transaction
 {
-    private $customerId;
-    private $timeStamp;
-    // private $serialNumber;
+
+    private $timestamp;
     private $item_id;
     private $customer_id;
-    //  private $timestamp;
     private $serialNumber;
     private $ElectronicSpec_id;
-    // private $transactionItems;
-    // private $ElectronicSpecification_id;
+
+
     function __construct() {
         $argv = func_get_args();
         switch( func_num_args() ) {
@@ -54,11 +52,11 @@ class Transaction
     }
 
     public function setTimeStamp($time){
-        $this->timeStamp =$time;
+        $this->timestamp =$time;
     }
 
     public function getTimeStamp(){
-        return $this->timeStamp;
+        return $this->timestamp;
     }
 
     public function set($data) {
@@ -74,8 +72,8 @@ class Transaction
         if (isset($data->ElectronicSpec_id)) {
             $this->ElectronicSpec_id = $data->ElectronicSpec_id;
         }
-        if (isset($data->timeStamp)) {
-            $this->timeStamp = $data->timeStamp;
+        if (isset($data->timestamp)) {
+            $this->timestamp = $data->timestamp;
         }
 
     }
@@ -87,7 +85,7 @@ class Transaction
         $returnData->customer_id = $this->customer_id;
         $returnData->serialNumber = $this->serialNumber;
         $returnData->ElectronicSpec_id = $this->ElectronicSpec_id;
-        $returnData->timeStamp = $this->timeStamp;
+        $returnData->timestamp = $this->timestamp;
 
 
         return $returnData;

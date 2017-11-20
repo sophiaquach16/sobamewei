@@ -54,8 +54,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ( $tr->timeStamp )
-                                            {{$tr->timeStamp}}
+                                        @if ( $tr->timestamp )
+                                            {{$tr->timestamp}}
                                         @else
                                             N/A
                                         @endif
