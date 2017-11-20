@@ -79,7 +79,7 @@ class ShoppingCartMapper {
 
         if($purchaseList !=null){
 
-            $list= $this->shoppingCart->getEIList();
+            $list= $this->transaction->purchase($userId);
 
             foreach($list as $ei) {
                 $this->unitOfWork->registerNew($ei);

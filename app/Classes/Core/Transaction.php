@@ -42,7 +42,12 @@ class Transaction
         $this->set($data);
     }
 
-
+    public function purchase($userId)
+    {
+        $EIList =  ShoppingCart::getInstance();
+        $shoppingList = $EIList->getEIList();
+        return $shoppingList;
+    }
 
     public function set($data)
     {
