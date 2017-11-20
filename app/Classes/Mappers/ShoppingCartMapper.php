@@ -88,7 +88,7 @@ class ShoppingCartMapper {
                 $this->unitOfWork->commit();
 
             }
-            //TODO delete the ei from the catalog
+            //delete the ei from the catalog
             $this->deleteEI($list);
             return 'Your order is successfully placed';
         }

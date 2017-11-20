@@ -77,11 +77,11 @@ Route::post('shopping-cart',array(
     'uses' => 'CustomerController@doPurchase'
 ));
 Route::get('my-account', array(
-    'uses' => 'CustomerController@showAccount'
+    'uses' => 'CustomerController@showTransaction'
 ));
 
 Route::post('my-account', array(
-    'uses' => 'MainController@deleteUser'//TODO change the post method for retirm
+    'uses' => 'MainController@deleteUser'
 ));
 
 Route::get('show-registered-users', array(
