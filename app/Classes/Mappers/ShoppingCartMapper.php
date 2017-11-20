@@ -77,9 +77,8 @@ class ShoppingCartMapper {
         $this->transaction->setTimeStamp($timeStamp);
         $purchaseList = $this->viewCart();
 
-     //   $this->electronicSpecification ->unsetUserAndExpiry($userId);
-
         if($purchaseList !=null){
+
             $list= $this->transaction->purchase($userId);
 
             foreach($list as $ei) {
