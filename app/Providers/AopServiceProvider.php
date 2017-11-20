@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use Doctrine\Common\Annotations\Reader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Go\Core\AspectContainer;
 use Illuminate\Contracts\Foundation\Application;
 use App\Aspect\LoggingAspect;
 use App\Aspect\GetESAspect;
+use App\Aspect\RetrieveSpecificationAspect;
 use Illuminate\Support\ServiceProvider;
 use PhpDeal\Aspect\InvariantCheckerAspect;
 use PhpDeal\Aspect\PostconditionCheckerAspect;
@@ -38,6 +40,9 @@ class AopServiceProvider extends ServiceProvider
         $this->app->singleton(GetESAspect::class, function (Application $app) {
             return new GetESAspect();
         });
+        $this->app->singleton(RetrieveSpecificationAspect:: class, function (Application $app){
+          return new RetrieveSpecificationAspect();
+        });
 
         $this->app->singleton(Reader::class, function (Application $app) {
             $container = $app->make(AspectContainer::class);
@@ -58,6 +63,7 @@ class AopServiceProvider extends ServiceProvider
             [
                 LoggingAspect::class,
                 GetESAspect::class,
+                RetrieveSpecificationAspect::class,
                 InvariantCheckerAspect::class,
                 PreconditionCheckerAspect::class,
                 PostconditionCheckerAspect::class
