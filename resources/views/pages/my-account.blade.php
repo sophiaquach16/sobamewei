@@ -28,33 +28,33 @@
                         <td colspan="17">
                         </td>
                     </tr>
-                    @if (! empty($purchaseList))
-                        @foreach ($purchaseList as $tr)
+                    @if (! empty($transactions))
+                        @foreach ($transactions as $tr)
 
                                 <tr bgcolor="#cce6ff">
 
-                                    <td>
-                                        @switch($tr->ElectronicType_id)
-                                            @case('1')
-                                            Desktop
-                                            @break
+                                    {{--<td>--}}
+                                        {{--@switch($tr->ElectronicType_id)--}}
+                                            {{--@case('1')--}}
+                                            {{--Desktop--}}
+                                            {{--@break--}}
 
-                                            @case('2')
-                                            Laptop
-                                            @break
+                                            {{--@case('2')--}}
+                                            {{--Laptop--}}
+                                            {{--@break--}}
 
-                                            @case('3')
-                                            Monitor
-                                            @break
+                                            {{--@case('3')--}}
+                                            {{--Monitor--}}
+                                            {{--@break--}}
 
-                                            @case('4')
-                                            Tablet
-                                            @break
+                                            {{--@case('4')--}}
+                                            {{--Tablet--}}
+                                            {{--@break--}}
 
-                                            @default
-                                            N/A
-                                        @endswitch
-                                    </td>
+                                            {{--@default--}}
+                                            {{--N/A--}}
+                                        {{--@endswitch--}}
+                                    {{--</td>--}}
                                     <td>
                                         @if ( $tr->serialNumber )
                                             {{$tr->serialNumber}}
@@ -76,13 +76,13 @@
                                                 N/A
                                         @endif
                                     </td>
-                                    <td>
-                                        @if ( $tr->price )
-                                            ${{$tr->price}}
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
+                                    {{--<td>--}}
+                                        {{--@if ( $tr->price )--}}
+                                            {{--${{$tr->price}}--}}
+                                        {{--@else--}}
+                                            {{--N/A--}}
+                                        {{--@endif--}}
+                                    {{--</td>--}}
                                     <td>
                                         <th> <button type="submit" class="btn btn-info btn-block">Return</button></th>
                                     </td>

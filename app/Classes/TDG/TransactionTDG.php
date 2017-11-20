@@ -34,6 +34,14 @@ class TransactionTDG{
 //        // dd($eIPurchasedDataList);
 //        return $eSDataList;
 //    }
+
+public function findAllTransactions(){
+
+    $queryString = 'SELECT * FROM Transaction';
+    $eIPurchasedDataList = $this->conn->directQuery($queryString);
+    return $eIPurchasedDataList;
+}
+
     public function findAll($userId){
         $queryString = 'SELECT *
             FROM Transaction
@@ -71,11 +79,12 @@ class TransactionTDG{
             //We send to MySQLConnection the associative array, to bind values to keys
             //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
             $eSDataList = $this->conn->query($queryString, $parameters);
-            $eSDataList = json_decode(json_encode($eSDataList), true);
+            //$eSDataList = json_decode(json_encode($eSDataList), true);
             //dd($eSDataList);
-            foreach ($eSDataList[0] as $eachAttribute => $value){
-                $singleItem->$eachAttribute = $value;
-            }
+
+//            foreach ($eSDataList[0] as $eachAttribute => $value){
+//                $singleItem->$eachAttribute = $value;
+//            }
 
         }
         return $purchaseList;

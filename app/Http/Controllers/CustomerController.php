@@ -16,9 +16,9 @@ class CustomerController extends Controller {
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('CheckCustomer');
-        $this->transactionMapper = new TransactionMapper();
         $this->middleware(function ($request, $next) {
             $this->shoppingCartMapper = new ShoppingCartMapper(auth()->user()->id);
+            $this->transactionMapper = new TransactionMapper();
 
             return $next($request);
         });
@@ -64,10 +64,11 @@ class CustomerController extends Controller {
     }
 
     public function showAccount() {
-        $purchaseList = $this->transactionMapper->getAllElectronicSpecifications(Auth::user()->id);
-        //dd($purchaseList);
-        //dd('hello');
-        return view('pages.my-account', ['purchaseList' => $purchaseList]);
+
+        $transactions = $this->transactionMapper->getAllTransactions();
+
+        return view('pages.my-account', ['$transactions' => $transactions]);
+
     }
 
 }
