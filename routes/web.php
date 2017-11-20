@@ -77,7 +77,7 @@ Route::post('shopping-cart',array(
     'uses' => 'CustomerController@doPurchase'
 ));
 Route::get('my-account', array(
-    'uses' => 'CustomerController@showAccount'
+    'uses' => 'CustomerController@showTransaction'
 ));
 
 Route::post('my-account', array(

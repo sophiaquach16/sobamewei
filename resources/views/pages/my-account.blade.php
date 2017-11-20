@@ -34,14 +34,14 @@
 
                         </td>
                     </tr>
-                    @if (! empty($transaction))
-                        @foreach ($transaction as $tr)
+                    @if (! empty($transactions))
+                        @foreach ($transactions as $tr)
 
                                 <tr bgcolor="#cce6ff">
 
                                     <td>
-                                        @if ($tr->electronicSpec_id )
-                                            {{$tr->electronicSpec_id}}
+                                        @if ($tr->ElectronicSpec_id )
+                                            {{$tr->ElectronicSpec_id}}
                                         @else
                                             N/A
                                         @endif
@@ -54,8 +54,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ( $tr->timestamp )
-                                            {{$tr->timestamp}}
+                                        @if ( $tr->timeStamp )
+                                            {{$tr->timeStamp}}
                                         @else
                                             N/A
                                         @endif

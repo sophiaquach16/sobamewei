@@ -130,6 +130,7 @@ class AdminController extends BaseController {
     }
     public function showRegisteredUsers(){
         $users =$this->UserCatalogMapper->getAllUsers();
+        dd($users);
         return view('pages.show-registered-users', ['user' => $users]);
     }
 
