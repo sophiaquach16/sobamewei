@@ -8,58 +8,65 @@
 
 namespace App\Classes\Core;
 
+use App\Classes\Core\ElectronicItem;
+use App\Classes\Core\User;
+use App\Classes\Core\ShoppingCart;
+
 
 
 
 class Transaction
 {
+    private $customerId;
+    private $timeStamp;
+    // private $serialNumber;
     private $item_id;
     private $customer_id;
-    private $timestamp;
+    //  private $timestamp;
     private $serialNumber;
     private $ElectronicSpec_id;
+    // private $transactionItems;
+    // private $ElectronicSpecification_id;
     function __construct() {
         $argv = func_get_args();
-        switch (func_num_args()) {
-            case 0:
-                self::__construct0();
-                break;
+        switch( func_num_args() ) {
             case 1:
                 self::__construct1($argv[0]);
                 break;
         }
     }
-    public function __construct0()
-    {
 
-        $this->timestamp = '';
-        $this->customer_id = 0;
-        $this->item_id = 0;
-        $this->serialNumber = 0;
-        $this->ElectronicSpec_id = 0;
-    }
     function __construct1($data) {
         $this->set($data);
     }
+//    public function __construct()
+//    {
+//        $this->timeStamp = null;
+//        $this->customerId = 0;
+//    }
 
     public function purchase($userId)
     {
         $EIList =  ShoppingCart::getInstance();
         $shoppingList = $EIList->getEIList();
+
         return $shoppingList;
     }
 
-    public function set($data)
-    {
+    public function setTimeStamp($time){
+        $this->timeStamp =$time;
+    }
 
-        if (isset($data->timestamp)) {
-            $this->timestamp = $data->timestamp;
+    public function getTimeStamp(){
+        return $this->timeStamp;
+    }
+
+    public function set($data) {
+        if (isset($data->item_id)) {
+            $this->item_id = $data->item_id;
         }
         if (isset($data->customer_id)) {
             $this->customer_id = $data->customer_id;
-        }
-        if (isset($data->item_id)) {
-            $this->item_id = $data->item_id;
         }
         if (isset($data->serialNumber)) {
             $this->serialNumber = $data->serialNumber;
@@ -67,50 +74,25 @@ class Transaction
         if (isset($data->ElectronicSpec_id)) {
             $this->ElectronicSpec_id = $data->ElectronicSpec_id;
         }
+        if (isset($data->timeStamp)) {
+            $this->timeStamp = $data->timeStamp;
+        }
+
     }
 
-
-    public function get() {
+    public function get(){
         $returnData = new \stdClass();
 
-        $returnData->timestamp = $this->timestamp;
-        $returnData->customer_id = $this->customer_id;
         $returnData->item_id = $this->item_id;
+        $returnData->customer_id = $this->customer_id;
         $returnData->serialNumber = $this->serialNumber;
         $returnData->ElectronicSpec_id = $this->ElectronicSpec_id;
+        $returnData->timeStamp = $this->timeStamp;
+
+
         return $returnData;
     }
 
-    public function setTimeStamp($time){
-        $this->timestamp =$time;
-    }
-
-    public function getTimeStamp(){
-        return $this->timestamp;
-    }
-    public function getElectronicSpecId(){
-        return $this->ElectronicSpec_id;
-
-    }
-    public function setElectronicSpecId($specId){
-        $this->ElectronicSpec_id = $specId;
-    }
-
-    public function getItemId(){
-        return $this->item_id;
-
-    }
-    public function setItemId($id){
-        $this->item_id=$id;
-
-    }
-    public function getSerialNumber(){
-        return $this->serialNumber;
-    }
-    public function setSerialNumber($serialNum){
-        $this->serialNumber=$serialNum;
-
-    }
 
 
 }

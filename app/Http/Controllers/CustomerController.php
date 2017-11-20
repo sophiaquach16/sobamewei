@@ -63,12 +63,10 @@ class CustomerController extends Controller {
         return Redirect::to('/');
     }
 
-    public function showAccount() {
 
+    public function showTransaction() {
         $transactions = $this->transactionMapper->getAllTransactions();
 
-        return view('pages.my-account', ['$transactions' => $transactions]);
-
+        return view('pages.my-account', ['transactions' => $transactions]);
     }
-
 }

@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Classes\Core;
+
 use Hash;
+
 class TransactionCatalog
 {
 
     private $transactionList;
 
-    function __construct0() {
-        $this->transactionList=[];
+    function __construct()
+    {
+        $this->transactionList = array();
         $argv = func_get_args();
         switch (func_num_args()) {
             case 1:
@@ -16,28 +19,32 @@ class TransactionCatalog
                 break;
         }
     }
-    function __construct1($trList) {
-        //$this->transactionList = array();
-        $this->setTransactionList($trList);
+
+    function __construct1($transactionListData)
+    {
+        $this->transactionList = array();
+
+        $this->setTransactionList($transactionListData);
     }
 
-    function setTransactionList($trList) {
-
-        foreach ($trList as $oneTransaction) {
-            $transaction = new Transaction($oneTransaction);
-            //$this->transactionList->append($transaction);
-           array_push($this->transactionList, $transaction);
+    function setTransactionList($transactionListData)
+    {
+        //dd($userListData);
+        foreach ($transactionListData as $transactionData) {
+            $transaction = new Transaction($transactionData);
+            array_push($this->transactionList, $transaction);
         }
     }
-    function getTransactionList() {
-        $returnObject = array();
-     if(is_array ($this->transactionList)) {
-         foreach ($this->transactionList as $oneTransaction) {
-            // $returnObject[] = $oneTransaction->get();
-             array_push($returnObject, $oneTransaction->get());
-         }
-     }
-        return $returnObject;
+
+    function getTransactionList()
+    {
+        $transactions = array();
+
+        foreach ($this->transactionList as $transaction) {
+            array_push($transactions, $transaction->get());
+        }
+
+        return $transactions;
     }
 
 
