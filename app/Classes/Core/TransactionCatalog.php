@@ -47,5 +47,17 @@ class TransactionCatalog
         return $transactions;
     }
 
+    function getTransactionListForUser($user_id)
+    {
+        $transactions = array();
+
+        foreach ($this->transactionList as $transaction) {
+            if ($transaction->get()->customer_id == $user_id){
+                array_push($transactions, $transaction->get());
+            }
+        }
+
+        return $transactions;
+    }
 
 }
