@@ -8,6 +8,7 @@
 
             <form method="post" id="purchase-history-form" class="form-horizontal col-sm-8  text-center purchase-history-form" action="/my-account" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                 <button type="submit" class="btn btn-success btn-block">Delete Account</button>
                 <div id="formLoad">
                     {{--<div class="row">--}}
@@ -20,10 +21,7 @@
                     </div>
                     <table>
                         <tr>
-                            {{--<th>Brand Name</th>--}}
-                            {{--<th>Display Size</th>--}}
-                            {{--<th>Model Number</th>--}}
-                            {{--<th>Price</th>--}}
+
                             <th>ElectronicSpec_id</th>
                             <th>serialNumber</th>
                             <th>TimeStamp</th>
@@ -60,7 +58,7 @@
                                             N/A
                                         @endif
                                     </td>
-                                    <td><th> <button type="submit" class="btn btn-info btn-block">Return</button></th></td>
+                                    {{--<td><th> <button type="submit" class="btn btn-info btn-block">Return</button></th></td>--}}
 
                                 </tr>
                                 <tr #cce6ff>
