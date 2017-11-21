@@ -7,19 +7,16 @@
  */
 namespace Tests\Unit;
 
-use App\Classes\Core\ShoppingCart;
-use App\Classes\Core\ElectronicItem;
 use App\Classes\Core\TransactionCatalog;
-use App\Classes\Core\User;
 use Tests\TestCase;
 use App\Classes\Core\Transaction;
 use Hash;
-use Illuminate\Support\Facades\Auth;
 
-class TransactionTest extends TestCase {
-    //tests purchase, set and get
+
+class TransactionCatalogTest extends TestCase {
+
     public function testGetAndSet(){
-        //Create new transaction and transaction Catalog
+        //Create new transaction and TransactionCatalog
         $transaction1 = new Transaction();
         $transaction2 = new Transaction();
         $transactionCatalog = new TransactionCatalog();
@@ -44,15 +41,13 @@ class TransactionTest extends TestCase {
         $transaction2->set($data2);
 
         $transactionList = array($transaction1,$transaction2);
-        //var_dump($transactionList);
+
         //set values to the catalog
         $transactionCatalog->setTransactionList($transactionList);
         $gettingTransactions = $transactionCatalog->getTransactionList();
-        var_dump($transactionList);
 
-        var_dump($gettingTransactions);
+        //Check if size is same for both
         $this->assertTrue(sizeOf($gettingTransactions) == sizeOf($transactionList));
     }
-
 }
 
