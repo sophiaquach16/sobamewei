@@ -26,8 +26,9 @@ class AdminController extends BaseController {
     private $electronicCatalogMapper;
 
     public function __construct() {
-        $this->electronicCatalogMapper = new ElectronicCatalogMapper();
-        $this->UserCatalogMapper = new UserCatalogMapper();
+        //Removed these two thanks to the MapperAspect.php
+        //$this->electronicCatalogMapper = new ElectronicCatalogMapper();
+        //$this->UserCatalogMapper = new UserCatalogMapper();
         $this->middleware('auth');
         $this->middleware('CheckAdmin');
     }
@@ -36,7 +37,10 @@ class AdminController extends BaseController {
     //create a simlink that  allow public access to the local images directory with command:
     //php artisan storage:link
     //more info: https://laravel.com/docs/5.5/filesystem#the-public-disk
-    public function doAddItems(Request $request) {
+    /**
+     * @Mapper(mapperType="ecm")
+     */
+     public function doAddItems(Request $request) {
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             //image will be saved with timestamp as its name
@@ -56,7 +60,7 @@ class AdminController extends BaseController {
         $electronicSpecificationData = (object) $request->except(['_token', 'quantity']);
         $electronicSpecificationData->image = $url;
 
-        if ($this->electronicCatalogMapper->makeNewElectronicSpecification($request->input('quantity'), $electronicSpecificationData)) { //
+        if ($request->mapper->makeNewElectronicSpecification($request->input('quantity'), $electronicSpecificationData)) { //
             Session::flash('success_msg', "Successfully added the electronic specification.");
             return Redirect::to('inventory');
         } else {
@@ -67,7 +71,7 @@ class AdminController extends BaseController {
 
     /**
      * @RetrieveSpecification(from="modifyRadioSelection")
-     * @Mapper(mapperType="ecm", methodCall="deleteElectronicItems")
+     * @Mapper(mapperType="ecm")
      */
     public function doModifyOrDelete(Request $request) {
         if ($request->object !== null && $request->input('submitButton') === 'modify') {
@@ -86,7 +90,7 @@ class AdminController extends BaseController {
             return view('index', ['eSToModify' => $eSToModify]);
         } else {
             if ($request->input('deleteCheckboxSelections') && $request->input('submitButton') === 'delete') {
-                $this->electronicCatalogMapper->deleteElectronicItems($request->input('deleteCheckboxSelections'));
+                $request->mapper->deleteElectronicItems($request->input('deleteCheckboxSelections'));
                 Session::flash('success_msg', "Successfully deleted the electronic items.");
                 return Redirect::back();
             } else {
@@ -98,7 +102,7 @@ class AdminController extends BaseController {
 
     /**
      * @RetrieveSpecification(from="modifyRadioSelection")
-     * @Mapper(mapperType="ecm", methodCall="modifyElectronicSpecification")
+     * @Mapper(mapperType="ecm")
      */
     public function doModify(Request $request) {
         if ($request->hasFile('image')) {
@@ -120,7 +124,7 @@ class AdminController extends BaseController {
         $electronicSpecificationData = (object) $request->except(['quantity', 'ElectronicType_id', '_token']);
         $electronicSpecificationData->image = $url;
 
-        if ($this->electronicCatalogMapper->modifyElectronicSpecification($request->input('quantity'), $request->session()->get('eSToModify'), $electronicSpecificationData)) {
+        if ($request->mapper->modifyElectronicSpecification($request->input('quantity'), $request->session()->get('eSToModify'), $electronicSpecificationData)) {
             Session::flash('success_msg', "Successfully modified the electronic specification.");
             return Redirect::to('inventory');
         } else {
@@ -130,10 +134,10 @@ class AdminController extends BaseController {
     }
 
     /**
-     * @Mapper(mapperType="ecm", methodCall="getAllElectronicSpecifications")
+     * @Mapper(mapperType="ecm")
      */
-    public function showInventory() {
-        $electronicSpecifications = $this->electronicCatalogMapper->getAllElectronicSpecifications();
+    public function showInventory(Request $request) {
+        $electronicSpecifications = $request->mapper->getAllElectronicSpecifications();
 
         return view('pages.inventory', ['electronicSpecifications' => $electronicSpecifications]);
     }
@@ -143,10 +147,10 @@ class AdminController extends BaseController {
     }
 
     /**
-     * @Mapper(mapperType="ucm", methodCall="getAllUsers")
+     * @Mapper(mapperType="ucm")
      */
-    public function showRegisteredUsers(){
-        $users =$this->UserCatalogMapper->getAllUsers();
+    public function showRegisteredUsers(Request $request){
+        $users = $request->mapper->getAllUsers();
         return view('pages.show-registered-users', ['user' => $users]);
     }
 

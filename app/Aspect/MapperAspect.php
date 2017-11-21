@@ -25,8 +25,8 @@ class MapperAspect implements Aspect
 
   public function __construct()
   {
-    $this->electronicMapper = new ElectronicCatalogMapper();
-    $this->shoppingCartMapper = new ShoppingCartMapper();
+    $this->electronicCatalogMapper = new ElectronicCatalogMapper();
+    //$this->shoppingCartMapper = new ShoppingCartMapper();
     $this->userCatalogMapper = new UserCatalogMapper();
   }
 
@@ -38,14 +38,26 @@ class MapperAspect implements Aspect
    */
   public function beforeMethod(MethodInvocation $invocation)
   {
-    if ($from == "ecm"){
-      $this->electronicCatalogMapper->$methodCall;
+    $retrieveObj = $invocation->getMethod()->getAnnotation(Mapper::class);
+    if ($retrieveObj == null) return;
+
+    $mapperType = $retrieveObj->mapperType;
+    $request = $invocation->getArguments()[0];
+
+    // check which mapper to use:
+
+    if ($mapperType == "ecm"){
+      $request->mapper = $this->electronicCatalogMapper;
     }
-    if ($from == "scm") {
-      $this->shoppingCartMapper->$methodCall;
+
+    if ($mapperType == "scm") {
+      $request->mapper = $this->shoppingCartMapper;
+      //$request->mapper = new ShoppingCartMapper(auth()->user()->id);
+
     }
-    if ($from == "ucm"){
-      $this->userCatalogMapper->$methodCall;
+
+    if ($mapperType == "ucm"){
+      $request->mapper = $this->userCatalogMapper;
     }
 
   }

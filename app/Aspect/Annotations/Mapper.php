@@ -22,11 +22,4 @@ class Mapper extends Annotation {
    */
   public $mapperType;
 
-  /**
-   * @Required
-   *
-   * @var string
-   */
-  public $methodCall;
-
 }

@@ -8,6 +8,7 @@ use Go\Core\AspectContainer;
 use Illuminate\Contracts\Foundation\Application;
 use App\Aspect\LoggingAspect;
 use App\Aspect\GetESAspect;
+use App\Aspect\MapperAspect;
 use App\Aspect\RetrieveSpecificationAspect;
 use Illuminate\Support\ServiceProvider;
 use PhpDeal\Aspect\InvariantCheckerAspect;
@@ -41,7 +42,7 @@ class AopServiceProvider extends ServiceProvider
             return new GetESAspect();
         });
         $this->app->singleton(MapperAspect::class, function (Application $app) {
-            return new GetMapperAspect();
+            return new MapperAspect();
         });
         $this->app->singleton(RetrieveSpecificationAspect:: class, function (Application $app){
           return new RetrieveSpecificationAspect();
@@ -66,6 +67,7 @@ class AopServiceProvider extends ServiceProvider
             [
                 LoggingAspect::class,
                 GetESAspect::class,
+                MapperAspect::class,
                 RetrieveSpecificationAspect::class,
                 InvariantCheckerAspect::class,
                 PreconditionCheckerAspect::class,
