@@ -204,8 +204,6 @@ class ShoppingCartTest extends TestCase
         Auth::login($user);
         Auth::check();
 
-        //Create outdated Electronic Item
-
         $electronicItem1 = new ElectronicItem();
         $electronicItem2 = new ElectronicItem();
 

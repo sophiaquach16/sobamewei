@@ -74,6 +74,7 @@ class UserCatalogMapper {
     }
 
     function deleteUser($userId){
+
         $this->identityMap->delete('User', 'id', $userId);
         $user=$this->userCatalog->getDeleteUserInfo($userId);
         $this->unitOfWork->registerDeleted($user);
@@ -81,6 +82,10 @@ class UserCatalogMapper {
     }
 
     function deleteCurrentUser($user){
+        $userId =$user->get()->id;
+       // dd($userId);
+        $this->userCatalogTDG->deleteLoginLog($userId);
+        $this->userCatalogTDG->deleteUserTransaction($userId);
         return $this->userCatalogTDG->deleteUser($user);
     }
 
