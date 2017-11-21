@@ -96,5 +96,20 @@ class TransactionTest extends TestCase {
         $this->assertTrue($purchaseItems == $shoppingList);
     }
 
+    public function testGetSetTimestamp(){
+        //create a transaction
+        $transaction = new Transaction();
+        $transactionData = new \stdClass();
+        $transactionData->item_id = '1';
+        $transactionData->customer_id='1';
+        $transactionData->serialNumber="123";
+        $transactionData->ElectronicSpec_id='1';
+
+        $transaction->set($transactionData);
+
+        $transaction->setTimeStamp("2017-12-12 12:12:12");
+        $this->assertTrue($transaction->getTimeStamp() == "2017-12-12 12:12:12");
+    }
+
 
 }
