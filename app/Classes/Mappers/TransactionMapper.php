@@ -31,13 +31,9 @@ class TransactionMapper {
         $this->identityMap = new IdentityMap();
     }
 
+    function getAllTransactions($user_id) {
 
-
-
-
-    function getAllTransactions(){
-
-        $transactions= $this->transactionCatalog->getTransactionList();
+        $transactions= $this->transactionCatalog->getTransactionListForUser($user_id);
 
         return $transactions;
     }

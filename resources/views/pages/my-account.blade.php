@@ -11,67 +11,61 @@
 
                 <button type="submit" class="btn btn-success btn-block">Delete Account</button>
                 <div id="formLoad">
-                    {{--<div class="row">--}}
-                    {{--<div class="items text-center"><span class="blueTitle"></span></div>--}}
-
-                    {{--</div>--}}
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="purchase-history">Purchase History</label>
+                    <div class="row">
+                        <div class="items text-center"><span class="blueTitle">Purchase History</span></div>
                     </div>
-                    <table>
-                        <tr>
+            </form>
 
-                            <th>ElectronicSpec_id</th>
-                            <th>serialNumber</th>
-                            <th>TimeStamp</th>
-                            <th> </th>
-                        </tr>
+                    <table class="table  table-striped">
                         <tr>
-                            <td colspan="17">
-
-                            </td>
+                        <th>ElectronicSpecification Id</th>
+                        <th>Serial Number</th>
+                        <th>Date and Time of Purchase</th>
+                        <th>Request for a return</th>
                         </tr>
                         @if (! empty($transactions))
-                            @foreach ($transactions as $tr)
-
+                        @foreach ($transactions as $tr)
+                            <form method="post" action="/show-transaction-details">
+                                {{ csrf_field() }}
                                 <tr bgcolor="#cce6ff">
-
+                                    {{--<td input type="hidden" name="{{$tr->ElectronicSpec_id}}" value="{{$tr->ElectronicSpec_id}}">--}}
                                     <td>
-                                        @if ($tr->ElectronicSpec_id )
-                                            {{$tr->ElectronicSpec_id}}
+                                        <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>                                        <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>
+                                        <input type="hidden" name="customer_id" value="{{$tr->customer_id}}"/>
+                                        <input type="hidden" name="ElectronicSpec_id" value="{{$tr->ElectronicSpec_id}}"/>
+                                    @if ($tr->ElectronicSpec_id )
+                                        {{$tr->ElectronicSpec_id}}
                                         @else
-                                            N/A
+                                        N/A
                                         @endif
                                     </td>
                                     <td>
+                                        <input type="hidden" name="serialNumber" value="{{$tr->serialNumber}}"/>
                                         @if ( $tr->serialNumber )
-                                            {{$tr->serialNumber}}
+                                        {{$tr->serialNumber}}
                                         @else
-                                            N/A
+                                        N/A
                                         @endif
                                     </td>
                                     <td>
-                                        @if ( $tr->timestamp )
-                                            {{$tr->timestamp}}
+                                        <input type="hidden" name="timestamp" value="{{$tr->timestamp}}"/>
+                                    @if ( $tr->timestamp )
+                                        {{$tr->timestamp}}
                                         @else
-                                            N/A
-                                        @endif
+                                        N/A
+                                    @endif
                                     </td>
-                                    {{--<td><th> <button type="submit" class="btn btn-info btn-block">Return</button></th></td>--}}
-
-                                </tr>
-                                <tr #cce6ff>
-                                    <td colspan="17">
-
+                                    <td class="col-md-3">
+                                        {{--<input type="hidden" name="ANT{{$tr}}" value="ANT{{$tr->ElectronicSpec_id}}"/>--}}
+                                        {{--<a href="/show-transaction-details?eS={{$tr->ElectronicSpec_id}}" class="btn btn-info" role="button"> Add To Cart </a>--}}
+                                        <button type="submit" id ="ANT_{{ $tr->item_id}}_{{ $tr->ElectronicSpec_id}}" name ="ANT_{{ $tr->item_id}}_{{ $tr->ElectronicSpec_id}}" class="btn btn-success btn-md">Get Purchase Details</button>
                                     </td>
                                 </tr>
-
-                            @endforeach
+                            </form>
+                        @endforeach
                         @endif
                     </table>
                 </div>
-            </form>
         </div>
     </div>
 @stop
