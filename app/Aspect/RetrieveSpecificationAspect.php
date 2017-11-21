@@ -40,10 +40,8 @@ class RetrieveSpecificationAspect implements Aspect
     if ($id !== null) $request->object = $this->getObject($id);
   }
 
-  // from kind return the right mapper, one of the 3
   public function getObject($id) {
     return $this->mapper->getElectronicSpecification($id);
   }
-
 
 }

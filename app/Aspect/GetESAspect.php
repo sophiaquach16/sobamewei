@@ -7,9 +7,6 @@ use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\Before;
 use Psr\Log\LoggerInterface;
 
-/**
- * Application logging aspect (Example provided by goaop-laravel-bridge)
- */
 class GetESAspect implements Aspect
 {
     /**

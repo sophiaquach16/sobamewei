@@ -40,6 +40,9 @@ class AopServiceProvider extends ServiceProvider
         $this->app->singleton(GetESAspect::class, function (Application $app) {
             return new GetESAspect();
         });
+        $this->app->singleton(MapperAspect::class, function (Application $app) {
+            return new GetMapperAspect();
+        });
         $this->app->singleton(RetrieveSpecificationAspect:: class, function (Application $app){
           return new RetrieveSpecificationAspect();
         });

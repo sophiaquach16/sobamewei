@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Aspect\Annotations\RetrieveSpecification;
+use App\Aspect\Annotations\Mapper;
 use Image;
 use Session;
 
@@ -66,6 +67,7 @@ class AdminController extends BaseController {
 
     /**
      * @RetrieveSpecification(from="modifyRadioSelection")
+     * @Mapper(mapperType="ecm", methodCall="deleteElectronicItems")
      */
     public function doModifyOrDelete(Request $request) {
         if ($request->object !== null && $request->input('submitButton') === 'modify') {
@@ -94,6 +96,10 @@ class AdminController extends BaseController {
         }
     }
 
+    /**
+     * @RetrieveSpecification(from="modifyRadioSelection")
+     * @Mapper(mapperType="ecm", methodCall="modifyElectronicSpecification")
+     */
     public function doModify(Request $request) {
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -123,6 +129,9 @@ class AdminController extends BaseController {
         }
     }
 
+    /**
+     * @Mapper(mapperType="ecm", methodCall="getAllElectronicSpecifications")
+     */
     public function showInventory() {
         $electronicSpecifications = $this->electronicCatalogMapper->getAllElectronicSpecifications();
 
@@ -132,6 +141,10 @@ class AdminController extends BaseController {
     public function showAddItems() {
         return view('pages.add-items');
     }
+
+    /**
+     * @Mapper(mapperType="ucm", methodCall="getAllUsers")
+     */
     public function showRegisteredUsers(){
         $users =$this->UserCatalogMapper->getAllUsers();
         return view('pages.show-registered-users', ['user' => $users]);
