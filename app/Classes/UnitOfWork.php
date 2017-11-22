@@ -5,6 +5,7 @@ namespace App\Classes;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\ElectronicSpecification;
 use App\Classes\Core\ElectronicItem;
+use App\Classes\Core\Transaction;
 use App\Classes\Core\UserCatalog;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Core\User;
@@ -17,6 +18,7 @@ class UnitOfWork {
     private $electronicCatalogMapper;
     private $userCatalogMapper;
     private $shoppingCartMapper;
+    private $transactionMapper;
 
     function __construct($mappers) {
         $this->newList = array();
@@ -33,6 +35,10 @@ class UnitOfWork {
         
         if (isset($mappers['shoppingCartMapper'])) {
             $this->shoppingCartMapper = $mappers['shoppingCartMapper'];
+        }
+
+        if (isset($mappers['transactionMapper'])) {
+            $this->transactionMapper = $mappers['transactionMapper'];
         }
         
     }
@@ -62,8 +68,8 @@ class UnitOfWork {
                 $this->shoppingCartMapper->saveTransaction($new);
 
             }
-            if ($new instanceof Purchase) {
-                $this->TransactionMapper->savePurchase($new);
+            if ($new instanceof Transaction) {
+                $this->transactionMapper->saveTransaction($new);
 
             }
         }

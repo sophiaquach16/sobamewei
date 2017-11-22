@@ -22,7 +22,7 @@ class CustomerController extends Controller
         $this->middleware('CheckCustomer');
         $this->middleware(function ($request, $next) {
             $this->shoppingCartMapper = new ShoppingCartMapper(auth()->user()->id);
-            $this->transactionMapper = new TransactionMapper();
+            $this->transactionMapper = new TransactionMapper(auth()->user()->id);
             $this->electronicCatalogMapper = new ElectronicCatalogMapper();
 
             return $next($request);
@@ -67,9 +67,8 @@ class CustomerController extends Controller
     public function doPurchase(Request $request)
     {
         $request['time'] = date("Y-m-d h:i:s a", time());
-        $message = $this->shoppingCartMapper->purchase(Auth::user()->id, $request['time']);
-        $request->session()->flash('success_msg', $message);
-        //return view('pages.shopping-cart', ['eSList' => $eSList]);
+        $userId = Auth::user()->id;
+        $this->transactionMapper->makeNewTransaction($request['time'],$userId);
         return Redirect::to('/');
     }
 

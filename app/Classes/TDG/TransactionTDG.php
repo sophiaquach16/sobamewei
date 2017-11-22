@@ -27,5 +27,28 @@ class TransactionTDG {
         return $transactionDataList;
     }
 
+    function addTransaction($transaction, $timeStamp)//electronic item
+    {
+
+        $parameters = new \stdClass();
+        $parameters->ElectronicSpec_id=$transaction->get()->ElectronicSpec_id;
+        $parameters->item_id=$transaction->get()->item_id;
+        $parameters->serialNumber=$transaction->get()->serialNumber;
+        $parameters->timestamp=$timeStamp;
+        $parameters->customer_id=$transaction->get()->customer_id;
+        //dd($parameters);
+        $queryString = 'INSERT INTO Transaction SET ';
+        foreach ($parameters as $key => $value) {
+            if ($value !== null) {
+                $queryString .= $key . ' = :' . $key;
+                $queryString .= ' , ';
+            }
+        }
+//We delete the last useless ' , '
+        $queryString = substr($queryString, 0, -2);
+        //dd($queryString);
+        return $this->conn->query($queryString, $parameters);
+    }
+
 
 }
