@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use App\Classes\Core\Transaction;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\ElectronicSpecification;
 use App\Classes\Core\ElectronicItem;

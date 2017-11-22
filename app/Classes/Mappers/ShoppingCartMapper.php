@@ -8,7 +8,6 @@ use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\TDG\ElectronicCatalogTDG;
-use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
@@ -22,7 +21,6 @@ class ShoppingCartMapper {
     private $shoppingCartTDG;
     private $unitOfWork;
     private $identityMap;
-    private $electronicSpecification;
     private $ElectronicCatalogMapper;
 
     function __construct($userId) {
@@ -34,7 +32,7 @@ class ShoppingCartMapper {
         $this->identityMap = new IdentityMap();
         $this->transaction = new transaction();
         $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
-        $this->ElectronicCatalogMapper = new ElectronicCatalogMapper();
+
     }
 
     /**
@@ -83,10 +81,7 @@ class ShoppingCartMapper {
 
             foreach($list as $ei) {
                 $this->unitOfWork->registerNew($ei);
-
-               // $this->unitOfWork->registerDeleted($ei);
                 $this->unitOfWork->commit();
-
             }
             //delete the ei from the catalog
             $this->deleteEI($list);

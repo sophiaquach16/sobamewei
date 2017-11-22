@@ -1,8 +1,9 @@
 @extends('layouts.default')
 @section('content')
 <div class="text-center"><h2 class="blueTitle">Transaction Detail</h2></div>
+<form method="post" id="transaction-detail-form" class="form-horizontal col-sm-8  text-center transaction-detail-form" action="/my-account" enctype="multipart/form-data">
 
-    @if( $eS )
+@if( $eS )
 
         @if($eS->ElectronicType_name === "Desktop")
             <div class="text-center">
@@ -142,6 +143,8 @@
             <br/>
             <br/>
 @stop
+
+</form>
 
 
 
