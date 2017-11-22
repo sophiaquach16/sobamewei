@@ -8,7 +8,7 @@ use App\Classes\Core\ElectronicItem;
 
 /**
  * shopping cart class
- * @Contract\Invariant("count($this->eIList) >= 0 && count($this->eIList) <= 7")
+ * @Contract\Invariant("Auth::check() && Auth::user()->admin === 0 && count($this->eIList) >= 0 && count($this->eIList) <= 7")
  */
 class ShoppingCart {
     private static  $instance= null;
@@ -21,7 +21,6 @@ class ShoppingCart {
      */
     private $size;
 
-    
     private function __construct(){
         $this->eIList = array(); 
         $this->size =0;
@@ -65,6 +64,7 @@ class ShoppingCart {
     }
 
 
+
     public function setEIList($eIListData) {
         $this->eIList = array();
         //dd($eSListData);
@@ -77,6 +77,8 @@ class ShoppingCart {
     }
 
     //helper method to remove the outdated EI in the eIList
+
+
     private function removeOutdatedEI(){
         foreach($this->eIList as $key => $value){
             if(strtotime($this->eIList[$key]->get()->expiryForUser) < strtotime(date("Y-m-d H:i:s"))){
@@ -87,6 +89,10 @@ class ShoppingCart {
     }
 
     //remove removed items in eIList
+
+    /**
+     * @Contract\Ensure("count($this->getEIList()) === $__old->size-1")
+     */
     public function updateEIList(){
         foreach($this->eIList as $key => $value){
             if(strtotime($this->eIList[$key]->get()->expiryForUser) == null && $this->eIList[$key]->get()->userId == null){
