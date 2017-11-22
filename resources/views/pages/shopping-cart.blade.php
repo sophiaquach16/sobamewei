@@ -38,7 +38,7 @@
         @else
             <h3>You have no items in your cart</h3>
         @endif
-        <button type="submit" class="btn btn-info">Purchase</button>
+        <button type="submit" class="btn btn-info" onClick="return confirm('Are you sure you want to purchase these items ? Click OK to continue the purchasing process.')">Purchase</button>
         <a href="/" class="btn btn-info" role="button"> Continue Shopping </a>
     </form>
     </div>

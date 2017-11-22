@@ -1,12 +1,20 @@
 @extends('layouts.default')
 @section('content')
-<div class="text-center"><h2 class="blueTitle">Transaction Detail</h2></div>
 
+<form method="post" action="my-account" enctype="multipart/form-data">
+    {{ csrf_field() }}
+<div class="text-center"><h2 class="blueTitle">Transaction Detail</h2></div>
+    <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>
+    <input type="hidden" name="serialNumber" value="{{$tr->serialNumber}}"/>
+    <input type="hidden" name="ElectronicSpec_id" value="{{$eS->id}}"/>
     @if( $eS )
 
         @if($eS->ElectronicType_name === "Desktop")
             <div class="text-center">
                 <h2>{{$eS->brandName}} {{$eS->ElectronicType_name}} - Model {{$eS->modelNumber}}</h2>
+                <h3>Purchase date : {{$tr->timestamp}}</h3>
+
+
             </div>
             <div class="row detailContainer">
                 <div class="col-md-1"></div>
@@ -18,6 +26,7 @@
                         @endif
                     </div>
                     <div class="col-md-4"> <br><br>
+                        <b>Serial Number</b>: {{$tr->serialNumber}}</br>
                         <b>Dimension</b>: {{$eS->dimension}} cm<br>
                         <b>Weight</b>: {{$eS->weight}} kg<br>
                         <b>RAM size</b>: {{$eS->ramSize}} GB<br>
@@ -137,14 +146,15 @@
         @endif
         <br><br><br><br>
     @endif
-
-            <button type="submit" class="btn btn-info btn-block">Return Item</button>
-            <br/>
-            <br/>
+    <div class="text-center">
+        <button type="submit" class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Return Purchase"
+                onClick="return confirm('Are you sure you want to return your item ? Click OK to continue the return process.');">
+            <i class="glyphicon glyphicon-trash"></i>
+            Return Item
+        </button>
+        </button>
+    </div>
+        <br/>
+        <br/>
+</form>
 @stop
-
-
-
-
-
-
