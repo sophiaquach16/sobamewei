@@ -16,7 +16,6 @@ class TransactionMapper {
     private $identityMap;
 
     function __construct() {
-        $argv = func_get_args();
         switch (func_num_args()) {
             case 0:
                 self::__construct0();
@@ -34,6 +33,12 @@ class TransactionMapper {
     function getAllTransactions($user_id) {
 
         $transactions= $this->transactionCatalog->getTransactionListForUser($user_id);
+
+        return $transactions;
+    }
+    function getTransactionByItemId($tr_id) {
+
+        $transactions= $this->transactionCatalog->getTransactionByItemId($tr_id);
 
         return $transactions;
     }

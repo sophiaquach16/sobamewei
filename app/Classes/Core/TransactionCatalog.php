@@ -60,4 +60,15 @@ class TransactionCatalog
         return $transactions;
     }
 
+    function getTransactionByItemId($it_id)
+    {
+        $transaction = new \stdClass();
+        foreach ($this->transactionList as $tr) {
+            if ($tr->get()->item_id == $it_id){
+                $transaction = $tr->get();
+            }
+        }
+        return $transaction;
+    }
+
 }
