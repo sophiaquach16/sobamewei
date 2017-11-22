@@ -8,12 +8,12 @@
 
             <form method="post" id="purchase-history-form" class="form-horizontal col-sm-8  text-center purchase-history-form" action="/my-account" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                 <button type="submit" class="btn btn-success btn-block">Delete Account</button>
                 <div id="formLoad">
                     <div class="row">
                         <div class="items text-center"><span class="blueTitle">Purchase History</span></div>
                     </div>
+                </div>
             </form>
 
                     <table class="table  table-striped">
@@ -28,9 +28,8 @@
                             <form method="post" action="/show-transaction-details">
                                 {{ csrf_field() }}
                                 <tr bgcolor="#cce6ff">
-                                    {{--<td input type="hidden" name="{{$tr->ElectronicSpec_id}}" value="{{$tr->ElectronicSpec_id}}">--}}
                                     <td>
-                                        <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>                                        <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>
+                                        <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>
                                         <input type="hidden" name="customer_id" value="{{$tr->customer_id}}"/>
                                         <input type="hidden" name="ElectronicSpec_id" value="{{$tr->ElectronicSpec_id}}"/>
                                     @if ($tr->ElectronicSpec_id )
@@ -56,9 +55,7 @@
                                     @endif
                                     </td>
                                     <td class="col-md-3">
-                                        {{--<input type="hidden" name="ANT{{$tr}}" value="ANT{{$tr->ElectronicSpec_id}}"/>--}}
-                                        {{--<a href="/show-transaction-details?eS={{$tr->ElectronicSpec_id}}" class="btn btn-info" role="button"> Add To Cart </a>--}}
-                                        <button type="submit" id ="ANT_{{ $tr->item_id}}_{{ $tr->ElectronicSpec_id}}" name ="ANT_{{ $tr->item_id}}_{{ $tr->ElectronicSpec_id}}" class="btn btn-success btn-md">Get Purchase Details</button>
+                                        <button type="submit" id ="{{ $tr->item_id}}_{{ $tr->ElectronicSpec_id}}" name ="{{ $tr->item_id}}_{{ $tr->ElectronicSpec_id}}" class="btn btn-success btn-md">Get Purchase Details</button>
                                     </td>
                                 </tr>
                             </form>
