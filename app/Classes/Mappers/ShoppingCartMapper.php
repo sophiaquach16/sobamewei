@@ -77,9 +77,8 @@ class ShoppingCartMapper {
         $this->transaction->setTimeStamp($timeStamp);
         $purchaseList = $this->viewCart();
 
-     //   $this->electronicSpecification ->unsetUserAndExpiry($userId);
-
         if($purchaseList !=null){
+
             $list= $this->transaction->purchase($userId);
 
             foreach($list as $ei) {
@@ -89,7 +88,7 @@ class ShoppingCartMapper {
                 $this->unitOfWork->commit();
 
             }
-            //TODO delete the ei from the catalog
+            //delete the ei from the catalog
             $this->deleteEI($list);
             return 'Your order is successfully placed';
         }

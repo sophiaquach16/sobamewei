@@ -77,7 +77,7 @@ Route::post('shopping-cart',array(
     'uses' => 'CustomerController@doPurchase'
 ));
 Route::get('my-account', array(
-    'uses' => 'CustomerController@showAccount'
+    'uses' => 'CustomerController@showTransactions'
 ));
 
 Route::post('my-account', array(
@@ -86,4 +86,8 @@ Route::post('my-account', array(
 
 Route::get('show-registered-users', array(
     'uses' => 'AdminController@showRegisteredUsers'
+));
+
+Route::post('show-transaction-details', array(
+    'uses' => 'CustomerController@showTransactionDetails'
 ));

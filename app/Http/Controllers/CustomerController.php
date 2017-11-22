@@ -4,19 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Classes\Mappers\ShoppingCartMapper;
+use App\Classes\Mappers\ElectronicCatalogMapper;
+use App\Classes\Mappers\TransactionMapper;
 use Auth;
 use Redirect;
 
 class CustomerController extends Controller {
 
     private $shoppingCartMapper;
+    private $transactionMapper;
+    private $electronicCatalogMapper;
 
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('CheckCustomer');
-
         $this->middleware(function ($request, $next) {
             $this->shoppingCartMapper = new ShoppingCartMapper(auth()->user()->id);
+            $this->transactionMapper = new TransactionMapper();
+            $this->electronicCatalogMapper = new ElectronicCatalogMapper();
 
             return $next($request);
         });
@@ -61,8 +66,21 @@ class CustomerController extends Controller {
         return Redirect::to('/');
     }
 
-    public function showAccount() {
-        return view('pages.my-account');
+
+    public function showTransactions() {
+        $transactions = $this->transactionMapper->getAllTransactions(Auth::user()->id);
+
+        return view('pages.my-account', ['transactions' => $transactions]);
     }
 
+    public function showTransactionDetails(Request $request) {
+        $item_id=($request->input('item_id'));
+        $customer_id=($request->input('customer_id'));
+        $ElectronicSpec_id=($request->input('ElectronicSpec_id'));
+        $serialNumber=($request->input('serialNumber'));
+        $timestamp=($request->input('timestamp'));
+        $electronicSpecification = $this->electronicCatalogMapper->getElectronicSpecification($ElectronicSpec_id);
+
+        return view ('pages.show-transaction-details',['eS' => $electronicSpecification]);
+    }
 }
