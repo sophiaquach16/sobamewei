@@ -11,6 +11,7 @@ namespace App\Classes\Core;
 use App\Classes\Core\ElectronicItem;
 use App\Classes\Core\User;
 use App\Classes\Core\ShoppingCart;
+use PhpDeal\Annotation as Contract;
 
 
 

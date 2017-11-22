@@ -21,10 +21,7 @@ class ShoppingCart {
      */
     private $size;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 8fc537d6130b26605863373427bd55868960395b
     private function __construct(){
         $this->eIList = array();
         $this->size =0;
