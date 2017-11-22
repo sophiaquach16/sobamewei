@@ -82,6 +82,10 @@ class ShoppingCartMapper {
         return 'Item Removed';
     }
 
+    /**
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0") //pre-condition
+     * @Contract\Ensure("($this->getTimeStamp() != null && $this->set($userId))" //post-condition
+     */
 
     function purchase($userId, $timeStamp){
         $this->transaction->setTimeStamp($timeStamp);
