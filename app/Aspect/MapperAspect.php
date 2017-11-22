@@ -13,6 +13,7 @@ use App\Aspect\Annotations\Mapper;
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Mappers\ShoppingCartMapper;
+use App\Classes\Mappers\TransactionMapper;
 
 /**
  * Application logging aspect (Example provided by goaop-laravel-bridge)
@@ -22,12 +23,14 @@ class MapperAspect implements Aspect
   private $electronicCatalogMapper;
   private $shoppingCartMapper;
   private $userCatalogMapper;
+  private $transactionMapper;
 
   public function __construct()
   {
     $this->electronicCatalogMapper = new ElectronicCatalogMapper();
     //$this->shoppingCartMapper = new ShoppingCartMapper();
     $this->userCatalogMapper = new UserCatalogMapper();
+    //$this->transactionMapper = new TransactionMapper();
   }
 
   /**
@@ -58,6 +61,10 @@ class MapperAspect implements Aspect
 
     if ($mapperType == "ucm"){
       $request->mapper = $this->userCatalogMapper;
+    }
+
+    if ($mapperType = "tm") {
+      //$request->mapper = $this->transactionMapper;
     }
 
   }
