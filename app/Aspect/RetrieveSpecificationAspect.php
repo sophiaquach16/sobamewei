@@ -34,16 +34,14 @@ class RetrieveSpecificationAspect implements Aspect
   {
     $retrieveObj = $invocation->getMethod()->getAnnotation(RetrieveSpecification::class);
     if ($retrieveObj === null) return;
-    $request = $invocation->getArguments()[0];
+    $request = $invocation->getArguments()[0]; // which is Request $request
 
-    $id = $request->input($retrieveObj->from);
+    $id = $request->input($retrieveObj->from); // input of modifyRadioSelection
     if ($id !== null) $request->object = $this->getObject($id);
   }
 
-  // from kind return the right mapper, one of the 3
   public function getObject($id) {
     return $this->mapper->getElectronicSpecification($id);
   }
-
 
 }

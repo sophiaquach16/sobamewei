@@ -60,4 +60,34 @@ class TransactionCatalog
         return $transactions;
     }
 
+    function getTransactionByItemId($it_id)
+    {
+        $transaction = new \stdClass();
+        foreach ($this->transactionList as $tr) {
+            if ($tr->get()->item_id == $it_id){
+                $transaction = $tr->get();
+            }
+        }
+        return $transaction;
+    }
+
+    function getTransactionsByUserIdAndTimestamp($user_id, $timestamp)
+    {
+        $transactions = array();
+
+        foreach ($this->transactionList as $transaction) {
+            if ($transaction->get()->customer_id == $user_id && $transaction->get()->timestamp == $timestamp){
+                array_push($transactions, $transaction);
+            }
+        }
+
+        return $transactions;
+//        $transaction = new array ();
+//        foreach ($this->transactionList as $tr) {
+//            if ($tr->get()->customer_id == $user_id && $tr->get()->timestamp == $timestamp){
+//                $transaction = $tr->get();
+//            }
+//        }
+//        return $transaction;
+    }
 }

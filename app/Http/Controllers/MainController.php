@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Classes\Mappers\UserCatalogMapper;
 use App\Classes\Mappers\ElectronicCatalogMapper;
+use App\Aspect\Annotations\Mapper;
 use App\Aspect\Annotations\RetrieveSpecification;
 
 //reference: https://www.cloudways.com/blog/laravel-login-authentication/
@@ -25,14 +26,18 @@ class MainController extends BaseController {
 
     // want to remove these
     public function __construct() {
-        $this->userCatalogMapper = new UserCatalogMapper();
-        $this->electronicCatalogMapper = new ElectronicCatalogMapper();
+        // Replaced two mappers with the MapperAspect
+        //$this->userCatalogMapper = new UserCatalogMapper();
+        //$this->electronicCatalogMapper = new ElectronicCatalogMapper();
     }
 
     public function showLogin() {
         return view('pages.login');
     }
 
+    /**
+     * @Mapper(mapperType="ucm")
+     */
     public function doLogin(Request $request) {
         $inputs = array(
             'email' => $request->input('email'),
@@ -49,8 +54,8 @@ class MainController extends BaseController {
         if ($validator->fails()) {
             return Redirect::to('login')->withErrors($validator);
         } else {
-            if ($this->userCatalogMapper->login($request->input('email'), $request->input('password')) && Auth::attempt($inputs)) {
-                $this->userCatalogMapper->makeLoginLog($request->user()->id);
+            if ($request->mapper->login($request->input('email'), $request->input('password')) && Auth::attempt($inputs)) {
+                $request->mapper->makeLoginLog($request->user()->id);
 
                 Session::flash('success_msg', "Successfully logged in.");
                 return Redirect::to('');
@@ -62,11 +67,14 @@ class MainController extends BaseController {
         }
     }
 
+    /**
+     * @Mapper(mapperType="ecm")
+     */
     public function showElectronicCatalog(Request $request) {
         $inputs = $request->all();
 
-        $eSFromType = $this->electronicCatalogMapper->getESByType($request->input('eSType'));
-        $electronicSpecifications = $this->electronicCatalogMapper->getESFilteredAndSortedByCriteria($request->input('eSType'), $request->except(['eSType', 'sortBy']), $request->input('sortBy'));
+        $eSFromType = $request->mapper->getESByType($request->input('eSType'));
+        $electronicSpecifications = $request->mapper->getESFilteredAndSortedByCriteria($request->input('eSType'), $request->except(['eSType', 'sortBy']), $request->input('sortBy'));
 
         $brandNames = array();
         foreach ($eSFromType as $eS) {
@@ -97,9 +105,12 @@ class MainController extends BaseController {
         return view('pages.registration');
     }
 
+    /**
+     * @Mapper(mapperType="ucm")
+     */
     public function doRegistration(Request $request) {
 
-        if ($this->userCatalogMapper->makeNewCustomer((object) $request->input())) {
+        if ($request->mapper->makeNewCustomer((object) $request->input())) {
             Session::flash('success_msg', "Successfully registered.");
             return Redirect::to('/');
         } else {
@@ -113,7 +124,6 @@ class MainController extends BaseController {
      */
     public function showDetails(Request $request) {
         $es = $request->object;
-        //if ($es == null) 0/0;
         $lastInputs = $request->session()->get('lastInputs');
         $eSpecifications = $request->session()->get('electronicSpecifications');
 
@@ -157,9 +167,11 @@ class MainController extends BaseController {
 
     }
 
+    /**
+     * @Mapper(mapperType="ucm")
+     */
     public function deleteUser(Request $request){
-        $this->userCatalogMapper->deleteUser(Auth::user()->id);
-
+        $message = $request->mapper->deleteUser(Auth::user()->id);
         $request->session()->flash('success_msg', "Your account has been deleted");
         return Redirect::to('/');
     }
