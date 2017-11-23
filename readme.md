@@ -97,3 +97,8 @@ docker-compose up
 docker-compose up -d
 docker-compose exec mariadb mysql -u root < databaseScript.sql
 docker-compose stop
+
+## Installation of PHPDeal for Contract programming
+1)the terminal and go to your repository folder.
+2) Type: composer require --dev lisachenko/php-deal
+Referenced from the php-deal framework https://github.com/php-deal/framework
