@@ -88,15 +88,11 @@ class CustomerController extends Controller
     {
         $item_id = ($request->input('item_id'));
         $ElectronicSpec_id = ($request->input('ElectronicSpec_id'));
-        $this->showTransactionInformation($ElectronicSpec_id,$item_id);
-
-    }
-
-    public function showTransactionInformation($ElectronicSpec_id,$item_id){
         $electronicSpecification = $this->electronicCatalogMapper->getElectronicSpecification($ElectronicSpec_id);
         $transaction = $this->transactionMapper->getTransactionByItemId($item_id);
         return view('pages.show-transaction-details', ['eS' => $electronicSpecification,
             'tr' => $transaction]);
+
     }
 
     public function doReturnPurchase(Request $request)
