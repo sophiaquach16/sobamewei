@@ -8,6 +8,7 @@ use App\Classes\Core\TransactionCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use PhpDeal\Annotation as Contract;
 
 use Hash;
 
@@ -47,6 +48,13 @@ class TransactionMapper
         return $transactions;
     }
 
+    /**
+     * @param $timestamp
+     * @param $user_id
+     * **
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0") //pre-condition
+     * @Contract\Ensure("($this->getTimeStamp() != null && $this->set($userId))" //post-condition
+     */
     function makeNewTransaction($timestamp, $user_id)
     {
         $eiList = $this->shoppingCart->getEIList();
