@@ -12,6 +12,7 @@ use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
 use PhpDeal\Annotation as Contract;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartMapper {
 
@@ -36,7 +37,7 @@ class ShoppingCartMapper {
     }
 
     /**
-     * //@Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7")
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7")
      */
     function addToCart($eSId, $userId, $expiry) {
         if (count($this->shoppingCart->getEIList()) < 7) {
@@ -60,10 +61,17 @@ class ShoppingCartMapper {
         $this->shoppingCartTDG->updateEI($eI);
     }
 
+
     function viewCart(){
         return $this->electronicCatalog->getESListFromEIList($this->shoppingCart->getEIList());
     }
 
+    /**
+     * @param $eSId
+     * @param $userId
+     * @return string
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7 && count($this->shoppingCart->getEIList()) > 0")
+     */
     function removeFromCart($eSId, $userId){
         $removedEI = $this->electronicCatalog->unsetUserAndExpiryFromEI($eSId, $userId);
         $this->unitOfWork->registerDirty($removedEI);
@@ -71,5 +79,6 @@ class ShoppingCartMapper {
         $this->shoppingCart->updateEIList();
         return 'Item Removed';
     }
+
 
 }
