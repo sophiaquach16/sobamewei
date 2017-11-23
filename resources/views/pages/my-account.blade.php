@@ -6,7 +6,7 @@
 
             <div class="col-sm-2"></div>
 
-            <form method="post" id="purchase-history-form" class="form-horizontal col-sm-8  text-center purchase-history-form" action="/my-account" enctype="multipart/form-data">
+            <form method="post" id="purchase-history-form" class="form-horizontal col-sm-8  text-center purchase-history-form" action="my-account" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-success btn-block">Delete Account</button>
                 <div id="formLoad">

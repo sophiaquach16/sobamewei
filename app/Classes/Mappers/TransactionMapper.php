@@ -8,6 +8,7 @@ use App\Classes\Core\TransactionCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+
 use Hash;
 
 class TransactionMapper
@@ -66,7 +67,6 @@ class TransactionMapper
             $this->unitOfWork->registerNew($tr);
             $this->unitOfWork->commit();
         }
-
 
     }
 

@@ -8,7 +8,6 @@ use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\TDG\ElectronicCatalogTDG;
-use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
@@ -23,7 +22,6 @@ class ShoppingCartMapper {
     private $shoppingCartTDG;
     private $unitOfWork;
     private $identityMap;
-    private $electronicSpecification;
     private $ElectronicCatalogMapper;
 
     function __construct($userId) {
@@ -35,7 +33,7 @@ class ShoppingCartMapper {
         $this->identityMap = new IdentityMap();
         $this->transaction = new transaction();
         $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
-        $this->ElectronicCatalogMapper = new ElectronicCatalogMapper();
+
     }
 
     /**
@@ -82,51 +80,5 @@ class ShoppingCartMapper {
         return 'Item Removed';
     }
 
-    /**
-     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0") //pre-condition
-     * @Contract\Ensure("($this->getTimeStamp() != null && $this->set($userId))" //post-condition
-     */
-
-    function purchase($userId, $timeStamp){
-        $this->transaction->setTimeStamp($timeStamp);
-        $purchaseList = $this->viewCart();
-
-        if($purchaseList !=null){
-
-            $list= $this->transaction->purchase($userId);
-
-            foreach($list as $ei) {
-                $this->unitOfWork->registerNew($ei);
-
-               // $this->unitOfWork->registerDeleted($ei);
-                $this->unitOfWork->commit();
-
-            }
-            //delete the ei from the catalog
-            $this->deleteEI($list);
-            return 'Your order is successfully placed';
-        }
-        else{
-            return 'The shoppingCart is empty';
-        }
-    }
-
-    function saveTransaction($transaction) {
-
-        $timeStamp = $this->transaction->getTimeStamp();
-        return $this->shoppingCartTDG->addTransaction($transaction, $timeStamp);
-    }
-
-    private function deleteEI($purchaseList){
-        $ids=array();
-        foreach($purchaseList as $ei) {
-            $id=$ei->getId();
-           // dd($ei);
-            array_push($ids, $id);
-
-        }
-
-        $this->ElectronicCatalogMapper->deleteElectronicItems($ids);
-    }
 
 }
