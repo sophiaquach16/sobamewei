@@ -82,12 +82,5 @@ class TransactionCatalog
         }
 
         return $transactions;
-//        $transaction = new array ();
-//        foreach ($this->transactionList as $tr) {
-//            if ($tr->get()->customer_id == $user_id && $tr->get()->timestamp == $timestamp){
-//                $transaction = $tr->get();
-//            }
-//        }
-//        return $transaction;
     }
 }

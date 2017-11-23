@@ -68,7 +68,11 @@ class CustomerController extends Controller
     {
         $request['time'] = date("Y-m-d h:i:s a", time());
         $userId = Auth::user()->id;
-        $this->transactionMapper->makeNewTransaction($request['time'],$userId);
+        $eiList=$this->electronicCatalogMapper->getAllEIForOnePurchaseForUser($userId);
+        foreach ($eiList as $ei){
+            $this->electronicCatalogMapper->deleteElectronicItems(array($ei->id));
+        }
+        $trList=$this->transactionMapper->makeNewTransaction($request['time'], $eiList);
         return Redirect::to('/');
     }
 

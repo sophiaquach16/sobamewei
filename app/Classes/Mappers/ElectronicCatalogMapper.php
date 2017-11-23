@@ -344,4 +344,22 @@ class ElectronicCatalogMapper {
         return $eSArray;
     }
 
+    function getAllEIForOnePurchaseForUser($user_id) {
+        $this->lockDataAccess();
+        $eIListForUser = array ();
+        $electronicSpecifications = $this->electronicCatalog->getESList();
+      //  dd($electronicSpecifications);
+        foreach ($electronicSpecifications as $eS){
+            $eIList = $eS->electronicItems;
+            foreach ($eIList as $eI){
+                //dd($eI);
+                if ($eI->User_id == $user_id)
+                    array_push($eIListForUser, $eI);
+            }
+        }
+
+        $this->unlockDataAccess();
+        return $eIListForUser;
+    }
+
 }
