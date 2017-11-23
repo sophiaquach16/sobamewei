@@ -134,4 +134,29 @@ class ElectronicCatalogTDG {
 
         return $parameters;
     }
+
+    public function saveReturnedEI($EI){
+        $objectData = (array) ( $EI->get());
+
+        foreach ($objectData as $key => $value) {
+            if (is_array($objectData[$key]) || is_null($objectData[$key])) {
+                unset($objectData[$key]);
+        }
+        }
+
+        $parameters = (object) $objectData;
+
+        $queryString = 'INSERT INTO electronicitem SET ';
+
+
+        foreach ((array) $parameters as $key => $value) {
+            $queryString .= $key . ' = :' . $key;
+            $queryString .= ' , ';
+        }
+
+        //We delete the last useless ' , '
+        $queryString = substr($queryString, 0, -2);
+
+        return $this->conn->query($queryString, $parameters);
+}
 }

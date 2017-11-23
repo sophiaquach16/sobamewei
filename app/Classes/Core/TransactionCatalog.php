@@ -83,4 +83,14 @@ class TransactionCatalog
 
         return $transactions;
     }
+
+    function getTransactionObjectByItemId($item_id){
+        $transaction = new Transaction();
+        foreach ($this->transactionList as $tr) {
+            if ($tr->get()->item_id == $item_id){
+                $transaction->set($tr->get());
+            }
+        }
+        return $transaction;
+    }
 }

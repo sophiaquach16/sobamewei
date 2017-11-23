@@ -59,12 +59,18 @@ class TransactionMapper
         }
         $this->transactionCatalog->setTransactionList($trListData);
         $trObjectsList = $this->transactionCatalog->getTransactionsByUserIdAndTimestamp($user_id, $timestamp);
-        foreach ($trObjectsList as $tr) {
-            $this->unitOfWork->registerNew($tr);
-            $this->unitOfWork->commit();
-            $this->identityMap->add('Transaction', $tr);
+        if($trObjectsList != null) {
+            foreach ($trObjectsList as $tr) {
+                $this->unitOfWork->registerNew($tr);
+                $this->unitOfWork->commit();
+                $this->identityMap->add('Transaction', $tr);
+            }
+            return "transactionMade";
         }
-        return $trObjectsList;
+        else{
+            return "transactionFailed";
+        }
+
     }
 
     function saveTransaction($transaction)
@@ -72,5 +78,23 @@ class TransactionMapper
 
         $timeStamp = $transaction->getTimeStamp();
         return $this->transactionTDG->addTransaction($transaction, $timeStamp);
+    }
+     function ReturnPurchase($item_id){
+         $transaction = $this->transactionCatalog->getTransactionObjectByItemId($item_id);
+
+         if($transaction != null) {
+             $this->identityMap->delete('Transaction', 'item_id', $item_id);
+             $this->unitOfWork->registerDeleted($transaction);
+             $this->unitOfWork->commit();
+
+             return "purchaseReturned";
+         }
+         else{
+             return "returnFailed";
+         }
+     }
+    function deleteTransaction($tr){
+
+        $this->transactionTDG->deleteTransaction($tr);
     }
 }

@@ -139,4 +139,25 @@ class ElectronicCatalog {
         return $removedEI;
     }
 
+    function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
+
+        $EIData = new \stdClass();
+        $EIData-> id = $item_id;
+        $EIData->serialNumber =$serialNumber;
+        $EIData->ElectronicSpecification_id = $ElectronicSpecification_id;
+
+        $newEI=new ElectronicItem();
+        $newEI->set($EIData);
+
+
+        foreach ($this->eSList as $es) {
+            if ($es->get()->id == $ElectronicSpecification_id){
+                $es->addElectronicItem($EIData);
+
+               break;
+            }
+        }
+
+        return $newEI;
+    }
 }
