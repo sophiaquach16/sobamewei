@@ -68,7 +68,11 @@ class CustomerController extends Controller
     {
         $request['time'] = date("Y-m-d h:i:s a", time());
         $userId = Auth::user()->id;
-        $this->transactionMapper->makeNewTransaction($request['time'],$userId);
+        $eiList=$this->electronicCatalogMapper->getAllEIForOnePurchaseForUser($userId);
+        foreach ($eiList as $ei){
+            $this->electronicCatalogMapper->deleteElectronicItems(array($ei->id));
+        }
+        $trList=$this->transactionMapper->makeNewTransaction($request['time'], $eiList);
         return Redirect::to('/');
     }
 
@@ -84,9 +88,13 @@ class CustomerController extends Controller
     {
         $item_id = ($request->input('item_id'));
         $ElectronicSpec_id = ($request->input('ElectronicSpec_id'));
+        $this->showTransactionInformation($ElectronicSpec_id,$item_id);
+
+    }
+
+    public function showTransactionInformation($ElectronicSpec_id,$item_id){
         $electronicSpecification = $this->electronicCatalogMapper->getElectronicSpecification($ElectronicSpec_id);
         $transaction = $this->transactionMapper->getTransactionByItemId($item_id);
-
         return view('pages.show-transaction-details', ['eS' => $electronicSpecification,
             'tr' => $transaction]);
     }

@@ -3,7 +3,6 @@
 namespace App\Classes\Mappers;
 
 use App\Classes\TDG\TransactionTDG;
-use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\Core\TransactionCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\UnitOfWork;
@@ -16,20 +15,15 @@ class TransactionMapper
 {
 
     private $transactionCatalog;
-    private $shoppingCart;
-    private $shoppingCartTDG;
     private $transactionTDG;
     private $unitOfWork;
     private $identityMap;
 
     function __construct($user_id)
     {
-        $this->transactionTDG = new transactionTDG();
-        $this->transactionCatalog = new transactionCatalog($this->transactionTDG->findAll());
+        $this->transactionTDG = new TransactionTDG();
+        $this->transactionCatalog = new TransactionCatalog($this->transactionTDG->findAll());
         $this->identityMap = new IdentityMap();
-        $this->shoppingCart = ShoppingCart::getInstance();
-        $this->shoppingCartTDG = new ShoppingCartTDG();
-        $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($user_id));
         $this->unitOfWork = new UnitOfWork(['transactionMapper' => $this]);
     }
 
@@ -43,30 +37,24 @@ class TransactionMapper
 
     function getTransactionByItemId($tr_id)
     {
-        $transactions = $this->transactionCatalog->getTransactionByItemId($tr_id);
+        $transaction = $this->transactionCatalog->getTransactionByItemId($tr_id);
 
-        return $transactions;
+        return $transaction;
     }
 
-    /**
-     * @param $timestamp
-     * @param $user_id
-     * **
-     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0") //pre-condition
-     * @Contract\Ensure("($this->getTimeStamp() != null && $this->set($userId))" //post-condition
-     */
-    function makeNewTransaction($timestamp, $user_id)
+    function makeNewTransaction($timestamp, $eiList)
     {
-        $eiList = $this->shoppingCart->getEIList();
         $trListData = array();
+        $user_id = null;
         //the foreach loop is used to convert an ei object to a transaction object
         foreach ($eiList as $ei) {
             $trData = new \stdClass();
-            $trData->item_id = $ei->getId();
-            $trData->customer_id = $user_id;
-            $trData->serialNumber = $ei->getSerialNumber();
-            $trData->ElectronicSpec_id = $ei->getElectronicSpecification_id();
+            $trData->item_id = $ei->id;
+            $trData->customer_id = $ei->User_id;
+            $trData->serialNumber = $ei->serialNumber;
+            $trData->ElectronicSpec_id = $ei->ElectronicSpecification_id;
             $trData->timestamp = $timestamp;
+            $user_id = $ei->User_id;
             array_push($trListData, $trData);
         }
         $this->transactionCatalog->setTransactionList($trListData);
@@ -74,8 +62,9 @@ class TransactionMapper
         foreach ($trObjectsList as $tr) {
             $this->unitOfWork->registerNew($tr);
             $this->unitOfWork->commit();
+            $this->identityMap->add('Transaction', $tr);
         }
-
+        return $trObjectsList;
     }
 
     function saveTransaction($transaction)
