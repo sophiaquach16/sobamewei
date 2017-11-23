@@ -1,12 +1,12 @@
 @extends('layouts.default')
 @section('content')
 
-    <form method="post" action="return" enctype="multipart/form-data">
+    <form method="post" action="/return" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="text-center"><h2 class="blueTitle">Transaction Detail</h2></div>
         <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>
         <input type="hidden" name="serialNumber" value="{{$tr->serialNumber}}"/>
-        <input type="hidden" name="ElectronicSpec_id" value="{{$eS->id}}"/>
+        <input type="hidden" name="ElectronicSpec_id" value="{{$tr->ElectronicSpec_id}}"/>
         @if( $eS )
 
             @if($eS->ElectronicType_name === "Desktop")

@@ -49,25 +49,6 @@ class ShoppingCartTDG
     }
 
 
-    function addTransaction($transaction, $timeStamp)//electronic item
-    {
 
-        $parameters = new \stdClass();
-        $parameters->ElectronicSpec_id=$transaction->getElectronicSpecification_id();
-        $parameters->item_id=$transaction->getId();
-        $parameters->SerialNumber=$transaction->getSerialNumber();
-        $parameters->timestamp=$timeStamp;
-        $parameters->customer_id=$transaction->getUserId();
-        $queryString = 'INSERT INTO Transaction SET ';
-        foreach ($parameters as $key => $value) {
-            if ($value !== null) {
-                $queryString .= $key . ' = :' . $key;
-                $queryString .= ' , ';
-            }
-        }
-//We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
-        return $this->conn->query($queryString, $parameters);
-    }
 }
 ?>
