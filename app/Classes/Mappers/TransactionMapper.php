@@ -10,6 +10,8 @@ use App\Classes\Core\ELectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use PhpDeal\Annotation as Contract;
+
 use Hash;
 
 class TransactionMapper
@@ -83,5 +85,4 @@ class TransactionMapper
         $timeStamp = $transaction->getTimeStamp();
         return $this->transactionTDG->addTransaction($transaction, $timeStamp);
     }
-
 }

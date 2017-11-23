@@ -74,7 +74,9 @@ class UserCatalogMapper {
     }
 
     function deleteUser($userId){
-
+//        $ESList = $this->electronicCatalog->getESList();
+//        dd($ESList);
+//        $this->electronicCatalog->unsetEIbyUserID($userId,$ESList);
         $this->identityMap->delete('User', 'id', $userId);
         $user=$this->userCatalog->getDeleteUserInfo($userId);
         $this->unitOfWork->registerDeleted($user);
@@ -83,7 +85,8 @@ class UserCatalogMapper {
 
     function deleteCurrentUser($user){
         $userId =$user->get()->id;
-       // dd($userId);
+
+        $this->userCatalogTDG->unsetUserEI($userId);
         $this->userCatalogTDG->deleteLoginLog($userId);
         $this->userCatalogTDG->deleteUserTransaction($userId);
         return $this->userCatalogTDG->deleteUser($user);

@@ -97,24 +97,24 @@ class CustomerController extends Controller
 
     public function doReturnPurchase(Request $request)
     {
-
-        $transactions = $this->transactionMapper->getAllTransactions(Auth::user()->id);
-        $transactionRemoved = false;
+        $item_id = ($request->input('item_id'));
+        $transactions = $this->transactionMapper->ReturnPurchase(Auth::user()->id,$item_id);
+        $transactionRemoved = true;
         //TODO the return code here
 
         //verify that from the transactions, the item returned or transaction, should no longer
         //be part of the transaction list by searching for the item id.
-        foreach ($transactions as $tr) {
-            if ($tr->item_id == $request->input('item_id')) {
-                $transactionRemoved = false;
-                break;
-            }
-        }
+//        foreach ($transactions as $tr) {
+//            if ($tr->item_id == $request->input('item_id')) {
+//                $transactionRemoved = false;
+//                break;
+//            }
+//        }
         //if the transaction no longer is part of the transactions, that means it has been
         //removed and show confirmation of return
-        if ($transactionRemoved == true) {
-            $request->session()->flash('success_msg', "Your purchase has been returned.");
-        }
+//        if ($transactionRemoved == true) {
+//            $request->session()->flash('success_msg', "Your purchase has been returned.");
+//        }
 
         return view('pages.my-account', ['transactions' => $transactions]);
     }
