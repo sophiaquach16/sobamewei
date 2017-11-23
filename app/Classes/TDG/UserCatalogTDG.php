@@ -157,7 +157,8 @@ class UserCatalogTDG {
         $eis = $this->conn->directQuery($queryString);
 
         foreach ($eis as $ei) {
-            if ($ei->id === $userId) {
+            if ($ei->User_id === $userId) {
+
                 $parameters = new \stdClass();
                 $parameters->User_id = null;
                 $parameters->expiryForUser = "0000-00-00 00:00:00";
