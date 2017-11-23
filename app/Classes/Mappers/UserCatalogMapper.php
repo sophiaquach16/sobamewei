@@ -14,6 +14,7 @@ class UserCatalogMapper {
     private $userCatalogTDG;
     private $unitOfWork;
     private $identityMap;
+    private $lockFilePointer;
 
     function __construct() {
         $argv = func_get_args();
@@ -64,7 +65,7 @@ class UserCatalogMapper {
             return false;
         }
     }
-    
+
     function login($email, $password){
         if($this->userCatalog->checkUser($email, $password)){
             return true;
@@ -74,13 +75,16 @@ class UserCatalogMapper {
     }
 
     function deleteUser($userId){
-//        $ESList = $this->electronicCatalog->getESList();
-//        dd($ESList);
-//        $this->electronicCatalog->unsetEIbyUserID($userId,$ESList);
+        $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c');
+        flock($this->lockFilePointer, LOCK_EX);
+
         $this->identityMap->delete('User', 'id', $userId);
         $user=$this->userCatalog->getDeleteUserInfo($userId);
         $this->unitOfWork->registerDeleted($user);
         $this->unitOfWork->commit();
+
+        flock($this->lockFilePointer, LOCK_UN);
+        fclose($this->lockFilePointer);
     }
 
     function deleteCurrentUser($user){
