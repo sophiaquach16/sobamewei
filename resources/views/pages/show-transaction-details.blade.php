@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 
-    <form method="post" action="my-account" enctype="multipart/form-data">
+    <form method="post" action="return" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="text-center"><h2 class="blueTitle">Transaction Detail</h2></div>
         <input type="hidden" name="item_id" value="{{$tr->item_id}}"/>

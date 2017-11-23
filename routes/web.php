@@ -92,5 +92,5 @@ Route::post('show-transaction-details', array(
     'uses' => 'CustomerController@showTransactionDetails'
 ));
 Route::post('return', array(
-    'uses' => 'CustomerController@doReturn'
+    'uses' => 'CustomerController@doReturnPurchase'
 ));

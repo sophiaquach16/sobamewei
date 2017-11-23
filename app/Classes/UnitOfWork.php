@@ -2,7 +2,7 @@
 
 namespace App\Classes;
 
-use App\Classes\Core\Transaction;
+
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\ElectronicSpecification;
 use App\Classes\Core\ElectronicItem;
@@ -88,6 +88,9 @@ class UnitOfWork {
             }
             if ($deleted instanceof User) {
                 $this->userCatalogMapper->deleteCurrentUser($deleted);
+            }
+            if ($deleted instanceof Transaction) {
+                $this->transactionMapper->deleteTransaction($deleted);
             }
         }
 

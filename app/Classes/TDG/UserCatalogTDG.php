@@ -150,4 +150,28 @@ class UserCatalogTDG {
 
         return $this->conn->query($queryString, $parameters);
     }
+
+    public function unsetUserEI($userId){
+
+        $queryString = 'SELECT * FROM Electronicitem';
+        $eis = $this->conn->directQuery($queryString);
+
+        foreach ($eis as $ei) {
+            if ($ei->id === $userId) {
+                $parameters = new \stdClass();
+                $parameters->User_id = null;
+                $parameters->expiryForUser = "0000-00-00 00:00:00";
+
+                $queryString = 'UPDATE electronicitem SET ';
+                $queryString .= 'User_id' . ' = :' . 'User_id';
+                $queryString .= ' , ';
+                $queryString .= 'expiryForUser' . ' = :' . 'expiryForUser';
+
+                $this->conn->query($queryString, $parameters);
+            }
+        }
+
+
+    }
+
 }
