@@ -102,7 +102,8 @@ class CustomerController extends Controller
     public function doReturnPurchase(Request $request)
     {
         $item_id = ($request->input('item_id'));
-        $transactions = $this->transactionMapper->ReturnPurchase(Auth::user()->id,$item_id);
+        $transactions = $this->transactionMapper->ReturnPurchase($item_id);
+
         $transactionRemoved = true;
         //TODO the return code here
 

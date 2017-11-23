@@ -73,4 +73,17 @@ class TransactionMapper
         $timeStamp = $transaction->getTimeStamp();
         return $this->transactionTDG->addTransaction($transaction, $timeStamp);
     }
+     function ReturnPurchase($item_id){
+         $transaction = $this->transactionCatalog->getTransactionByItemId($item_id);
+         if($transaction!= null) {
+             $this->identityMap->delete('Transaction', 'item_id', $item_id);
+             $this->unitOfWork->registerDeleted($transaction);
+             $this->unitOfWork->commit();
+
+             return "Your purchase has been returned.";
+         }
+         else{
+             return "return failed, please try again";
+         }
+     }
 }
