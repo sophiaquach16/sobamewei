@@ -48,7 +48,7 @@ class TransactionMapper
      * @param $eiList
      * @return string
      * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && $eiList =! null") //pre-condition
-     * @Contract\Ensure("$this->getAllTransactions($user_id) != null &&count($this->getAllTransactions($user_id)) == count($eiList)") //post-condition
+     * @Contract\Ensure("$this->getAllTransactions($user_id) != null && count($this->getAllTransactions($user_id)) == count($eiList)") //post-condition
      * //Number of transactions corresponds to the number of objects that the customer has purchased
      *
      */
@@ -90,6 +90,12 @@ class TransactionMapper
         $timeStamp = $transaction->getTimeStamp();
         return $this->transactionTDG->addTransaction($transaction, $timeStamp);
     }
+
+    /**
+     * @param $item_id
+     * @return string
+     * @Contract\Ensure("($this->getTransactionByItemId($item_id))==null")
+     */
      function ReturnPurchase($item_id){
          $transaction = $this->transactionCatalog->getTransactionObjectByItemId($item_id);
 
