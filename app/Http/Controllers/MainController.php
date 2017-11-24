@@ -172,7 +172,12 @@ class MainController extends BaseController {
      */
     public function deleteUser(Request $request){
         $message = $request->mapper->deleteUser(Auth::user()->id);
-        $request->session()->flash('success_msg', "Your account has been deleted");
+        if ($message == "userDeleteSuccess") {
+          $request->session()->flash('success_msg', "Your account has been deleted");
+        }
+        else {
+          $request->session()->flash('error_msg', "Your account has NOT been deleted");
+        }
         return Redirect::to('/');
     }
 }

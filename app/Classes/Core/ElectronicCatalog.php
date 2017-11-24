@@ -105,9 +105,9 @@ class ElectronicCatalog {
 
     function reserveFirstEIFromES($eSId, $userId, $expiry) {
         $firstAvailableEI = null;
-        
+
         //dd($this->eSList);
-        
+
         foreach ($this->eSList as &$eS) {
             if ($eS->get()->id === $eSId) {
                 $firstAvailableEI = $eS->reserveFirstAvailableEI($userId, $expiry);
@@ -131,8 +131,8 @@ class ElectronicCatalog {
 
     function unsetUserAndExpiryFromEI($eSId, $userId){
         $removedEI = null;
-        foreach ($this->eSList as $eS){
-            if($eS->get()->id == $eSId){
+        foreach ($this->eSList as $eS) {
+            if($eS->get()->id == $eSId) {
                 $removedEI = $eS->unsetUserAndExpiry($userId);
                 break;
             }

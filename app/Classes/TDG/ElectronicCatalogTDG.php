@@ -146,7 +146,7 @@ class ElectronicCatalogTDG {
 
         $parameters = (object) $objectData;
 
-        $queryString = 'INSERT INTO electronicitem SET ';
+        $queryString = 'INSERT INTO ElectronicItem SET ';
 
 
         foreach ((array) $parameters as $key => $value) {
