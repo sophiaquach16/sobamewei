@@ -120,54 +120,57 @@ class UserCatalogTDG {
 
     public function deleteUser($user){
 
-            $queryString = 'DELETE FROM user WHERE ';
-            $queryString .= 'id' . ' = :' . 'id';
+        $queryString = 'DELETE FROM User WHERE ';
+        $queryString .= 'id' . ' = :' . 'id';
 
-            $parameters = new \stdClass();
-            $parameters->id = $user->get()->id;
+        $parameters = new \stdClass();
+        $parameters->id = $user->get()->id;
 
-             return $this->conn->query($queryString, $parameters);
+        echo($queryString);
+        return $this->conn->query($queryString, $parameters);
 
-        }
+    }
 
-    public function deleteLoginLog($userId){
+    public function deleteLoginLog($userId) {
 
-            $queryString = 'DELETE FROM loginlog WHERE ';
-            $queryString .= 'user_id' . ' = :' . 'user_id';
+          $queryString = 'DELETE FROM LoginLog WHERE ';
+          $queryString .= 'user_id' . ' = :' . 'user_id';
 
-            $parameters = new \stdClass();
-            $parameters->user_id = $userId;
+          $parameters = new \stdClass();
+          $parameters->user_id = $userId;
 
-           return $this->conn->query($queryString, $parameters);
-        }
+          echo($queryString);
+          return $this->conn->query($queryString, $parameters);
+    }
 
     public function deleteUserTransaction($userId){
-        $queryString = 'DELETE FROM transaction WHERE ';
+        $queryString = 'DELETE FROM Transaction WHERE ';
         $queryString .= 'customer_id' . ' = :' . 'customer_id';
 
         $parameters = new \stdClass();
         $parameters->customer_id = $userId;
 
+        echo($queryString);
         return $this->conn->query($queryString, $parameters);
     }
 
     public function unsetUserEI($userId){
 
-        $queryString = 'SELECT * FROM Electronicitem';
+        $queryString = 'SELECT * FROM ElectronicItem';
         $eis = $this->conn->directQuery($queryString);
 
         foreach ($eis as $ei) {
             if ($ei->User_id === $userId) {
-
                 $parameters = new \stdClass();
                 $parameters->User_id = null;
                 $parameters->expiryForUser = "0000-00-00 00:00:00";
 
-                $queryString = 'UPDATE electronicitem SET ';
+                $queryString = 'UPDATE ElectronicItem SET ';
                 $queryString .= 'User_id' . ' = :' . 'User_id';
                 $queryString .= ' , ';
                 $queryString .= 'expiryForUser' . ' = :' . 'expiryForUser';
 
+                echo($queryString);
                 $this->conn->query($queryString, $parameters);
             }
         }

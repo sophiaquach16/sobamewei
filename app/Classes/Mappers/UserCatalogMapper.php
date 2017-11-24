@@ -88,7 +88,7 @@ class UserCatalogMapper {
     }
 
     function deleteCurrentUser($user){
-        $userId =$user->get()->id;
+        $userId=$user->get()->id;
 
         $this->userCatalogTDG->unsetUserEI($userId);
         $this->userCatalogTDG->deleteLoginLog($userId);

@@ -146,7 +146,7 @@ class ElectronicCatalogTDG {
 
         $parameters = (object) $objectData;
 
-        $queryString = 'INSERT INTO electronicitem SET ';
+        $queryString = 'INSERT INTO ElectronicItem SET ';
 
 
         foreach ((array) $parameters as $key => $value) {
@@ -157,6 +157,7 @@ class ElectronicCatalogTDG {
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
 
+        echo($queryString);
         return $this->conn->query($queryString, $parameters);
 }
 }
