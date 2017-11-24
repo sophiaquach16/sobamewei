@@ -134,10 +134,10 @@ class UserCatalogTDG {
     public function deleteLoginLog($userId) {
 
           $queryString = 'DELETE FROM LoginLog WHERE ';
-          $queryString .= 'user_id' . ' = :' . 'user_id';
+          $queryString .= 'User_id' . ' = :' . 'User_id';
 
           $parameters = new \stdClass();
-          $parameters->user_id = $userId;
+          $parameters->User_id = $userId;
 
           echo($queryString);
           return $this->conn->query($queryString, $parameters);
