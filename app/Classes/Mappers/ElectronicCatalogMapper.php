@@ -6,6 +6,7 @@ use App\Classes\TDG\ElectronicCatalogTDG;
 use App\Classes\Core\ElectronicCatalog;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use PhpDeal\Annotation as Contract;
 
 class ElectronicCatalogMapper {
 
@@ -361,6 +362,15 @@ class ElectronicCatalogMapper {
         $this->unlockDataAccess();
         return $eIListForUser;
     }
+
+    /**
+     * @param $item_id
+     * @param $serialNumber
+     * @param $ElectronicSpecification_id
+     *
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && $item_id != null && $serialNumber !=null && $ElectronicSpecification_id !=null ") //pre-condition
+     * @Contract\Ensure ("($this->getElectronicSpecification($ElectronicSpecification_id)->get()->electronicItems)!=null") //post-condition
+     */
 
    function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
        $this->lockDataAccess();
