@@ -109,8 +109,66 @@ class TransactionCatalogTest extends TestCase {
         $transaction = $transactionCatalog->getTransactionObjectByItemId($data1->item_id);
         $this->assertTrue($transaction->get()->item_id == $data1->item_id);
 
-
     }
 
+
+    public function testGetTransactionsByUserIdAndTimestamp(){
+        $transaction1 = new Transaction();
+        $transaction2 = new Transaction();
+        $transactionCatalog = new TransactionCatalog();
+
+        $data1 = new \stdClass();
+        $data2 = new \stdClass();
+
+        $data1->item_id='1';
+        $data1->customer_id='1';
+        $data1->serialNumber="123";
+        $data1->ElectronicSpec_id='1';
+        $data1->timestamp="2017-12-12 11:11:11";
+
+        $transaction1->set($data1);
+
+        $data2->item_id='2';
+        $data2->customer_id='1';
+        $data2->serialNumber="345";
+        $data2->ElectronicSpec_id='2';
+        $data2->timestamp="2017-12-12 11:11:11";
+
+        $transaction2->set($data2);
+
+        $transactionList = array($transaction1,$transaction2);
+
+        //set values to the catalog
+        $transactionCatalog->setTransactionList($transactionList);
+        $gettingTransaction = $transactionCatalog->getTransactionsByUserIdAndTimestamp($data1->customer_id,$data1->timestamp);
+        $this->assertTrue($transactionList == $gettingTransaction);
+    }
+
+    function testGetTransactionListForUser(){
+        $transaction1 = new Transaction();
+        $transaction2 = new Transaction();
+        $transactionCatalog = new TransactionCatalog();
+        $data1 = new \stdClass();
+        $data2 = new \stdClass();
+        $data1->item_id='1';
+        $data1->customer_id='1';
+        $data1->serialNumber="123";
+        $data1->ElectronicSpec_id='1';
+        $data1->timestamp="2017-12-12 11:11:11";
+        $transaction1->set($data1);
+        $data2->item_id='2';
+
+        $data2->customer_id='1';
+        $data2->serialNumber="345";
+        $data2->ElectronicSpec_id='2';
+        $data2->timestamp="2017-12-12 11:11:11";
+        $transaction2->set($data2);
+        $transactionList = array($transaction1,$transaction2);
+        //set values to the catalog
+        $transactionCatalog->setTransactionList($transactionList);
+
+        $transaction = $transactionCatalog->getTransactionListForUser($data1->customer_id);
+        $this->assertTrue(count($transaction ) == 2);
+    }
 }
 
