@@ -48,7 +48,7 @@ class ShoppingCartMapper {
                 $this->shoppingCart->addEIToCart($eI);
                 $this->unitOfWork->registerDirty($eI);
                 $this->unitOfWork->commit();
-                
+
                 return 'itemAddedToCart';
             } else {
                 return 'itemOutOfStock';

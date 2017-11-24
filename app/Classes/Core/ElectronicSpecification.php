@@ -206,19 +206,19 @@ class ElectronicSpecification {
 
     public function reserveFirstAvailableEI($userId, $expiry) {
         $eI = $this->findNextAvailableEI();
-        
+
         if($eI!=null){
         $eI->setUserId($userId);
         $eI->setExpiryForUser($expiry);
         }
 
-        
+
         return $eI;
     }
 
     /**
      * Helper function to find next available EI of the electronic specification
-     * 
+     *
      * return type
      */
     private function &findNextAvailableEI() {
@@ -227,9 +227,9 @@ class ElectronicSpecification {
                 return $eI;
             }
         }
-        
+
         $result = null;
-        
+
         return $result;
     }
 
@@ -237,7 +237,7 @@ class ElectronicSpecification {
         $eIToRemove = null;
 
         foreach ($this->electronicItems as $eI){
-            if($eI->getUserId() == $userId){
+            if($eI->getUserId() == $userId) {
                 $eIToRemove = $eI;
                 break;
             }

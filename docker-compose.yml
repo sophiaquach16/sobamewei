@@ -2,18 +2,16 @@ version: '2'
 
 services:
   mariadb:
-    image: mariadb
+    build: docker/mariadb
     ports:
       - 3306:3306
-    volumes:
-      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_PASSWORD=${DB_PASSWORD}
 
-  conushop:
+  laravel:
     image: hitalos/laravel:latest
     ports:
         - 80:80
