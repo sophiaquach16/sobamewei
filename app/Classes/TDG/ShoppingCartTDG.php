@@ -23,9 +23,14 @@ class ShoppingCartTDG
 
     function updateEI($eI)
     {
-        $queryString = "UPDATE ElectronicItem SET User_id = " . $eI->get()->User_id . ", expiryForUser= '" . $eI->get()->expiryForUser . "' WHERE id= " . $eI->get()->id;
-
-        return $this->conn->directQuery($queryString);
+      $currentExpiryDate = $eI->get()->expiryForUser;
+      if ($currentExpiryDate == '') {
+        $currentExpiryDate = 'NULL';
+      } else {
+        $currentExpiryDate = "'".$currentExpiryDate."'";
+      }
+      $queryString = "UPDATE ElectronicItem SET User_id = " . $eI->get()->User_id . ", expiryForUser= " . $currentExpiryDate . " WHERE id= " . $eI->get()->id;
+      return $this->conn->directQuery($queryString);
     }
 
     function findAllEIFromUser($userId)

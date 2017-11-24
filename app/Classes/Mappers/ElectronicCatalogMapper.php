@@ -365,14 +365,9 @@ class ElectronicCatalogMapper {
    function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
        $this->lockDataAccess();
        $EI=$this->electronicCatalog->addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id);
-
-           $this->identityMap->add('ElectronicItem', 'id', $item_id);
-
-
-           $this->unitOfWork->registerNew($EI);
-
+       $this->identityMap->add('ElectronicItem', 'id', $item_id);
+       $this->unitOfWork->registerNew($EI);
        $this->unitOfWork->commit();
-
        $this->unlockDataAccess();
    }
    function saveEI($ei){
