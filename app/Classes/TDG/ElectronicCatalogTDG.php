@@ -157,7 +157,6 @@ class ElectronicCatalogTDG {
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
 
-        echo($queryString);
         return $this->conn->query($queryString, $parameters);
 }
 }
