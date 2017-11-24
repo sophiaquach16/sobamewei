@@ -126,7 +126,6 @@ class UserCatalogTDG {
         $parameters = new \stdClass();
         $parameters->id = $user->get()->id;
 
-        echo($queryString);
         return $this->conn->query($queryString, $parameters);
 
     }
@@ -139,7 +138,6 @@ class UserCatalogTDG {
           $parameters = new \stdClass();
           $parameters->User_id = $userId;
 
-          echo($queryString);
           return $this->conn->query($queryString, $parameters);
     }
 
@@ -150,7 +148,6 @@ class UserCatalogTDG {
         $parameters = new \stdClass();
         $parameters->customer_id = $userId;
 
-        echo($queryString);
         return $this->conn->query($queryString, $parameters);
     }
 
@@ -170,7 +167,6 @@ class UserCatalogTDG {
                 $queryString .= ' , ';
                 $queryString .= 'expiryForUser' . ' = :' . 'expiryForUser';
 
-                echo($queryString);
                 $this->conn->query($queryString, $parameters);
             }
         }
