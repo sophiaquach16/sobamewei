@@ -75,16 +75,26 @@ class UserCatalogMapper {
     }
 
     function deleteUser($userId){
+        $message = "";
         $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c');
         flock($this->lockFilePointer, LOCK_EX);
 
         $this->identityMap->delete('User', 'id', $userId);
         $user=$this->userCatalog->getDeleteUserInfo($userId);
-        $this->unitOfWork->registerDeleted($user);
-        $this->unitOfWork->commit();
+
+        if($user != null) {
+          $this->unitOfWork->registerDeleted($user);
+          $this->unitOfWork->commit();
+          $message = "userDeleteSuccess";
+        }
+        else {
+          $message = "userDeleteFailure";
+        }
 
         flock($this->lockFilePointer, LOCK_UN);
         fclose($this->lockFilePointer);
+
+        return $message;
     }
 
     function deleteCurrentUser($user){
