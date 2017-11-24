@@ -3,31 +3,27 @@
 namespace App\Classes\Mappers;
 
 use App\Classes\TDG\TransactionTDG;
-use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\Core\TransactionCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
+use PhpDeal\Annotation as Contract;
+
 use Hash;
 
 class TransactionMapper
 {
 
     private $transactionCatalog;
-    private $shoppingCart;
-    private $shoppingCartTDG;
     private $transactionTDG;
     private $unitOfWork;
     private $identityMap;
 
     function __construct($user_id)
     {
-        $this->transactionTDG = new transactionTDG();
-        $this->transactionCatalog = new transactionCatalog($this->transactionTDG->findAll());
+        $this->transactionTDG = new TransactionTDG();
+        $this->transactionCatalog = new TransactionCatalog($this->transactionTDG->findAll());
         $this->identityMap = new IdentityMap();
-        $this->shoppingCart = ShoppingCart::getInstance();
-        $this->shoppingCartTDG = new ShoppingCartTDG();
-        $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($user_id));
         $this->unitOfWork = new UnitOfWork(['transactionMapper' => $this]);
     }
 
@@ -41,32 +37,39 @@ class TransactionMapper
 
     function getTransactionByItemId($tr_id)
     {
-        $transactions = $this->transactionCatalog->getTransactionByItemId($tr_id);
+        $transaction = $this->transactionCatalog->getTransactionByItemId($tr_id);
 
-        return $transactions;
+        return $transaction;
     }
 
-    function makeNewTransaction($timestamp, $user_id)
+    function makeNewTransaction($timestamp, $eiList)
     {
-        $eiList = $this->shoppingCart->getEIList();
         $trListData = array();
+        $user_id = null;
         //the foreach loop is used to convert an ei object to a transaction object
         foreach ($eiList as $ei) {
             $trData = new \stdClass();
-            $trData->item_id = $ei->getId();
-            $trData->customer_id = $user_id;
-            $trData->serialNumber = $ei->getSerialNumber();
-            $trData->ElectronicSpec_id = $ei->getElectronicSpecification_id();
+            $trData->item_id = $ei->id;
+            $trData->customer_id = $ei->User_id;
+            $trData->serialNumber = $ei->serialNumber;
+            $trData->ElectronicSpec_id = $ei->ElectronicSpecification_id;
             $trData->timestamp = $timestamp;
+            $user_id = $ei->User_id;
             array_push($trListData, $trData);
         }
         $this->transactionCatalog->setTransactionList($trListData);
         $trObjectsList = $this->transactionCatalog->getTransactionsByUserIdAndTimestamp($user_id, $timestamp);
-        foreach ($trObjectsList as $tr) {
-            $this->unitOfWork->registerNew($tr);
-            $this->unitOfWork->commit();
+        if($trObjectsList != null) {
+            foreach ($trObjectsList as $tr) {
+                $this->unitOfWork->registerNew($tr);
+                $this->unitOfWork->commit();
+                $this->identityMap->add('Transaction', $tr);
+            }
+            return "transactionMade";
         }
-
+        else{
+            return "transactionFailed";
+        }
 
     }
 
@@ -75,5 +78,23 @@ class TransactionMapper
 
         $timeStamp = $transaction->getTimeStamp();
         return $this->transactionTDG->addTransaction($transaction, $timeStamp);
+    }
+     function ReturnPurchase($item_id){
+         $transaction = $this->transactionCatalog->getTransactionObjectByItemId($item_id);
+
+         if($transaction != null) {
+             $this->identityMap->delete('Transaction', 'item_id', $item_id);
+             $this->unitOfWork->registerDeleted($transaction);
+             $this->unitOfWork->commit();
+
+             return "purchaseReturned";
+         }
+         else{
+             return "returnFailed";
+         }
+     }
+    function deleteTransaction($tr){
+
+        $this->transactionTDG->deleteTransaction($tr);
     }
 }

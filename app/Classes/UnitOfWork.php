@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+
 use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\ElectronicSpecification;
 use App\Classes\Core\ElectronicItem;
@@ -65,7 +66,7 @@ class UnitOfWork {
                 $this->userCatalogMapper->saveUser($new);
             }
             if ($new instanceof ElectronicItem) {
-                $this->shoppingCartMapper->saveTransaction($new);
+                $this->electronicCatalogMapper->saveEI($new);
 
             }
             if ($new instanceof Transaction) {
@@ -87,6 +88,9 @@ class UnitOfWork {
             }
             if ($deleted instanceof User) {
                 $this->userCatalogMapper->deleteCurrentUser($deleted);
+            }
+            if ($deleted instanceof Transaction) {
+                $this->transactionMapper->deleteTransaction($deleted);
             }
         }
 

@@ -91,7 +91,6 @@ Route::get('show-registered-users', array(
 Route::post('show-transaction-details', array(
     'uses' => 'CustomerController@showTransactionDetails'
 ));
-Route::post('my-account', array(
+Route::post('return', array(
     'uses' => 'CustomerController@doReturnPurchase'
 ));
-

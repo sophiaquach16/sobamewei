@@ -8,11 +8,11 @@ use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
 use App\Classes\TDG\ElectronicCatalogTDG;
-use App\Classes\Mappers\ElectronicCatalogMapper;
 use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
 use PhpDeal\Annotation as Contract;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartMapper {
 
@@ -22,7 +22,6 @@ class ShoppingCartMapper {
     private $shoppingCartTDG;
     private $unitOfWork;
     private $identityMap;
-    private $electronicSpecification;
     private $ElectronicCatalogMapper;
 
     function __construct($userId) {
@@ -34,11 +33,11 @@ class ShoppingCartMapper {
         $this->identityMap = new IdentityMap();
         $this->transaction = new transaction();
         $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
-        $this->ElectronicCatalogMapper = new ElectronicCatalogMapper();
+
     }
 
     /**
-     * //@Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7")
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7")
      */
     function addToCart($eSId, $userId, $expiry) {
         if (count($this->shoppingCart->getEIList()) < 7) {
@@ -62,10 +61,17 @@ class ShoppingCartMapper {
         $this->shoppingCartTDG->updateEI($eI);
     }
 
+
     function viewCart(){
         return $this->electronicCatalog->getESListFromEIList($this->shoppingCart->getEIList());
     }
 
+    /**
+     * @param $eSId
+     * @param $userId
+     * @return string
+     * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && count($this->shoppingCart->getEIList()) < 7 && count($this->shoppingCart->getEIList()) > 0")
+     */
     function removeFromCart($eSId, $userId){
         $removedEI = $this->electronicCatalog->unsetUserAndExpiryFromEI($eSId, $userId);
         $this->unitOfWork->registerDirty($removedEI);
@@ -73,46 +79,6 @@ class ShoppingCartMapper {
         $this->shoppingCart->updateEIList();
         return 'Item Removed';
     }
-    function purchase($userId, $timeStamp){
-        $this->transaction->setTimeStamp($timeStamp);
-        $purchaseList = $this->viewCart();
 
-        if($purchaseList !=null){
-
-            $list= $this->transaction->purchase($userId);
-
-            foreach($list as $ei) {
-                $this->unitOfWork->registerNew($ei);
-
-               // $this->unitOfWork->registerDeleted($ei);
-                $this->unitOfWork->commit();
-
-            }
-            //delete the ei from the catalog
-            $this->deleteEI($list);
-            return 'Your order is successfully placed';
-        }
-        else{
-            return 'The shoppingCart is empty';
-        }
-    }
-
-    function saveTransaction($transaction) {
-
-        $timeStamp = $this->transaction->getTimeStamp();
-        return $this->shoppingCartTDG->addTransaction($transaction, $timeStamp);
-    }
-
-    private function deleteEI($purchaseList){
-        $ids=array();
-        foreach($purchaseList as $ei) {
-            $id=$ei->getId();
-           // dd($ei);
-            array_push($ids, $id);
-
-        }
-
-        $this->ElectronicCatalogMapper->deleteElectronicItems($ids);
-    }
 
 }

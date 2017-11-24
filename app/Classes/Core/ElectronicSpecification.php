@@ -233,7 +233,7 @@ class ElectronicSpecification {
         return $result;
     }
 
-    function unsetUserAndExpiry($userId){
+    public function unsetUserAndExpiry($userId){
         $eIToRemove = null;
 
         foreach ($this->electronicItems as $eI){

@@ -492,4 +492,18 @@ class ElectronicCatalogTest extends TestCase {
         $this->assertTrue(sizeof($catalogList) == sizeof(array($electronicData)));
     }
 
+    public function testReturnedEI() {
+      $electronicCatalog = new ElectronicCatalog();
+
+      $electronicItem = new ElectronicItem();
+      $itemData = new \stdClass();
+      $itemData-> id = 'abcc12345';
+      $itemData-> serialNumber = 'cdee12345';
+      $itemData-> ElectronicSpecification_id = '1';
+      $electronicItem-> set($itemData);
+
+      $returnedEI = $electronicCatalog->addReturnedEI('abcc12345', 'cdee12345', '1');
+      $this->assertTrue($returnedEI == $electronicItem);
+    }
+
 }

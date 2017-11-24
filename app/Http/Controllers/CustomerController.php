@@ -68,7 +68,17 @@ class CustomerController extends Controller
     {
         $request['time'] = date("Y-m-d h:i:s a", time());
         $userId = Auth::user()->id;
-        $this->transactionMapper->makeNewTransaction($request['time'],$userId);
+        $eiList=$this->electronicCatalogMapper->getAllEIForOnePurchaseForUser($userId);
+        foreach ($eiList as $ei){
+            $this->electronicCatalogMapper->deleteElectronicItems(array($ei->id));
+        }
+        $result=$this->transactionMapper->makeNewTransaction($request['time'], $eiList);
+        if ($result === 'transactionMade') {
+            $request->session()->flash('success_msg', 'Your purchase has been placed.');
+
+        } else if ($result === 'transactionFailed') {
+            $request->session()->flash('error_msg', 'Your transaction is failed.');
+        }
         return Redirect::to('/');
     }
 
@@ -86,33 +96,28 @@ class CustomerController extends Controller
         $ElectronicSpec_id = ($request->input('ElectronicSpec_id'));
         $electronicSpecification = $this->electronicCatalogMapper->getElectronicSpecification($ElectronicSpec_id);
         $transaction = $this->transactionMapper->getTransactionByItemId($item_id);
-
         return view('pages.show-transaction-details', ['eS' => $electronicSpecification,
             'tr' => $transaction]);
+
     }
 
     public function doReturnPurchase(Request $request)
     {
+        $item_id = ($request->input('item_id'));
+        $serialNumber = ($request->input('serialNumber'));
+        $ElectronicSpecification_id = ($request->input('ElectronicSpec_id'));
 
-        $transactions = $this->transactionMapper->getAllTransactions(Auth::user()->id);
-        $transactionRemoved = false;
-        //TODO the return code here
+        $result = $this->transactionMapper->ReturnPurchase($item_id);
 
-        //verify that from the transactions, the item returned or transaction, should no longer
-        //be part of the transaction list by searching for the item id.
-        foreach ($transactions as $tr) {
-            if ($tr->item_id == $request->input('item_id')) {
-                $transactionRemoved = false;
-                break;
-            }
-        }
-        //if the transaction no longer is part of the transactions, that means it has been
-        //removed and show confirmation of return
-        if ($transactionRemoved == true) {
-            $request->session()->flash('success_msg', "Your purchase has been returned.");
+        if ($result === 'purchaseReturned') {
+            $request->session()->flash('success_msg', 'Your purchase has been returned.');
+            $this->electronicCatalogMapper->addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id);
+        } else if ($result === 'returnFailed') {
+            $request->session()->flash('error_msg', 'Return failed, please try again.');
         }
 
-        return view('pages.my-account', ['transactions' => $transactions]);
+        return Redirect::to('/');
+
     }
 
 }

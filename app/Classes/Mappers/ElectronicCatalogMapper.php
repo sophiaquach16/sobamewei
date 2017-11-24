@@ -344,4 +344,38 @@ class ElectronicCatalogMapper {
         return $eSArray;
     }
 
+    function getAllEIForOnePurchaseForUser($user_id) {
+        $this->lockDataAccess();
+        $eIListForUser = array ();
+        $electronicSpecifications = $this->electronicCatalog->getESList();
+      //  dd($electronicSpecifications);
+        foreach ($electronicSpecifications as $eS){
+            $eIList = $eS->electronicItems;
+            foreach ($eIList as $eI){
+                //dd($eI);
+                if ($eI->User_id == $user_id)
+                    array_push($eIListForUser, $eI);
+            }
+        }
+
+        $this->unlockDataAccess();
+        return $eIListForUser;
+    }
+
+   function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
+       $this->lockDataAccess();
+       $EI=$this->electronicCatalog->addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id);
+
+           $this->identityMap->add('ElectronicItem', 'id', $item_id);
+
+
+           $this->unitOfWork->registerNew($EI);
+
+       $this->unitOfWork->commit();
+
+       $this->unlockDataAccess();
+   }
+   function saveEI($ei){
+       $this->electronicCatalogTDG->saveReturnedEI($ei);
+   }
 }

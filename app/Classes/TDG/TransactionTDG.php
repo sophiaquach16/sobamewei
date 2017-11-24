@@ -51,4 +51,13 @@ class TransactionTDG {
     }
 
 
+    public function deleteTransaction($transaction){
+        $queryString = 'DELETE FROM Transaction WHERE ';
+        $queryString .= 'item_id' . ' = :' . 'item_id';
+
+        $parameters = new \stdClass();
+        $parameters->item_id = $transaction->get()->item_id;
+
+        return $this->conn->query($queryString, $parameters);
+    }
 }
