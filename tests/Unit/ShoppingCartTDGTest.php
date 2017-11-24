@@ -4,127 +4,90 @@ namespace Tests\Unit;
 
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
+use App\Classes\Core\ElectronicSpecification;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Classes\Core\ElectronicItem;
+use App\Classes\TDG\ElectronicCatalogTDG;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Core\User;
 
 class ShoppingCartTDGTest extends TestCase {
-    //Tests for: updateEI, findAllEIFromUser,addTransaction
-
-    public function testUpdateEI(){
-
-        $ShoppingCartTDG = new ShoppingCartTDG();
-        //Creation of a user
-        $user = new User();
-
-        $userData = new \stdClass();
-
-        $userData->id = '1';
-        $userData->firstName = 'John';
-        $userData->lastName = 'Doe';
-        $userData->email = 'johndoe123@gmail.com';
-        $userData->phone = '123-456-7890';
-        $userData->admin = '0';
-        $userData->physicalAddress = '1234 Wallstreet';
-        $userData->password = 'password123';
-
-        $user->set($userData);
-
-        //Creation of a ShoppingCart
-        $ShoppingCart = ShoppingCart::getInstance();
-        //Logging in the user
-        Auth::login($user);
-        Auth::check();
-
-        //Creation of an electronic item
-        $electronicItem1 = new ElectronicItem();
-
-        $item1Data = new \stdClass();
-        $item1Data->id='1';
-        $item1Data->serialNumber = 123;
-        $item1Data->ElectronicSpecification_id = "1";
-        $item1Data->User_id='1';
-        $item1Data->expiryForUser='2017-12-25 12:12:12';
-
-        $electronicItem1->set($item1Data);
-
-        $listOfItems = array($electronicItem1);
-        $ShoppingCart->setEIList($listOfItems);
-
-        $ShoppingCartTDG->updateEI($electronicItem1);
-        //var_dump($ShoppingCartTDG);
-
-        $this->assertDatabaseHas('electronicitem',[
-            'id'=>'1',
-            'serialNumber'=>123,
-            'ElectronicSpecification_id'=>"1",
-            'User_id'=>'1',
-            'expiryForUser'=>"2017,12,25 12:12:12",
-        ]);
-    }
     public function testFindAllEIFromUser(){
-        $ShoppingCartTDG = new ShoppingCartTDG();
+
+
+        $shoppingCartTDG = new ShoppingCartTDG();
         //Creation of a user
         $user = new User();
 
         $userData = new \stdClass();
 
-        $userData->id = '1';
+        $userData->id = 5;
         $userData->firstName = 'John';
         $userData->lastName = 'Doe';
         $userData->email = 'johndoe123@gmail.com';
         $userData->phone = '123-456-7890';
-        $userData->admin = '0';
+        $userData->admin = 0;
         $userData->physicalAddress = '1234 Wallstreet';
         $userData->password = 'password123';
 
         $user->set($userData);
 
         //Creation of a ShoppingCart
-        $ShoppingCart = ShoppingCart::getInstance();
+        $shoppingCart = ShoppingCart::getInstance();
         //Logging in the user
         Auth::login($user);
         Auth::check();
 
-        //Creation of Items
-        $electronicItem1 = new ElectronicItem();
-        $electronicItem2 = new ElectronicItem();
-        $electronicItem3 = new ElectronicItem();
+        $electronicCatalogTDG = new ElectronicCatalogTDG();
+        $eS = new ElectronicSpecification();
 
-        $item1Data = new \stdClass();
-        $item1Data->id='1';
-        $item1Data->serialNumber = 123;
-        $item1Data->ElectronicSpecification_id = "1";
-        $item1Data->User_id='1';
-        $item1Data->expiryForUser='2017-12-25 12:12:12';
+        $eSData = new \stdClass();
+        $eSData->id = 12345;
+        $eSData->dimension = '100 x 200 x 300';
+        $eSData->weight = 400;
+        $eSData->modelNumber = 'ABC123DEF5D';
+        $eSData->brandName = 'LG';
+        $eSData->hdSize = '500';
+        $eSData->price = '1000';
+        $eSData->processorType = 'AMD';
+        $eSData->ramSize = '16';
+        $eSData->cpuCores = '4';
+        $eSData->batteryInfo = '12 hours';
+        $eSData->os = 'Windows';
+        $eSData->camera = 1;
+        $eSData->touchScreen = 1;
+        $eSData->displaySize = 10;
+        $eSData->ElectronicType_id = 3;
 
-        $electronicItem1->set($item1Data);
+        $eS->set($eSData);
 
-        $item2Data = new \stdClass();
+        $electronicCatalogTDG->insertElectronicSpecification($eS);
 
-        $item2Data->id='2';
-        $item2Data->serialNumber = 234;
-        $item2Data->ElectronicSpecification_id = "2";
-        $item2Data->User_id='1';
-        $item2Data->expiryForUser='2017-12-25 12:12:12';
+        $eIData = new \stdClass();
+        $eIData->id = 12345;
+        $eIData->serialNumber = "ABC123";
+        $eIData->ElectronicSpecification_id = 2;
+        $eIData->User_id=5;
+        $eIData->expiryForUser='2017-12-25 12:12:12';
 
-        $electronicItem2->set($item2Data);
+        $electronicCatalogTDG->insertElectronicItem($eSData->modelNumber, $eIData);
+        $shoppingCart->setEIList(array($eIData));
+        $itemsRetrievedFromDB= $shoppingCartTDG->findAllEIFromUser($eIData->User_id);
+        var_dump($itemsRetrievedFromDB);
+        $shoppingCartItems=$shoppingCart->getEIList();
+        $sameValues = false;
+        foreach ($itemsRetrievedFromDB as $itemDB){
+            foreach ($shoppingCartItems as $shoppingItem)
+                if ($itemDB->id== $shoppingItem->getId()){
+                    $sameValues = true;
+                }
+                else
+                    $sameValues = false;
+                break;
+        }
+        $this->assertTrue($sameValues);
 
-        $item3Data = new \stdClass();
-        $item3Data->id='3';
-        $item3Data->serialNumber = 345;
-        $item3Data->ElectronicSpecification_id = "1";
-        $item3Data->User_id='1';
-        $item3Data->expiryForUser='2017-12-25 12:12:12';
-
-        $electronicItem3->set($item3Data);
-        $itemsList = array($electronicItem1,$electronicItem2,$electronicItem3);
-        $ShoppingCart->setEIList($itemsList);
-        $itemsFromUser = $ShoppingCartTDG->findAllEIFromUser('1');
-        //var_dump($itemsFromUser);
-        $this->assertTrue($itemsFromUser == $itemsList);
     }
 
 }
