@@ -3,8 +3,6 @@
 namespace App\Classes\Core;
 use PhpDeal\Annotation as Contract;
 
-namespace App\Classes\Core;
-
 /**
  * Class Transaction
  * @Contract\Invariant("Auth::check() && Auth::user()->admin === 0")
@@ -41,7 +39,7 @@ class Transaction
      * @param $userId
      * @return array
      * @Contract\Verify("Auth::check() && Auth::user()->admin === 0 && (count(Auth::user()) == 1)") //pre-condition
-     * @Contract\Ensure("($this->getTimeStamp() != null && $this->set($userId))" //post-condition
+     * @Contract\Ensure("$this->getTimeStamp()!= null") //post-condition
      */
     public function purchase($userId)
     {

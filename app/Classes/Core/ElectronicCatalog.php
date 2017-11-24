@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Classes\Core;
+use PhpDeal\Annotation as Contract;
+use Auth;
 
 class ElectronicCatalog {
 
@@ -139,6 +141,15 @@ class ElectronicCatalog {
         return $removedEI;
     }
 
+
+
+    /**
+     * @param $item_id
+     * @param $serialNumber
+     * @param $ElectronicSpecification_id
+     * @Contract\Verify("Auth::check() === true && Auth::user()->admin === 0")
+     * @Contract\Ensure("($__result->getID() == $item_id) && ($__result->getSerialNumber()==$serialNumber) && ($__result->getElectronicSpecification_id==$ElectronicSpecification_id)");
+     */
     function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
 
         $EIData = new \stdClass();
