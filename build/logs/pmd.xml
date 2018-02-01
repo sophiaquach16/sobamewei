@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="@project.version@" timestamp="2018-01-28T21:19:27+00:00">
+<pmd version="@project.version@" timestamp="2018-02-01T05:25:41+00:00">
   <file name="/var/www/html/sobamewei/app/Classes/Core/ElectronicSpecification.php">
     <violation beginline="66" endline="150" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="App\Classes\Core" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="ElectronicSpecification" method="set" priority="3">
       The method set() has a Cyclomatic Complexity of 25. The configured cyclomatic complexity threshold is 10.
