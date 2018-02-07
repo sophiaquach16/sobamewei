@@ -140,7 +140,6 @@ class ElectronicCatalogTest extends TestCase {
 
         $itemDataJson = json_decode(json_encode($item1Data), true);
         $valuesMatch = false;
-        $valueOfItemIndex;
         //retrieve which array index is the item we have just added into the
         //specification
         foreach ($catalogListJson[0]["electronicItems"] as $itemIndex => $item) {
