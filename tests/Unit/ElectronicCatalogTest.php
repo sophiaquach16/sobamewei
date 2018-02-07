@@ -294,7 +294,6 @@ class ElectronicCatalogTest extends TestCase {
 
       $electronicDataJson = json_decode(json_encode($electronicData), true);
       $valuesMatch = false;
-      var_dump($electronicDataJson);
 
       //compare values added from electronicData with the actual
       //ElectronicSpecification object
