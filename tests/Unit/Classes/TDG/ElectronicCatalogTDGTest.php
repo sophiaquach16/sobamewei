@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Classes\TDG\ElectronicCatalogTDG;
-use App\Classes\Core\ElectronicSpecification;
-use App\Classes\Core\ElectronicItem;
 
 class ElectronicCatalogTDGTest extends TestCase {
 
