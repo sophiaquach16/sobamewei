@@ -505,5 +505,4 @@ class ElectronicCatalogTest extends TestCase {
       $returnedEI = $electronicCatalog->addReturnedEI('abcc12345', 'cdee12345', '1');
       $this->assertTrue($returnedEI == $electronicItem);
     }
-
 }

@@ -87,7 +87,6 @@ class ShoppingCartTDGTest extends TestCase {
                 break;
         }
         $this->assertTrue($sameValues);
-
     }
 
 }
