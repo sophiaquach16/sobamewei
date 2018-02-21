@@ -8,6 +8,24 @@
 
 namespace Tests\Unit;
 
+class MockShoppingCart{
+    public function getEIList(){
+        return array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+    }
+
+    public function updateEIList(){
+    }
+}
+
+class MockShoppingCartTDG{
+    public function findalleifromuser($userid){
+    }
+
+    public function updateEI($ei){
+    }
+}
+
+
 class MockElectronicCataLogTDG{
     public function insertElectronicSpecification($electronicSpecification){
         return new \stdClass();
@@ -102,12 +120,15 @@ class MockUnitOfWork{
 }
 
 class MockTransaction{
-    private $timestamp = 888888;
-    private $item_id = 72;
-    private $customer_id = 8;
-    private $serialNumber= 8989;
-    private $ElectronicSpec_id = 293;
-
+    public $timestamp = 888888;
+    public $item_id = 72;
+    public $customer_id = 8;
+    public $serialNumber= 8989;
+    public $ElectronicSpec_id = 293;
+    
+    public function getTimeStamp(){
+        return $this->timestamp;
+    }
     public function get(){
         $returnData = new \stdClass();
         $returnData->item_id = $this->item_id;
