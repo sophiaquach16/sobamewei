@@ -7,7 +7,6 @@ namespace App\Classes\Mappers;
 use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
-use App\Classes\TDG\ElectronicCatalogTDG;
 use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
@@ -16,24 +15,21 @@ use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartMapper {
 
-    private $electronicCatalogTDG;
-    private $shoppingCart;
-    private $transaction;
-    private $shoppingCartTDG;
-    private $unitOfWork;
-    private $identityMap;
-    private $ElectronicCatalogMapper;
+    public $shoppingCart;
+    public $shoppingCartTDG;
+    public $unitOfWork;
+    public $identityMap;
+    public $electronicCatalog;
 
     function __construct($userId) {
-        $this->electronicCatalogTDG = new ElectronicCatalogTDG();
-        $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
-        $this->shoppingCart = ShoppingCart::getInstance();
-        $this->shoppingCartTDG = new ShoppingCartTDG();
-        $this->unitOfWork = new UnitOfWork(['shoppingCartMapper' => $this]);
-        $this->identityMap = new IdentityMap();
-        $this->transaction = new transaction();
-        $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
-
+        if ($userId > -1){
+            $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
+            $this->shoppingCart = ShoppingCart::getInstance();
+            $this->shoppingCartTDG = new ShoppingCartTDG();
+            $this->unitOfWork = new UnitOfWork(['shoppingCartMapper' => $this]);
+            $this->identityMap = new IdentityMap();
+            $this->shoppingCart->setEIList($this->shoppingCartTDG->findalleifromuser($userid));
+        }
     }
 
     /**
@@ -59,6 +55,7 @@ class ShoppingCartMapper {
 
     function updateEI($eI) {
         $this->shoppingCartTDG->updateEI($eI);
+        return true;
     }
 
 
@@ -79,6 +76,4 @@ class ShoppingCartMapper {
         $this->shoppingCart->updateEIList();
         return 'Item Removed';
     }
-
-
 }

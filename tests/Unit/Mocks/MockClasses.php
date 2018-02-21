@@ -74,6 +74,13 @@ class MockElectronicCatalog{
 
     public function deleteElectronicItem($ei){
     }
+
+    public function getESListFromEIList($lst){
+        return new MockElectronicSpecification(); 
+    }
+
+    public function unsetUserAndExpiryFromEI($eSId, $userId){
+    }
 }
 
 class MockIdentityMap{
