@@ -5,23 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Classes\Mappers\ShoppingCartMapper;
 
-class MockShoppingCart{
-    public function getEIList(){
-        return array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-    }
-
-    public function updateEIList(){
-    }
-}
-
-class MockShoppingCartTDG{
-    public function findalleifromuser($userid){
-    }
-
-    public function updateEI($ei){
-    }
-}
-
 class ShoppingCartMapperTest extends TestCase{
     public function setUp(){
         $this->shoppingCartMapper = new ShoppingCartMapper(-1);
