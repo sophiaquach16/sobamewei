@@ -136,6 +136,9 @@ class MockMySQLConnection{
         else if ($query === "SELECT * FROM User WHERE email = :email"){
             return array();
         }
+        else if ($query === "SELECT ElectronicItem.id, serialNumber, ElectronicSpecification_id, User_id, expiryForUser FROM ElectronicItem  JOIN User ON ElectronicItem.User_id = User.id WHERE User.id = 999"){
+           return array();
+        }
         return null;
     }
 }
