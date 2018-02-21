@@ -18,9 +18,7 @@ class UserCatalogTDG {
      */
     public function find($parameters) {
 
-        $queryString = 'SELECT id, firstname, lastName, email, phone, admin,
-                physicalAddress, password FROM User
-                WHERE ';
+        $queryString = 'SELECT id, firstname, lastName, email, phone, admin, physicalAddress, password FROM User WHERE ';
 
         //For each key, (ex: id, email, etc.), we build the query
         foreach ($parameters as $key => $value) {
@@ -83,7 +81,6 @@ class UserCatalogTDG {
         //We send to MySQLConnection the associative array, to bind values to keys
         //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
         $array = $this->conn->query($queryString, $parameters);
-
         if (count($array) > 0 && Hash::check($password, $array[0]->password)) {
             return true;
         } else {

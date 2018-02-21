@@ -7,117 +7,85 @@
 */
 
 namespace Tests\Unit;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Classes\Core\User;
-use App\Classes\Core\UserCatalog;
+use Tests\TestCase; 
 use App\Classes\TDG\UserCatalogTDG;
-use App\Classes\Mappers\UserCatalogMapper;
 
 class UserCatalogTDGTest extends TestCase {
+    
+    public function setUp(){
+        $this->mockUser = new MockUser();
+        $this->userCatalogTDG = new UserCatalogTDG();
+        $this->userCatalogTDG->conn = new MockMySQLConnection();
+    }
 
-//Test the add method in UserCatalogTDG to see if user got added into the database
-	public function testAdd(){
-		$userCatalogTDG = new UserCatalogTDG();
-		
-		$userData = new \stdClass();
+    public function testAdd(){		
+        $this->userCatalogTDG->add($this->mockUser);
 
-		//create user with all its parameters 
-		$userData->firstName = 'Jay';
-		$userData->lastName = 'Lin';
-		$userData->email = 'jlin@hotmail.com';
-		$userData->phone = '6789998212';
-		$userData->admin = 0;
-		$userData->physicalAddress = '111 St-Laurent Street';
-		$userData->password = '123';
-		$user= new User($userData);
+        $expected_query = "INSERT INTO User SET id = :id , firstName = :firstName , lastName = :lastName , email = :email , phone = :phone , admin = :admin , physicalAddress = :physicalAddress , password = :password ";        
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
 
-		$userCatalogTDG->add($user);
-		
-		$this->assertDatabaseHas('User', [
-            'email' => 'jlin@hotmail.com'
-        ]);
-	}
+    public function testFind(){
+        $this->userCatalogTDG->find($this->mockUser);    
+        $expected_query = "SELECT id, firstname, lastName, email, phone, admin, physicalAddress, password FROM User WHERE id = :id AND firstName = :firstName AND lastName = :lastName AND email = :email AND phone = :phone AND admin = :admin AND physicalAddress = :physicalAddress AND password = :password";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
 
-	//Test the login method in UserCatalogTDG to see if user has been logged in succesfully
-	public function testLogin(){
-		
-		$userCatalogMapper = new UserCatalogMapper();
-	    
-		$this->assertTrue($userCatalogMapper->login('admin1@conushop.com','admin'));
-	}
+    public function testFindAll(){
+        $this->userCatalogTDG->findAll();
+        $expected_query = "SELECT * FROM User";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
 
-	//Test the find method in UserCatalogTDG, to make sure that a particular user is saved in the database
-	public function testFind(){
-		$userCatalogTDG = new UserCatalogTDG();
-		$userData = new \stdClass();
-        
-		//create user with all its parameters
-		$userData->firstName = 'Eric';
-		$userData->lastName = 'Watson';
-		$userData->email = 'ewat@aol.com';
-		$userData->phone = '443-885-3424';
-		$userData->physicalAddress = '150 Whatsit Avenue';
-		$userData->password = '1e2r3ic';
+    public function testInsertLoginLog(){
+        $timestamp = "888888";
+        $userId = $this->mockUser->id;
+        $this->userCatalogTDG->insertLoginLog($userId, $timestamp);
+        $expected_query = "INSERT INTO LoginLog SET User_id = :User_id , timestamp = :timestamp ";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
 
-		$user= new User($userData);
-		$userCatalogTDG->add($user);
+    public function testLogin(){
+        $email = $this->mockUser->email;
+        $password = $this->mockUser->password;
+        $this->userCatalogTDG->login($email, $password);
+        $expected_query = "SELECT * FROM User WHERE email = :email";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
 
-		// Make sure we don't search with information we shouldn't have.
-		unset($userData->password);
+    public function testDeleteUser(){
+        $this->userCatalogTDG->deleteUser($this->mockUser);
+        $expected_query = "DELETE FROM User WHERE id = :id";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
+    
+    public function testDeleteLoginLog(){
+        $userId = $this->mockUser->id;
+        $this->userCatalogTDG->deleteLoginLog($userId);
+        $expected_query = "DELETE FROM LoginLog WHERE User_id = :User_id";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }
 
-		// Make sure we only have one result.
-		$this->assertTrue(count($userCatalogTDG->find($userData)) == 1);
-	}
+    public function testDeleteUserTransaction(){
+        $userId = $this->mockUser->id;
+        $this->userCatalogTDG->deleteUserTransaction($userId);
+        $expected_query = "DELETE FROM Transaction WHERE customer_id = :customer_id";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    }   
 
-	
-
-	
-	//Test the findAll method in UserCatalogTDG, to make sure that the all users were saved in the database
-	public function testFindAll(){
-		$userCatalogTDG = new UserCatalogTDG();
-
-		$userData1 = new \stdClass();
-		$userData1->firstName = 'Evan';
-		$userData1->lastName = 'Davis';
-		$userData1->email = 'eda@gmail.com';
-		$userData1->phone = '443-885-3424';
-		$userData1->physicalAddress = '150 Whatsit Avenue';
-		$userData1->password = 'evanspassword';
-
-		$userData2 = new \stdClass();
-		$userData2->firstName = 'Jay';
-		$userData2->lastName = 'Lin';
-		$userData2->email = 'jlin@hotmail.com';
-		$userData2->phone = '6789998212';
-		$userData2->physicalAddress = '111 St-Laurent Street';
-		$userData2->password = '123';
-
-
-		$user1 = new User($userData1);
-		$user2 = new User($userData2);
-
-		$userCatalogTDG->add($user1);
-		$userCatalogTDG->add($user2);
-
-		// Retrieve the full user list.
-		$users = $userCatalogTDG->findAll();
-
-		$seenUser1 = false;
-		$seenUser2 = false;
-
-		// Check if user1 and user2 are there.
-		foreach($users as $user) {
-			$email = $user->email;
-			if ($email == $userData1->email) {
-				$seenUser1 = true;
-			}else if ($email == $userData2->email){
-				$seenUser2 = true;
-			}
-		}
-
-		// Make sure we saw both users.
-		$this->assertTrue($seenUser1 && $seenUser2);
-	}
-
+    public function testUnsetUserEI(){
+        $userId = $this->mockUser->id;
+        $this->userCatalogTDG->unsetUserEI($userId);
+        $expected_query = "SELECT * FROM ElectronicItem";
+        $result_query = $this->userCatalogTDG->conn->query_string;
+        $this->assertTrue($expected_query === $result_query);
+    } 
 }
