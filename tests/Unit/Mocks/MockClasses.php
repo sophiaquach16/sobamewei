@@ -8,6 +8,81 @@
 
 namespace Tests\Unit;
 
+class MockUserCatalog{
+    public function findUser($email){
+        return true;
+    }
+    public function makeCustomer($userData){
+    }
+
+    public function checkUser($email, $password){
+        return true;
+    }
+
+    public function getDeleteUserInfo($userId){
+        return new MockUser();
+    }
+
+    public function getUserList(){
+        return new MockUser();
+    }
+}
+
+class MockUserCatalogTDG{
+    public function add($user){
+        return new \stdClass();
+    }
+
+    public function insertLoginLog($id, $timestamp){
+        
+    }
+
+    public function unsetUserEI($userId){
+    }
+
+    public function deleteLoginLog($userId){
+    }
+
+    public function deleteUserTransaction($userId){
+    }
+
+    public function deleteUser($user){
+        return new \stdClass();
+    }
+}
+
+
+class MockTransactionCatalog{
+    public function getTransactionListForUser($user_id){
+        return new MockTransaction();
+    }
+
+    public function getTransactionByItemId($tr_id){
+        return new MockTransaction();
+    }
+    
+    public function getTransactionObjectByItemId($tr_id){
+        return new MockTransaction();
+    }
+
+    public function setTransactionList($trListData){
+    }
+
+    public function getTransactionsByUserIdAndTimestamp($user_id, $timestamp){
+        return null;
+    }
+}
+
+class MockTransactionTDG{
+    public function addTransaction($transaction, $timeStamp){
+        return new \stdClass();
+    }
+
+    public function deleteTransaction($tr){
+    }
+}
+
+
 class MockShoppingCart{
     public function getEIList(){
         return array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);

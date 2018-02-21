@@ -10,11 +10,11 @@ use Hash;
 
 class UserCatalogMapper {
 
-    private $userCatalog;
-    private $userCatalogTDG;
-    private $unitOfWork;
-    private $identityMap;
-    private $lockFilePointer;
+    public $userCatalog;
+    public $userCatalogTDG;
+    public $unitOfWork;
+    public $identityMap;
+    public $lockFilePointer;
 
     function __construct() {
         $argv = func_get_args();
@@ -41,6 +41,7 @@ class UserCatalogMapper {
         $timestamp = date("Y-m-d H:i:s");
 
         $this->userCatalogTDG->insertLoginLog($id, $timestamp);
+        return true;
     }
 
     function makeNewCustomer($userData) {
@@ -76,8 +77,11 @@ class UserCatalogMapper {
 
     function deleteUser($userId){
         $message = "";
-        $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c');
-        flock($this->lockFilePointer, LOCK_EX);
+        try{
+            $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c');
+            flock($this->lockFilePointer, LOCK_EX);
+        }catch(\Exception $e){
+        }
 
         $this->identityMap->delete('User', 'id', $userId);
         $user=$this->userCatalog->getDeleteUserInfo($userId);
@@ -90,9 +94,12 @@ class UserCatalogMapper {
         else {
           $message = "userDeleteFailure";
         }
-
-        flock($this->lockFilePointer, LOCK_UN);
-        fclose($this->lockFilePointer);
+        
+        try{
+            flock($this->lockFilePointer, LOCK_UN);
+            fclose($this->lockFilePointer);
+        }catch(\Exception $e){
+        }
 
         return $message;
     }
