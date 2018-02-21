@@ -6,7 +6,7 @@ use Hash;
 
 class UserCatalogTDG {
 
-    private $conn;
+    public $conn;
 
     public function __construct() {
         $this->conn = new MySQLConnection();
