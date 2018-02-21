@@ -8,6 +8,24 @@
 
 namespace Tests\Unit;
 
+class MockTransaction{
+    private $timestamp = 888888;
+    private $item_id = 72;
+    private $customer_id = 8;
+    private $serialNumber= 8989;
+    private $ElectronicSpec_id = 293;
+
+    public function get(){
+        $returnData = new \stdClass();
+        $returnData->item_id = $this->item_id;
+        $returnData->customer_id = $this->customer_id;
+        $returnData->serialNumber = $this->serialNumber;
+        $returnData->ElectronicSpec_id = $this->ElectronicSpec_id;
+        $returnData->timestamp = $this->timestamp;
+        return $returnData;
+    }
+}
+
 class MockUser{
     public $id = 999;
     public $firstName = 'example_firstname';
