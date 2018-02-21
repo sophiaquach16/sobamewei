@@ -10,11 +10,11 @@ use PhpDeal\Annotation as Contract;
 
 class ElectronicCatalogMapper {
 
-    private $electronicCatalog;
-    private $electronicCatalogTDG;
-    private $unitOfWork;
-    private $identityMap;
-    private $lockFilePointer;
+    public $electronicCatalog;
+    public $electronicCatalogTDG;
+    public $unitOfWork;
+    public $identityMap;
+    public $lockFilePointer;
 
     function __construct() {
         $argv = func_get_args();
@@ -96,8 +96,11 @@ class ElectronicCatalogMapper {
             //Delete old file
             $splitLink = explode("/", $eS->image);
             $fileName = end($splitLink);
-            if ($fileName !== "" && file_exists(public_path('images/' . $fileName))) {
-                unlink(public_path('images/' . $fileName));
+            try{
+                if ($fileName !== "" && file_exists(public_path('images/' . $fileName))) {
+                    unlink(public_path('images/' . $fileName));
+                }
+            }catch(\Exception $e){
             }
 
             $electronicSpecification = $this->electronicCatalog->modifyElectronicSpecification($eSId, $eSData);
@@ -150,6 +153,7 @@ class ElectronicCatalogMapper {
         $this->unitOfWork->commit();
 
         $this->unlockDataAccess();
+        return true;
     }
 
     function getAllElectronicSpecifications() {
@@ -185,17 +189,26 @@ class ElectronicCatalogMapper {
     }
 
     private function lockDataAccess() {
-        $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c'); //set file pointer
-        flock($this->lockFilePointer, LOCK_EX); //lock file
+        try{
+            $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c'); //set file pointer
+            flock($this->lockFilePointer, LOCK_EX); //lock file
+        }catch(\Exception $e){
+        }
     }
 
     private function checkLock() {
-        flock($this->lockFilePointer, LOCK_NB);
+        try{
+            flock($this->lockFilePointer, LOCK_NB);
+        }catch(\Exception $e){
+        }
     }
 
     private function unlockDataAccess() {
-        flock($this->lockFilePointer, LOCK_UN); //unlock file
-        fclose($this->lockFilePointer); //close file
+        try{
+            flock($this->lockFilePointer, LOCK_UN); //unlock file
+            fclose($this->lockFilePointer); //close file
+        }catch(\Exception $e){
+        }
     }
 
     function getESFilteredAndSortedByCriteria($eSType, $criteriaArray, $sortBy) {
@@ -379,8 +392,11 @@ class ElectronicCatalogMapper {
        $this->unitOfWork->registerNew($EI);
        $this->unitOfWork->commit();
        $this->unlockDataAccess();
+       return true;
    }
+
    function saveEI($ei){
        $this->electronicCatalogTDG->saveReturnedEI($ei);
+       return true;
    }
 }

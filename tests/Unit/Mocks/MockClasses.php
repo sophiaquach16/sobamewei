@@ -8,6 +8,92 @@
 
 namespace Tests\Unit;
 
+class MockElectronicCataLogTDG{
+    public function insertElectronicSpecification($electronicSpecification){
+        return new \stdClass();
+    }
+    
+    public function updateElectronicSpecification($electronicSpecification){
+        return new \stdClass();
+    }
+    
+    public function deleteElectronicItem($electronicItem){
+        return new \stdClass();
+    }
+
+    public function insertElectronicItem($modelNumber, $electronicItemData){
+        return new \stdClass();
+    }
+
+    public function saveReturnedEI($ei){
+        return new \stdClass();
+    }
+}
+
+class MockElectronicCatalog{
+    private $esList;
+    
+    function __construct() {
+        $es = new MockElectronicSpecification();
+        $this->esList = array($es);
+    }
+
+    public function findElectronicSpecification($modelNumber){
+        $modelNumberExists = false;
+        foreach ($this->esList as $eS) {
+            if ($eS->modelNumber === $modelNumber) {
+                $modelNumberExists = true;
+            }
+        }
+        return $modelNumberExists;
+    }
+
+    public function makeElectronicSpecification($electronicSpecificationData){
+        return new MockElectronicSpecification();
+    }
+
+    public function makeElectronicItem($modelNumber, $electronicItemData){
+    }
+
+    public function getElectronicSpecificationById($eSId){
+        $mockES = new MockElectronicSpecification();
+        return $mockES->get();
+    }
+
+    public function modifyElectronicSpecification($eSId, $eSData){
+        return new MockElectronicSpecification();
+    }
+    
+    public function getESList(){
+        return array();
+    }
+
+    public function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
+        return new MockElectronicItem();
+    }
+
+    public function deleteElectronicItem($ei){
+    }
+}
+
+class MockIdentityMap{
+    public function add($objectClass, $object){}
+    public function get($objectClass, $objectProperty, $objectPropertyValue){
+        return null;
+    }
+    public function delete($objectClass, $objectProperty, $objectPropertyValue){}
+    public function clear(){}
+}
+
+class MockUnitOfWork{
+    public function registerNew($object){}
+    public function registerDeleted($object){}
+    public function registerDirty($object){}
+    public function commit(){
+        return null;
+    }
+}
+
 class MockTransaction{
     private $timestamp = 888888;
     private $item_id = 72;
