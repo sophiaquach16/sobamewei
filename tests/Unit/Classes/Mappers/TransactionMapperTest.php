@@ -5,36 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Classes\Mappers\TransactionMapper;
 
-class MockTransactionCatalog{
-    public function getTransactionListForUser($user_id){
-        return new MockTransaction();
-    }
-
-    public function getTransactionByItemId($tr_id){
-        return new MockTransaction();
-    }
-    
-    public function getTransactionObjectByItemId($tr_id){
-        return new MockTransaction();
-    }
-
-    public function setTransactionList($trListData){
-    }
-
-    public function getTransactionsByUserIdAndTimestamp($user_id, $timestamp){
-        return null;
-    }
-}
-
-class MockTransactionTDG{
-    public function addTransaction($transaction, $timeStamp){
-        return new \stdClass();
-    }
-
-    public function deleteTransaction($tr){
-    }
-}
-
 class TransactionMapperTest extends TestCase{
     public function setUp(){
         $this->transactionMapper = new TransactionMapper(-1);
