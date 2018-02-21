@@ -49,7 +49,6 @@ class ShoppingCartTDG
                 unset($eIsData[$key]);
             }
         }
-
         return $eIsData;
     }
 }
