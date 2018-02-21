@@ -6,12 +6,13 @@ use Tests\TestCase;
 use App\Classes\IdentityMap;
 
 class MockObject{
+    private $id = 57;
     function __construct() {
     }
 
     public function get(){
         $return_val = new \stdClass();
-        $return_val->id = 57;
+        $return_val->id = $this->id;
         return $return_val;
     }
 }
