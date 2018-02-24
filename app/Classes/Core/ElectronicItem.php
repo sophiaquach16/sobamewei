@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Classes\Core;
-
-class ElectronicItem {
+class ElectronicItem implements iElectronicItem {
 
     private $id;
     private $serialNumber;
