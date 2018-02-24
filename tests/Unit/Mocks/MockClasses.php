@@ -8,6 +8,14 @@
 
 namespace Tests\Unit;
 
+use App\Classes\iIdentityMap;
+use App\Classes\iUnitOfWork;
+use App\Classes\TDG\iElectronicCatalogTDG;
+use App\Classes\TDG\iMySQLConnection;
+use App\Classes\TDG\iShoppingCartTDG;
+use App\Classes\TDG\iTransactionTDG;
+use App\Classes\TDG\iUserCatalogTDG;
+
 class MockUserCatalog{
     public function findUser($email){
         return true;
@@ -28,7 +36,7 @@ class MockUserCatalog{
     }
 }
 
-class MockUserCatalogTDG{
+class MockUserCatalogTDG implements iUserCatalogTDG {
     public function add($user){
         return new \stdClass();
     }
@@ -49,10 +57,25 @@ class MockUserCatalogTDG{
     public function deleteUser($user){
         return new \stdClass();
     }
+
+    public function find($parameters)
+    {
+        // TODO: Implement find() method.
+    }
+
+    public function findAll()
+    {
+        // TODO: Implement findAll() method.
+    }
+
+    public function login($email, $password)
+    {
+        // TODO: Implement login() method.
+    }
 }
 
 
-class MockTransactionCatalog{
+class MockTransactionCatalog {
     public function getTransactionListForUser($user_id){
         return new MockTransaction();
     }
@@ -73,12 +96,17 @@ class MockTransactionCatalog{
     }
 }
 
-class MockTransactionTDG{
+class MockTransactionTDG implements iTransactionTDG {
     public function addTransaction($transaction, $timeStamp){
         return new \stdClass();
     }
 
     public function deleteTransaction($tr){
+    }
+
+    public function findAll()
+    {
+        // TODO: Implement findAll() method.
     }
 }
 
@@ -90,9 +118,10 @@ class MockShoppingCart{
 
     public function updateEIList(){
     }
+
 }
 
-class MockShoppingCartTDG{
+class MockShoppingCartTDG implements iShoppingCartTDG {
     public function findalleifromuser($userid){
     }
 
@@ -101,7 +130,7 @@ class MockShoppingCartTDG{
 }
 
 
-class MockElectronicCataLogTDG{
+class MockElectronicCataLogTDG implements iElectronicCatalogTDG {
     public function insertElectronicSpecification($electronicSpecification){
         return new \stdClass();
     }
@@ -120,6 +149,21 @@ class MockElectronicCataLogTDG{
 
     public function saveReturnedEI($ei){
         return new \stdClass();
+    }
+
+    public function find($parameters)
+    {
+        // TODO: Implement find() method.
+    }
+
+    public function findAll()
+    {
+        // TODO: Implement findAll() method.
+    }
+
+    public function unsetUselessESProperties($object)
+    {
+        // TODO: Implement unsetUselessESProperties() method.
     }
 }
 
@@ -176,7 +220,7 @@ class MockElectronicCatalog{
     }
 }
 
-class MockIdentityMap{
+class MockIdentityMap implements iIdentityMap {
     public function add($objectClass, $object){}
     public function get($objectClass, $objectProperty, $objectPropertyValue){
         return null;
@@ -185,7 +229,7 @@ class MockIdentityMap{
     public function clear(){}
 }
 
-class MockUnitOfWork{
+class MockUnitOfWork implements iUnitOfWork {
     public function registerNew($object){}
     public function registerDeleted($object){}
     public function registerDirty($object){}
@@ -317,7 +361,7 @@ class MockElectronicSpecification{
     }
 }
 
-class MockMySQLConnection{
+class MockMySQLConnection implements iMySQLConnection {
     public $query_string;
     public $parameters;
 
@@ -347,5 +391,10 @@ class MockMySQLConnection{
            return array();
         }
         return null;
+    }
+
+    public function getPDOConnection()
+    {
+        // TODO: Implement getPDOConnection() method.
     }
 }
