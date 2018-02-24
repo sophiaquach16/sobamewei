@@ -10,7 +10,7 @@ class MySQLConnection {
 
     public function __construct() {
         $connectionString =
-          'mysql:host='.env('DB_HOST').';dbname='.env('DB_DATABASE').';charset=utf8';
+          'mysql:host=localhost;dbname=conushop;charset=utf8';
         $this->conn = new PDO(
           $connectionString,
           env('DB_USERNAME'),
@@ -20,9 +20,6 @@ class MySQLConnection {
 
     public function query($query, $bindValues) {
         $localConn = $this->conn;
-
-
-
 
         $stmt = $localConn->prepare($query);
 

@@ -13,13 +13,13 @@ use App\Classes\Core\User;
 
 class UnitOfWork {
 
-    private $newList;
-    private $changedList;
-    private $deletedList;
-    private $electronicCatalogMapper;
-    private $userCatalogMapper;
-    private $shoppingCartMapper;
-    private $transactionMapper;
+    public $newList;
+    public $changedList;
+    public $deletedList;
+    public $electronicCatalogMapper;
+    public $userCatalogMapper;
+    public $shoppingCartMapper;
+    public $transactionMapper;
 
     function __construct($mappers) {
         $this->newList = array();
