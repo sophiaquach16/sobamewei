@@ -7,6 +7,7 @@ namespace App\Classes\Mappers;
 use App\Classes\Core\ElectronicCatalog;
 use App\Classes\Core\ShoppingCart;
 use App\Classes\TDG\ShoppingCartTDG;
+use App\Classes\TDG\ElectronicCatalogTDG;
 use App\Classes\Core\Transaction;
 use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
@@ -15,21 +16,24 @@ use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartMapper {
 
+    public $electronicCatalogTDG;
     public $shoppingCart;
+    public $transaction;
     public $shoppingCartTDG;
     public $unitOfWork;
     public $identityMap;
-    public $electronicCatalog;
+    public $ElectronicCatalogMapper;
 
     function __construct($userId) {
-        if ($userId > -1){
-            $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
-            $this->shoppingCart = ShoppingCart::getInstance();
-            $this->shoppingCartTDG = new ShoppingCartTDG();
-            $this->unitOfWork = new UnitOfWork(['shoppingCartMapper' => $this]);
-            $this->identityMap = new IdentityMap();
-            $this->shoppingCart->setEIList($this->shoppingCartTDG->findalleifromuser($userid));
-        }
+        $this->electronicCatalogTDG = new ElectronicCatalogTDG();
+        $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
+        $this->shoppingCart = ShoppingCart::getInstance();
+        $this->shoppingCartTDG = new ShoppingCartTDG();
+        $this->unitOfWork = new UnitOfWork(['shoppingCartMapper' => $this]);
+        $this->identityMap = new IdentityMap();
+        $this->transaction = new transaction();
+        $this->shoppingCart->setEIList($this->shoppingCartTDG->findAllEIFromUser($userId));
+
     }
 
     /**
