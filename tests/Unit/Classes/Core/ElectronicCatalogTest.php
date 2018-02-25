@@ -10,7 +10,35 @@ use App\Classes\Core\ElectronicSpecification;
 
 class ElectronicCatalogTest extends TestCase {
 
+    public function setUp(){
 
+        parent::setUp();
+
+        $this->electronicItemMock1 = $this
+            ->getMockBuilder(ElectronicItem::class)
+            ->setMethods(['get'])
+            ->getMock();
+
+        $this->electronicItemMock2 = $this
+            ->getMockBuilder(ElectronicItem::class)
+            ->setMethods(['get'])
+            ->getMock();
+
+        $this->elecSpec = $this
+            ->getMockBuilder(ElectronicSpecification::class)
+            ->setMethods(['get','set'])
+            ->getMock();
+
+
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        //removing all items from the cart after each test execution
+
+    }
     public function testmodifyElectronicSpecification() {
         $electronicSpecification = new ElectronicSpecification();
 
@@ -334,11 +362,8 @@ class ElectronicCatalogTest extends TestCase {
    }
 
 //test
-
-    public function testfindElectronicSpecification() {
-        $electronicSpecification = new ElectronicSpecification();
-        $electronicItem1 = new ElectronicItem();
-        $electronicItem2 = new ElectronicItem();
+        //Mocked ElectronicItem And specification
+    public function testMockfindElectronicSpecification() {
 
         $item1Data = new \stdClass();
         $item1Data->id = 1;
@@ -350,9 +375,9 @@ class ElectronicCatalogTest extends TestCase {
         $item2Data->serialNumber = 456;
         $item2Data->ElectronicSpecification_id = "456";
 
-        $electronicItem1->set($item1Data);
-        $electronicItem2->set($item2Data);
-        $electronicItems = array($electronicItem1, $electronicItem2);
+        $this->electronicItemMock1 -> method('get')->willReturn($item1Data);
+        $this->electronicItemMock2 -> method('get')->willReturn($item2Data);
+        $electronicItems = array($this->electronicItemMock1, $this->electronicItemMock2);
         $testModelNumber = "123model";
 
         $electronicData = new \stdClass();
@@ -374,7 +399,7 @@ class ElectronicCatalogTest extends TestCase {
         $electronicData->displaySize = '1';
         $electronicData->electronicItems = $electronicItems;
 
-        $electronicSpecification->set($electronicData);
+        $this->elecSpec->method('set')->willReturn($electronicData);
         $electronicCatalog = new ElectronicCatalog();
         $electronicCatalog->setESList(array($electronicData));
 
@@ -382,11 +407,8 @@ class ElectronicCatalogTest extends TestCase {
         $this->assertTrue($modelFoundBool);
     }
 
-    public function testdeleteElectronicItem() {
+    public function testMockdeleteElectronicItem() {
         $electronicSpecification = new ElectronicSpecification();
-        $electronicItem1 = new ElectronicItem();
-        $electronicItem2 = new ElectronicItem();
-
         $item1Data = new \stdClass();
         $item1Data->id = 1;
         $item1Data->serialNumber = 123;
@@ -396,9 +418,10 @@ class ElectronicCatalogTest extends TestCase {
         $item2Data->id = 2;
         $item2Data->serialNumber = 456;
         $item2Data->ElectronicSpecification_id = 456;
-        $electronicItem1->set($item1Data);
-        $electronicItem2->set($item2Data);
-        $electronicItems = array($electronicItem1, $electronicItem2);
+
+        $this->electronicItemMock1 -> method('get')->willReturn($item1Data);
+        $this->electronicItemMock2 -> method('get')->willReturn($item2Data);
+        $electronicItems = array($this->electronicItemMock1, $this->electronicItemMock2);
 
         $electronicData = new \stdClass();
         $electronicData->id = '1'; //all id are int

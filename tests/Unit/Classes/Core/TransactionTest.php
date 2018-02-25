@@ -59,8 +59,7 @@ class TransactionTest extends TestCase {
         $this->assertTrue($result);
     }
 
-    //only need to mock testPurchase seeing as it contains dependency to ElectronicItems + User + shoppingCart
-    public function testPurchaseMock(){
+    public function testPurchase(){
         //Create user
 
         $userData = new \stdClass();
@@ -108,6 +107,7 @@ class TransactionTest extends TestCase {
 
         $transaction->set($transactionData);
 
+        dump($this->electronicItemMock1);
 
         $purchaseItems = $transaction->purchase('1'); //list of purchased items
 

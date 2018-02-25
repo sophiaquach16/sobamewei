@@ -33,8 +33,10 @@ class TransactionCatalogTest extends TestCase
             ->getMock();
     }
 
-    //Mocked transaction class
-    public function testGetAndSetMock()
+    //Didn't Mock anything in testGetandSet as testing Getters and Setters is trivial. On top of that,
+    // The method in transasctionCatalog setTransactionList($InputArray) returns a transaction itself which would
+    //defeat the point of mocking this one method.
+    public function testGetAndSet()
     {
 
 
@@ -49,7 +51,6 @@ class TransactionCatalogTest extends TestCase
         $data1->ElectronicSpec_id = '1';
         $data1->timestamp = "2017-12-12 11:11:11";
 
-        $this -> transaction1->method('get')-> willReturn($data1);
 
         $data2->item_id = '2';
         $data2->customer_id = '1';
@@ -57,14 +58,13 @@ class TransactionCatalogTest extends TestCase
         $data2->ElectronicSpec_id = '2';
         $data2->timestamp = "2017-12-12 11:11:11";
 
-        $this->transaction2 ->method('get')-> willReturn($data2);
 
-        $transactionList = array($this -> transaction1, $this->transaction2);
+        $transactionList = array($data1 , $data2);
         //convert each std object to another array
 
         //set values to the catalog
-        $transactionCatalog->setTransactionList($transactionList);
-        $gettingTransactions = $transactionCatalog->getTransactionList();
+        $this -> transactionCatalog->setTransactionList($transactionList);
+        $gettingTransactions = $this -> transactionCatalog->getTransactionList();
 
         //convert retrieved list to array
         foreach ($gettingTransactions as $key => $value) {
@@ -91,9 +91,9 @@ class TransactionCatalogTest extends TestCase
         $this->assertTrue($same);
     }
 
-    function testGetTransactionObjectByItemId()
+    //only need 1 return object, which can be mocked using one of the mocked instance in the Setup()
+    function MockGetTransactionObjectByItemId()
     {
-
 
         $data1 = new \stdClass();
         $data2 = new \stdClass();
@@ -103,29 +103,28 @@ class TransactionCatalogTest extends TestCase
         $data1->ElectronicSpec_id = '1';
         $data1->timestamp = "2017-12-12 11:11:11";
 
-        $this -> transaction1->method('get')-> willReturn($data1);
-
         $data2->item_id = '2';
         $data2->customer_id = '1';
         $data2->serialNumber = "345";
         $data2->ElectronicSpec_id = '2';
         $data2->timestamp = "2017-12-12 11:11:11";
 
-        $this->transaction2 ->method('get')-> willReturn($data2);
-
-        $this -> transactionList = array($this -> transaction1, $this->transaction2);
+        $this->transaction2 ->method('get') -> willReturn($data1);
+        $this -> transactionList = array($this -> $data1, $this->$data2);
         //set values to the catalog
 
-        $this -> transactionCatalog->setTransactionList($this->transaction1);
+        $this -> transactionCatalog->setTransactionList($this ->transactionList);
+
         $item_id = '1';
-        $transaction = $this -> transactionCatalog->getTransactionObjectByItemId($item_id);
-        $this->assertTrue($transaction == $this->transaction1  );
+        $this->transaction1 -> method('get') -> willReturn($this -> transactionCatalog->getTransactionObjectByItemId($item_id));
+        $this->assertTrue($this->transaction2 == $this->transaction1  );
     }
 
+    //Didn't mock this method because the return value is an Array of n Transactions for a certain item
+    //This means that it can't be known in advance how many mock this method will need, making it impossible to mock the return value
     public function testGetTransactionByItemId()
     {
-        $transaction1 = new Transaction();
-        $transaction2 = new Transaction();
+
         $transactionCatalog = new TransactionCatalog();
 
         $data1 = new \stdClass();
@@ -137,7 +136,7 @@ class TransactionCatalogTest extends TestCase
         $data1->ElectronicSpec_id = '1';
         $data1->timestamp = "2017-12-12 11:11:11";
 
-        $transaction1->set($data1);
+
 
         $data2->item_id = '2';
         $data2->customer_id = '1';
@@ -145,9 +144,8 @@ class TransactionCatalogTest extends TestCase
         $data2->ElectronicSpec_id = '2';
         $data2->timestamp = "2017-12-12 11:11:11";
 
-        $transaction2->set($data2);
 
-        $transactionList = array($transaction1, $transaction2);
+        $transactionList = array($data1, $data2);
 
         //set values to the catalog
         $transactionCatalog->setTransactionList($transactionList);
@@ -167,11 +165,11 @@ class TransactionCatalogTest extends TestCase
 
     }
 
-
+    //Didn't mock this method because the return value is an Array of n Transactions for a certain item
+    //This means that it can't be known in advance how many mock this method will need, making it impossible to mock the return value
     public function testGetTransactionsByUserIdAndTimestamp()
     {
-        $transaction1 = new Transaction();
-        $transaction2 = new Transaction();
+
         $transactionCatalog = new TransactionCatalog();
 
         $data1 = new \stdClass();
@@ -183,7 +181,6 @@ class TransactionCatalogTest extends TestCase
         $data1->ElectronicSpec_id = '1';
         $data1->timestamp = "2017-12-12 11:11:11";
 
-        $transaction1->set($data1);
 
         $data2->item_id = '2';
         $data2->customer_id = '1';
@@ -191,9 +188,8 @@ class TransactionCatalogTest extends TestCase
         $data2->ElectronicSpec_id = '2';
         $data2->timestamp = "2017-12-12 11:11:11";
 
-        $transaction2->set($data2);
 
-        $transactionList = array($transaction1, $transaction2);
+        $transactionList = array($data1, $data2);
 
         //set values to the catalog
         $transactionCatalog->setTransactionList($transactionList);
@@ -218,8 +214,7 @@ class TransactionCatalogTest extends TestCase
     function testGetTransactionListForUser()
     {
         //create 2 transactions with the same user id
-        $transaction1 = new Transaction();
-        $transaction2 = new Transaction();
+
         $transactionCatalog = new TransactionCatalog();
         $data1 = new \stdClass;
         $data2 = new \stdClass;
@@ -228,15 +223,15 @@ class TransactionCatalogTest extends TestCase
         $data1->serialNumber = "123";
         $data1->ElectronicSpec_id = '1';
         $data1->timestamp = "2017-12-12 11:11:11";
-        $transaction1->set($data1);
+
 
         $data2->item_id = '2';
         $data2->customer_id = '12';
         $data2->serialNumber = "345";
         $data2->ElectronicSpec_id = '2';
         $data2->timestamp = "2017-12-12 11:11:11";
-        $transaction2->set($data2);
-        $transactionList = array($transaction1, $transaction2);
+
+        $transactionList = array($data1, $data2);
         //set values to the catalog
         $transactionCatalog->setTransactionList($transactionList);
 

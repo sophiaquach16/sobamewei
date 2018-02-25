@@ -17,6 +17,7 @@ use Hash;
 class UserCatalogTest extends TestCase
 {
 
+
     public function testAccessorsMethods()
     {
         $user1 = new User();
