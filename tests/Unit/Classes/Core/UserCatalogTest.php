@@ -121,4 +121,16 @@ class UserCatalogTest extends TestCase
         //dump($total);
         $this->assertTrue(count($newUserList) == 3);
     }
+
+    public function testDeleteUserInfo()
+    {
+        $this->user1->set($this->user1Data);
+        $this->user2->set($this->user2Data);
+        $userList = array($this->user1, $this->user2);
+        $this->userCatalog->setUserList($userList);
+
+        $returnedUser = $this->userCatalog->getDeleteUserInfo(2);
+        $this->assertTrue( $returnedUser->get()->id == 2);
+
+    }
 }
