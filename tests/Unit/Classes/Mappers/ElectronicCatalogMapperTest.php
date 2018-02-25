@@ -15,8 +15,11 @@ class ElectronicCatalogMapperTest extends TestCase
     private $electronicCatalogMapper;
     private $electronicCatalogTDGMock;
     private $electronicCatalogMock;
+    private $electronicSpecification;
     private $unitOfWorkMock;
     private $identityMapMock;
+    private $eSData;
+    private $eSData2;
 
     public function setUp()
     {
@@ -27,7 +30,10 @@ class ElectronicCatalogMapperTest extends TestCase
             ->getMockBuilder(ElectronicCatalogTDG::class)
             ->setMethods(
                 ['insertElectronicSpecification',
-                'updateElectronicSpecification'])
+                'updateElectronicSpecification',
+                'deleteElectronicItem',
+                'getESList',
+                'insertElectronicItem'])
             ->getMock();
 
 
@@ -35,6 +41,10 @@ class ElectronicCatalogMapperTest extends TestCase
         $this->electronicCatalogMock = $this
             ->getMockBuilder(ElectronicCatalog::class)
             ->disableOriginalConstructor()
+            ->setMethods(
+                ['makeElectronicItem',
+                'getESList',
+                'getElectronicSpecificationById'])
             ->getMock();
 
 
@@ -42,6 +52,7 @@ class ElectronicCatalogMapperTest extends TestCase
         $this->unitOfWorkMock = $this
             ->getMockBuilder(UnitOfWork::class)
             ->disableOriginalConstructor()
+            ->setMethods(['registerNew', 'commit'])
             ->getMock();
 
         //creating an identity map mock
@@ -57,59 +68,147 @@ class ElectronicCatalogMapperTest extends TestCase
             $this->electronicCatalogMock,
             $this->unitOfWorkMock,
             $this->identityMapMock);
+
+
+        //creating an actual ElectronicSpecification data and creating a new electronicSpecification with that data
+        $this->eSData = new \stdClass();
+        $this->eSData->id = 1;
+        //creating an actual ElectronicSpecification data and creating a new electronicSpecification with that data
+        $this->eSData2 = new \stdClass();
+        $this->eSData2->id = 2;
+        //creating an ES and setting its data, this is not a mock
+        $this->electronicSpecification = new ElectronicSpecification();
+        $this->electronicSpecification->set($this->eSData);
+
     }
 
     public function tearDown()
     {
         parent::tearDown();
         $this->electronicCatalogMapper = null;
+        $this->electronicCatalogMock = null;
 
     }
 
     public function testMockSaveES()
     {
-        //creating an ES and setting its data, this is not a mock
-        $electronicSpecification = new ElectronicSpecification();
-        $eSData = new \stdClass();
-        $eSData->id = 1;
-        $electronicSpecification->set($eSData);
-
         //insertElectronicSpecification is called in the saveES method of ElectronicCatalogMapper class
         $this->electronicCatalogTDGMock
             ->method('insertElectronicSpecification')
-            ->willReturn($eSData);
-
-        $returnedValue = $this->electronicCatalogMapper->saveES($electronicSpecification);
-        $this->assertTrue($returnedValue->id == $eSData->id);
+            ->willReturn($this->eSData);
+        $returnedValue = $this->electronicCatalogMapper->saveES($this->electronicSpecification);
+        $this->assertTrue($returnedValue->id == $this->eSData->id);
     }
 
     public function testMockUpdateES()
     {
-        $electronicSpecification = new ElectronicSpecification();
-        $eSData = new \stdClass();
-        $eSData->id = 1;
-        $electronicSpecification->set($eSData);
-
-        //insertElectronicSpecification is called in the saveES method of ElectronicCatalogMapper class
+        //updateElectronicSpecification is called in the saveES method of ElectronicCatalogMapper class
         $this->electronicCatalogTDGMock
             ->method('updateElectronicSpecification')
-            ->willReturn($eSData);
+            ->willReturn($this->eSData);
 
-        $returnedValue = $this->electronicCatalogMapper->updateES($electronicSpecification);
-        $this->assertTrue($returnedValue->id == $eSData->id);
+        $returnedValue = $this->electronicCatalogMapper->updateES($this->electronicSpecification);
+        $this->assertTrue($returnedValue->id == $this->eSData->id);
 
     }
 
-//    public function testUpdateES(){
-//        $result = $this->electronicCatalogMapper->updateES($this->mockES);
-//        $this->assertNotFalse($result);
+
+    public function testMockdeleteES()
+    {
+        //deleteElectronicItem is called in the saveES method of ElectronicCatalogMapper class
+        $this->electronicCatalogTDGMock
+            ->method('deleteElectronicItem')
+            ->willReturn($this->eSData);
+
+        $returnedValue = $this->electronicCatalogMapper->deleteEI($this->electronicSpecification);
+        $this->assertTrue($returnedValue->id == $this->eSData->id);
+
+    }
+
+//    public function testMockMakeNewElectronicSpecification()
+//    {
+//
 //    }
 //
-//    public function testDeleteEI(){
-//        $result = $this->electronicCatalogMapper->deleteEI($this->mockEI);
-//        $this->assertNotFalse($result);
+//    public function testMockModifyElectronicSpecification()
+//    {
+//
 //    }
 //
+//    public function testMockDeleteElectronicItems()
+//    {
+//
+//    }
+
+    public function testMockGetAllElectronicSpecifications()
+    {
+        $this->electronicCatalogMock
+            ->method('getESList')
+            ->willReturn(array($this->eSData));
+        $returnedData = $this->electronicCatalogMapper->getAllElectronicSpecifications();
+        $same = true;
+        foreach ($returnedData as $eS)
+        if ( $eS != $this->eSData)
+        {
+            $same = false;
+            break;
+        }
+        $this->assertTrue($same);
+
+    }
+
+    public function testMockGetElectronicSpecification()
+    {
+        $this->electronicCatalogMock
+            ->method('getElectronicSpecificationById')
+            ->willReturn($this->eSData);
+        $returnedData = $this->electronicCatalogMapper->getElectronicSpecification($this->eSData->id);
+        $this->assertTrue( $returnedData == $this->eSData);
+
+    }
+
+    public function testMockGetESFilteredAndSortedByCriteria()
+    {
+
+    }
+
+    public function testMockGetESByType()
+    {
+        $this->eSData->ElectronicType_name = 'Laptop';
+        $this->eSData2->ElectronicType_name = 'Laptop';
+        $this->electronicCatalogMock
+            ->method('getESList')
+            ->willReturn(array($this->eSData, $this->eSData2));
+
+        //there exists 1 ES of type Laptop
+        $retrievedESByType1 = $this->electronicCatalogMapper->getESByType('Laptop');
+       // dd($retrievedESByType1);
+        //there does not exists 1 ES of type Monitor
+        $retrievedESByType2 = $this->electronicCatalogMapper->getESByType('Monitor');
+
+        //there are two items of type laptop
+        $onlyLaptops = true;
+        foreach ($retrievedESByType1 as $each){
+            if ($each->ElectronicType_name != 'Laptop'){
+                $onlyLaptops = false;
+                break;
+            }
+        }
+        $this->assertTrue(sizeof($retrievedESByType1) == 2 && $onlyLaptops);
+        $this->assertTrue(sizeof($retrievedESByType2) == 0 );
+
+    }
+
+    public function testGetAllEIForOnePurchaseForUssr()
+    {
+        $electronicItemData1 = new \stdClass();
+        $electronicItemData2 = new \stdClass();
+        $this->eSData->ElectronicType_name = 'Laptop';
+        $this->eSData2->ElectronicType_name = 'Laptop';
+        $electronicItemData1->User_id = 5;
+        $electronicItemData2->User_id = 6;
+
+    }
 //    public function testMakeNewElectronicSpecification(){
 //        $quantity = 1;
 //        $result = $this->electronicCatalogMapper->makeNewElectronicSpecification($quantity, $this->mockES);
