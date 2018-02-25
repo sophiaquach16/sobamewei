@@ -65,15 +65,16 @@ class ElectroniItemTests extends TestCase{
     $retrievedElectronicSpecificationId=$electronicItem->getElectronicSpecification_id();
     $this->assertTrue($retrievedElectronicSpecificationId==$itemData->ElectronicSpecification_id);
   }
-    // test for both set and get UserbyId
-    public function testsetgetUserbyId (){
-        $itemData=new \stdClass();
-        $itemData->id=1;
-        $itemData->serialNumber=123;
-        $itemData->ElectronicSpecification_id=123;
-        $electronicItem = new ElectronicItem();
-        $electronicItem->setUserId($itemData->User_id);
-        $retrievedUserId=$electronicItem->getUserId();
-        $this->assertTrue($retrievedUserId==$itemData->User_id);
-    }
+  
+  //tests for both setExpiryforUser and getExpiryforUser
+  public function testsetgetExpiryforUser (){
+       $itemData=new \stdClass();
+       $itemData->id=1;
+       $itemData->serialNumber=123;
+       $itemData->ElectronicSpecification_id=123;
+       $electronicItem = new ElectronicItem();
+       $electronicItem->setExpiryForUser($itemData->ExpiryForUser);
+       $retrievedExpiry=$electronicItem->getExpiryForUser();
+       $this->assertTrue($retrievedExpiry==$itemData->ExpiryForUser);
+ }
 }
