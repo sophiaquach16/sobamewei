@@ -25,7 +25,9 @@ class ElectronicCatalogMapperTest extends TestCase
         //creating an electronic catalog TDG mock
         $this->electronicCatalogTDGMock = $this
             ->getMockBuilder(ElectronicCatalogTDG::class)
-            ->setMethods(['insertElectronicSpecification'])
+            ->setMethods(
+                ['insertElectronicSpecification',
+                'updateElectronicSpecification'])
             ->getMock();
 
 
@@ -66,7 +68,6 @@ class ElectronicCatalogMapperTest extends TestCase
 
     public function testMockSaveES()
     {
-
         //creating an ES and setting its data, this is not a mock
         $electronicSpecification = new ElectronicSpecification();
         $eSData = new \stdClass();
@@ -80,6 +81,23 @@ class ElectronicCatalogMapperTest extends TestCase
 
         $returnedValue = $this->electronicCatalogMapper->saveES($electronicSpecification);
         $this->assertTrue($returnedValue->id == $eSData->id);
+    }
+
+    public function testMockUpdateES()
+    {
+        $electronicSpecification = new ElectronicSpecification();
+        $eSData = new \stdClass();
+        $eSData->id = 1;
+        $electronicSpecification->set($eSData);
+
+        //insertElectronicSpecification is called in the saveES method of ElectronicCatalogMapper class
+        $this->electronicCatalogTDGMock
+            ->method('updateElectronicSpecification')
+            ->willReturn($eSData);
+
+        $returnedValue = $this->electronicCatalogMapper->updateES($electronicSpecification);
+        $this->assertTrue($returnedValue->id == $eSData->id);
+
     }
 
 //    public function testUpdateES(){
