@@ -12,90 +12,77 @@ use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartTest extends TestCase
 {
-    public function testAddEIToCart()
+    public function testMockAddEIToCart()
     {
 
-        $user = new User();
-
-        $userData = new \stdClass();
-
-        $userData->id = '1';
-        $userData->firstName = 'John';
-        $userData->lastName = 'Doe';
-        $userData->email = 'johndoe123@gmail.com';
-        $userData->phone = '123-456-7890';
-        $userData->admin = '0';
-        $userData->physicalAddress = '1234 Wallstreet';
-        $userData->password = 'password123';
-
-        $user->set($userData);
-
-        Auth::login($user);
-        Auth::check();
-
-        $electronicItem1 = new ElectronicItem();
-        $electronicItem2 = new ElectronicItem();
-        $electronicItem3 = new ElectronicItem();
-
-
         $shoppingCart = ShoppingCart::getInstance(); //creating instance of ShoppingCart
-        $item1Data = new \stdClass();
-        $item2Data = new \stdClass();
-        $item3Data = new \stdClass();
 
-        $item1Data->id = "1";
-        $item1Data->serialNumber = 123;
-        $item1Data->ElectronicSpecification_id = "1";
-        $item1Data->User_id = '1';
-        //since items are removed from the user's cart if they are expired, set a item expiry date that is 30
-        // minutes ahead of current time
-        $item1Data->expiryForUser = date('Y-m-d H:i:s', strtotime('30 minute'));
-        $electronicItem1->set($item1Data);
+        //creating mock object and declaring stub method for mocked class
+        $electronicItemMock1 = $this
+            ->getMockBuilder(ElectronicItem::class)
+            ->setMethods(['getId'])
+            ->getMock();
 
+        //declare what to return when stub method is called on mock object
+        $electronicItemMock1->method('getId')->willReturn('20');
 
-        $item2Data->id = "2";
-        $item2Data->serialNumber = 234;
-        $item2Data->ElectronicSpecification_id = "2";
-        $item2Data->User_id = '1';
-        $item2Data->expiryForUser = date('Y-m-d H:i:s', strtotime('30 minute'));
-        $electronicItem2->set($item2Data);
-
-        $item3Data->id = "3";
-        $item3Data->serialNumber = 345;
-        $item3Data->ElectronicSpecification_id = "3";
-        $item3Data->User_id = "1";
-        $item3Data->expiryForUser = date('Y-m-d H:i:s', strtotime('30 minute'));
-        $electronicItem3->set($item3Data);
-
-        //create an array of the input data
-        $itemDataArray = array((array)$item1Data, (array)$item2Data, (array)$item3Data);
-
-        $shoppingCart->addEIToCart($electronicItem1);
-        $shoppingCart->addEIToCart($electronicItem2);
-        $shoppingCart->addEIToCart($electronicItem3);
-
-        $key = 0;
-        $same = true;
-        $shoppingCartList = $shoppingCart->getEIList();
-
-        //compare each input data to the retrieved data from getEIList. they should have identical values
-        foreach ($shoppingCartList as $item) {
-            if ($itemDataArray[$key]['id'] == $item->get()->id &&
-                $itemDataArray[$key]['serialNumber'] == $item->get()->serialNumber &&
-                $itemDataArray[$key]['ElectronicSpecification_id'] == $item->get()->ElectronicSpecification_id &&
-                $itemDataArray[$key]['User_id'] == $item->get()->User_id &&
-                $itemDataArray[$key]['expiryForUser'] == $item->get()->expiryForUser) {
-                $key++;
-            } else {
-                $same = false;
-                break;
-            }
-        }
-        $this->assertTrue($same && sizeof($shoppingCartList) == 3);
-
+        //add stub object to cart
+        $retrievedItem = $shoppingCart->addEIToCart($electronicItemMock1);
+        $this->assertTrue($retrievedItem->getId() == '20');
+        $this->assertTrue(sizeof($shoppingCart) == 1);
     }
 
+    public function testMockGetEIList()
+    {
+        //getting the actual cart instance
+        $shoppingCart = ShoppingCart::getInstance(); //creating instance of ShoppingCart
 
+        //creating a mock item with sub method get
+        $electronicItemMock1 = $this
+            ->getMockBuilder(ElectronicItem::class)
+            ->setMethods(['get'])
+            ->getMock();
+
+        //creating a mock item with sub method get
+        $electronicItemMock2 = $this
+            ->getMockBuilder(ElectronicItem::class)
+            ->setMethods(['get'])
+            ->getMock();
+
+        //object is expired,
+        $obj1 = new \stdClass();
+        $obj1->expiryForUser = '2017-12-25 12:12:12';
+        $electronicItemMock1->method('get')->willReturn($obj1);
+
+        //object not yet expired
+        $obj2 = new \stdClass();
+        $obj2->expiryForUser = date('Y-m-d H:i:s', strtotime('30 minute'));
+        $electronicItemMock2->method('get')->willReturn($obj2);
+
+        //adding all the mocks to the shopping cart
+        ( $shoppingCart->addEIToCart($electronicItemMock1));
+        ( $shoppingCart->addEIToCart($electronicItemMock2));
+        ( $shoppingCart->addEIToCart($electronicItemMock2));
+        var_dump($shoppingCart->getEIList());
+
+        $itemsNotExpired = true;
+        $cartSize = 0;
+        //verifying that the cart does not contain any expired items
+        //therefore should not contain the expired mock created above
+        foreach ($shoppingCart->getEIList() as $item)
+        {
+            $cartSize++;
+            if ($item->get()->expiryForUser < date('Y-m-d H:i:s'))
+            {
+                $itemsNotExpired = false;
+                break;
+            }//an expired item is one that is smaller than a future date or the current date
+        }
+        //added 3 items to cart, but one is expired so 2 items remaining in cart
+        $this->assertTrue($cartSize == 2);
+        $this->assertTrue($itemsNotExpired == true);
+
+    }
     public function testGetSetEIList()
     {
 
