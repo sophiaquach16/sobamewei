@@ -16,39 +16,53 @@ use Hash;
 
 class UserCatalogTest extends TestCase
 {
+    private $userCatalog;
+    private $user1;
+    private $user2;
+    private $user1Data;
+    private $user2Data;
 
+    public function setUp(){
+        parent::setUp();
+        $this->userCatalog = new UserCatalog();
+        $this->user1 = new User();
+        $this->user2 = new user();
+        $this->user1Data = new \stdClass();
+        $this->user2Data = new \stdClass();
 
+        $this->user1Data->id = 1;
+        $this->user1Data->firstName = 'foo1';
+        $this->user1Data->lastName = 'bar1';
+        $this->user1Data->email = 'foo@gmail.com';
+        $this->user1Data->phone = '514-111-1111';
+        $this->user1Data->admin = 0;
+        $this->user1Data->physicalAddress = 'Chez bar';
+        $this->user1Data->password = 'foo123';
+
+        $this->user2Data->id = 2;
+        $this->user2Data->firstName = 'foo2';
+        $this->user2Data->lastName = 'bar2';
+        $this->user2Data->email = 'bar@gmail.com';
+        $this->user2Data->phone = '514-222-2222';
+        $this->user2Data->admin = 0;
+        $this->user2Data->physicalAddress = 'Chez foo';
+        $this->user2Data->password = 'bar123';
+
+    }
+
+    public function tearDown(){
+        parent::tearDown();
+        //set the catalog to an empty list
+        $this->userCatalog->setUserList(array());
+
+    }
     public function testAccessorsMethods()
     {
-        $user1 = new User();
-        $user2 = new user();
-        $user1Data = new \stdClass();
-        $user2Data = new \stdClass();
-        $userCatalog = new UserCatalog();
-
-        $user1Data->id = 1;
-        $user1Data->firstName = 'foo1';
-        $user1Data->lastName = 'bar1';
-        $user1Data->email = 'foo@gmail.com';
-        $user1Data->phone = '514-111-1111';
-        $user1Data->admin = 0;
-        $user1Data->physicalAddress = 'Chez bar';
-        $user1Data->password = 'foo123';
-
-        $user2Data->id = 2;
-        $user2Data->firstName = 'foo2';
-        $user2Data->lastName = 'bar2';
-        $user2Data->email = 'bar@gmail.com';
-        $user2Data->phone = '514-222-2222';
-        $user2Data->admin = 0;
-        $user2Data->physicalAddress = 'Chez foo';
-        $user2Data->password = 'bar123';
-
-        $user1->set($user1Data);
-        $user2->set($user2Data);
-        $userList = array($user1, $user2);
-        $userCatalog->setUserList($userList);
-        $userCatalogList = $userCatalog->getUserList();
+        $this->user1->set($this->user1Data);
+        $this->user2->set($this->user2Data);
+        $userList = array($this->user1, $this->user2);
+        $this->userCatalog->setUserList($userList);
+        $userCatalogList = $this->userCatalog->getUserList();
 
         $this->assertTrue(sizeof($userList) == sizeof($userCatalogList));
 
@@ -56,108 +70,37 @@ class UserCatalogTest extends TestCase
 
     public function testCheckUser()
     {
-        $user1 = new User();
-        $user2 = new user();
-        $user1Data = new \stdClass();
-        $user2Data = new \stdClass();
-        $userCatalog = new UserCatalog();
-
-        $user1Data->id = 1;
-        $user1Data->firstName = 'foo1';
-        $user1Data->lastName = 'bar1';
-        $user1Data->email = 'foo@gmail.com';
-        $user1Data->phone = '514-111-1111';
-        $user1Data->admin = 0;
-        $user1Data->physicalAddress = 'Chez bar';
-        $user1Data->password = 'foo123';
-
-        $user2Data->id = 2;
-        $user2Data->firstName = 'foo2';
-        $user2Data->lastName = 'bar2';
-        $user2Data->email = 'bar@gmail.com';
-        $user2Data->phone = '514-222-2222';
-        $user2Data->admin = 0;
-        $user2Data->physicalAddress = 'Chez foo';
-        $user2Data->password = 'bar123';
-
-        $user1->set($user1Data);
-        $user2->set($user2Data);
-        $userList = array($user1, $user2);
-        $userCatalog->setUserList($userList);
+        $this->user1->set($this->user1Data);
+        $this->user2->set($this->user2Data);
+        $userList = array($this->user1, $this->user2);
+        $this->userCatalog->setUserList($userList);
 
         $emailParameter = 'bar@gmail.com';
         $pswParameter = 'bar123';
         $hashedPsw = Hash::make($pswParameter);
-        $this->assertTrue($userCatalog->checkUser($emailParameter, $hashedPsw));
+        $this->assertTrue($this->userCatalog->checkUser($emailParameter, $hashedPsw));
 
     }
 
     public function testFindUser()
     {
-        $user1 = new User();
-        $user2 = new user();
-        $user1Data = new \stdClass();
-        $user2Data = new \stdClass();
-        $userCatalog = new UserCatalog();
-
-        $user1Data->id = 1;
-        $user1Data->firstName = 'foo1';
-        $user1Data->lastName = 'bar1';
-        $user1Data->email = 'foo@gmail.com';
-        $user1Data->phone = '514-111-1111';
-        $user1Data->admin = 0;
-        $user1Data->physicalAddress = 'Chez bar';
-        $user1Data->password = 'foo123';
-
-        $user2Data->id = 2;
-        $user2Data->firstName = 'foo2';
-        $user2Data->lastName = 'bar2';
-        $user2Data->email = 'bar@gmail.com';
-        $user2Data->phone = '514-222-2222';
-        $user2Data->admin = 0;
-        $user2Data->physicalAddress = 'Chez foo';
-        $user2Data->password = 'bar123';
-
-        $user1->set($user1Data);
-        $user2->set($user2Data);
-        $userList = array($user1, $user2);
-        $userCatalog->setUserList($userList);
+       $this->user1->set($this->user1Data);
+       $this->user2->set($this->user2Data);
+       $userList = array($this->user1, $this->user2);
+       $this->userCatalog->setUserList($userList);
 
         $emailParameter = 'bar@gmail.com';
 
-        $this->assertTrue($userCatalog->findUser($emailParameter));
+        $this->assertTrue($this->userCatalog->findUser($emailParameter));
     }
 
     public function testMakeCustomer()
     {
-        $user1 = new User();
-        $user2 = new user();
-        $user1Data = new \stdClass();
-        $user2Data = new \stdClass();
-        $userCatalog = new UserCatalog();
 
-        $user1Data->id = 1;
-        $user1Data->firstName = 'foo1';
-        $user1Data->lastName = 'bar1';
-        $user1Data->email = 'foo@gmail.com';
-        $user1Data->phone = '514-111-1111';
-        $user1Data->admin = 0;
-        $user1Data->physicalAddress = 'Chez bar';
-        $user1Data->password = 'foo123';
-
-        $user2Data->id = 2;
-        $user2Data->firstName = 'foo2';
-        $user2Data->lastName = 'bar2';
-        $user2Data->email = 'bar@gmail.com';
-        $user2Data->phone = '514-222-2222';
-        $user2Data->admin = 0;
-        $user2Data->physicalAddress = 'Chez foo';
-        $user2Data->password = 'bar123';
-
-        $user1->set($user1Data);
-        $user2->set($user2Data);
-        $userList = array($user1, $user2);
-        $userCatalog->setUserList($userList);
+        $this->user1->set($this->user1Data);
+        $this->user2->set($this->user2Data);
+        $userList = array($this->user1, $this->user2);
+        $this->userCatalog->setUserList($userList);
         //default userList has 2 users
 
         //adding one more user using makeNewCustom
@@ -172,11 +115,22 @@ class UserCatalogTest extends TestCase
         $user3Data->physicalAddress = 'Chez bar';
         $user3Data->password = 'foobar123';
 
-        $userCatalog->makeCustomer($user3Data);
+        $this->userCatalog->makeCustomer($user3Data);
         //dump($userCatalog);
-        $newUserList = $userCatalog->getUserList();
-        //$total = count($newUserList);
+        $newUserList = $this->userCatalog->getUserList();
         //dump($total);
         $this->assertTrue(count($newUserList) == 3);
+    }
+
+    public function testDeleteUserInfo()
+    {
+        $this->user1->set($this->user1Data);
+        $this->user2->set($this->user2Data);
+        $userList = array($this->user1, $this->user2);
+        $this->userCatalog->setUserList($userList);
+
+        $returnedUser = $this->userCatalog->getDeleteUserInfo(2);
+        $this->assertTrue( $returnedUser->get()->id == 2);
+
     }
 }

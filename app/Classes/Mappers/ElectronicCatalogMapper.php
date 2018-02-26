@@ -2,13 +2,13 @@
 
 namespace App\Classes\Mappers;
 
-use App\Classes\TDG\ElectronicCatalogTDG;
 use App\Classes\Core\ElectronicCatalog;
-use App\Classes\UnitOfWork;
 use App\Classes\IdentityMap;
-use PhpDeal\Annotation as Contract;
+use App\Classes\TDG\ElectronicCatalogTDG;
+use App\Classes\UnitOfWork;
 
-class ElectronicCatalogMapper {
+class ElectronicCatalogMapper
+{
 
     public $electronicCatalog;
     public $electronicCatalogTDG;
@@ -16,35 +16,56 @@ class ElectronicCatalogMapper {
     public $identityMap;
     public $lockFilePointer;
 
-    function __construct() {
+    function __construct()
+    {
         $argv = func_get_args();
         switch (func_num_args()) {
             case 0:
                 self::__construct0();
                 break;
+
+            case 4:
+                self::__construct4($argv[0], $argv[1], $argv[2], $argv[3]);
+                break;
         }
+
     }
 
-    function __construct0() {
+    function __construct0()
+    {
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
         $this->electronicCatalog = new ElectronicCatalog($this->electronicCatalogTDG->findAll());
         $this->unitOfWork = new UnitOfWork(['electronicCatalogMapper' => $this]);
         $this->identityMap = new IdentityMap();
     }
 
-    function saveES($electronicSpecification) {
+    //constructor created for the purpose of mocking
+    function __construct4($electronicCatalogTDGMock, $electronicCatalogMock, $unitOfWorkMock,
+                          $identityMapMock)
+    {
+        $this->electronicCatalogTDG = $electronicCatalogTDGMock;
+        $this->electronicCatalog = $electronicCatalogMock;
+        $this->unitOfWork = $unitOfWorkMock;
+        $this->identityMap = $identityMapMock;
+    }
+
+    function saveES($electronicSpecification)
+    {
         return $this->electronicCatalogTDG->insertElectronicSpecification($electronicSpecification);
     }
 
-    function updateES($electronicSpecification) {
+    function updateES($electronicSpecification)
+    {
         return $this->electronicCatalogTDG->updateElectronicSpecification($electronicSpecification);
     }
 
-    function deleteEI($electronicItem) {
+    function deleteEI($electronicItem)
+    {
         return $this->electronicCatalogTDG->deleteElectronicItem($electronicItem);
     }
 
-    function makeNewElectronicSpecification($quantity, $electronicSpecificationData) {
+    function makeNewElectronicSpecification($quantity, $electronicSpecificationData)
+    {
         $this->lockDataAccess();
         //add image path to ESData
 
@@ -82,7 +103,8 @@ class ElectronicCatalogMapper {
         }
     }
 
-    function modifyElectronicSpecification($quantity, $eS, $eSData) {
+    function modifyElectronicSpecification($quantity, $eS, $eSData)
+    {
         $eSId = $eS->id;
 
         $this->lockDataAccess();
@@ -96,11 +118,11 @@ class ElectronicCatalogMapper {
             //Delete old file
             $splitLink = explode("/", $eS->image);
             $fileName = end($splitLink);
-            try{
+            try {
                 if ($fileName !== "" && file_exists(public_path('images/' . $fileName))) {
                     unlink(public_path('images/' . $fileName));
                 }
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
             }
 
             $electronicSpecification = $this->electronicCatalog->modifyElectronicSpecification($eSId, $eSData);
@@ -140,7 +162,8 @@ class ElectronicCatalogMapper {
         }
     }
 
-    function deleteElectronicItems($eIIds) {
+    function deleteElectronicItems($eIIds)
+    {
         $this->lockDataAccess();
 
         foreach ($eIIds as $eIId) {
@@ -156,7 +179,8 @@ class ElectronicCatalogMapper {
         return true;
     }
 
-    function getAllElectronicSpecifications() {
+    function getAllElectronicSpecifications()
+    {
         $this->lockDataAccess();
 
         $electronicSpecifications = $this->electronicCatalog->getESList();
@@ -166,7 +190,8 @@ class ElectronicCatalogMapper {
         return $electronicSpecifications;
     }
 
-    function getElectronicSpecification($id) {
+    function getElectronicSpecification($id)
+    {
         $this->lockDataAccess();
 
         $electronicSpecification = $this->electronicCatalog->getElectronicSpecificationById($id);
@@ -176,7 +201,8 @@ class ElectronicCatalogMapper {
         return $electronicSpecification;
     }
 
-    private function generateSerialNumber() {
+    private function generateSerialNumber()
+    {
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         $serialNumber = '';
@@ -188,30 +214,34 @@ class ElectronicCatalogMapper {
         return $serialNumber;
     }
 
-    private function lockDataAccess() {
-        try{
+    private function lockDataAccess()
+    {
+        try {
             $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c'); //set file pointer
             flock($this->lockFilePointer, LOCK_EX); //lock file
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
         }
     }
 
-    private function checkLock() {
-        try{
+    private function checkLock()
+    {
+        try {
             flock($this->lockFilePointer, LOCK_NB);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
         }
     }
 
-    private function unlockDataAccess() {
-        try{
+    private function unlockDataAccess()
+    {
+        try {
             flock($this->lockFilePointer, LOCK_UN); //unlock file
             fclose($this->lockFilePointer); //close file
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
         }
     }
 
-    function getESFilteredAndSortedByCriteria($eSType, $criteriaArray, $sortBy) {
+    function getESFilteredAndSortedByCriteria($eSType, $criteriaArray, $sortBy)
+    {
         // parameter is an array of criterion to be applied to the initial array: "$array"
 
         $eSArray = $this->electronicCatalog->getESList();
@@ -328,12 +358,12 @@ class ElectronicCatalogMapper {
         // Sort By
         if (!is_null($sortBy)) {
             if ($sortBy === "priceAscending") {
-                usort($filteredDone, function($a, $b) {
+                usort($filteredDone, function ($a, $b) {
                     return $a->price <=> $b->price;
                 });
             } else {
                 if ($sortBy === "priceDescending") {
-                    usort($filteredDone, function($a, $b) {
+                    usort($filteredDone, function ($a, $b) {
                         return $b->price <=> $a->price;
                     });
                 }
@@ -343,7 +373,8 @@ class ElectronicCatalogMapper {
         return $filteredDone;
     }
 
-    function getESByType($eSType) {
+    function getESByType($eSType)
+    {
 
         $eSArray = $this->electronicCatalog->getESList();
 
@@ -358,14 +389,15 @@ class ElectronicCatalogMapper {
         return $eSArray;
     }
 
-    function getAllEIForOnePurchaseForUser($user_id) {
+    function getAllEIForOnePurchaseForUser($user_id)
+    {
         $this->lockDataAccess();
-        $eIListForUser = array ();
+        $eIListForUser = array();
         $electronicSpecifications = $this->electronicCatalog->getESList();
-      //  dd($electronicSpecifications);
-        foreach ($electronicSpecifications as $eS){
+        //  dd($electronicSpecifications);
+        foreach ($electronicSpecifications as $eS) {
             $eIList = $eS->electronicItems;
-            foreach ($eIList as $eI){
+            foreach ($eIList as $eI) {
                 //dd($eI);
                 if ($eI->User_id == $user_id)
                     array_push($eIListForUser, $eI);
@@ -385,18 +417,20 @@ class ElectronicCatalogMapper {
      * @Contract\Ensure ("($this->getElectronicSpecification($ElectronicSpecification_id)->get()->electronicItems)!=null") //post-condition
      */
 
-   function addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id){
-       $this->lockDataAccess();
-       $EI=$this->electronicCatalog->addReturnedEI($item_id,$serialNumber,$ElectronicSpecification_id);
-       $this->identityMap->add('ElectronicItem', 'id', $item_id);
-       $this->unitOfWork->registerNew($EI);
-       $this->unitOfWork->commit();
-       $this->unlockDataAccess();
-       return true;
-   }
+    function addReturnedEI($item_id, $serialNumber, $ElectronicSpecification_id)
+    {
+        $this->lockDataAccess();
+        $EI = $this->electronicCatalog->addReturnedEI($item_id, $serialNumber, $ElectronicSpecification_id);
+        $this->identityMap->add('ElectronicItem', 'id', $item_id);
+        $this->unitOfWork->registerNew($EI);
+        $this->unitOfWork->commit();
+        $this->unlockDataAccess();
+        return true;
+    }
 
-   function saveEI($ei){
-       $this->electronicCatalogTDG->saveReturnedEI($ei);
-       return true;
-   }
+    function saveEI($ei)
+    {
+        $this->electronicCatalogTDG->saveReturnedEI($ei);
+        return true;
+    }
 }
