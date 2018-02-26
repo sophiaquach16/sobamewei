@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="40" assertions="40" errors="0" failures="7" skipped="0" time="1.728313">
+    <testsuite name="Feature" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.133882">
+      <testsuite name="Tests\Feature\ExampleTest" file="/var/www/html/sobamewei/tests/Feature/ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.133882">
+        <testcase name="testBasicTest" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="/var/www/html/sobamewei/tests/Feature/ExampleTest.php" line="15" assertions="1" time="0.133882"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Unit" tests="39" assertions="39" errors="0" failures="7" skipped="0" time="1.594431">
+      <testsuite name="Tests\Unit\ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" tests="8" assertions="8" errors="0" failures="0" skipped="0" time="0.317771">
+        <testcase name="testmodifyElectronicSpecification" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="14" assertions="1" time="0.037188"/>
+        <testcase name="testmakeElectronicItem" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="108" assertions="1" time="0.037417"/>
+        <testcase name="testmakeElectronicSpecification" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="175" assertions="1" time="0.052099"/>
+        <testcase name="testgetElectronicSpecificationById" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="253" assertions="1" time="0.040622">
+          <system-out>array(18) {
+  ["id"]=&gt;
+  int(123)
+  ["dimension"]=&gt;
+  string(5) "2X3X4"
+  ["weight"]=&gt;
+  string(3) "100"
+  ["modelNumber"]=&gt;
+  string(8) "123model"
+  ["brandName"]=&gt;
+  string(3) "123"
+  ["hdSize"]=&gt;
+  string(3) "123"
+  ["price"]=&gt;
+  string(3) "123"
+  ["processorType"]=&gt;
+  string(5) "intel"
+  ["ramSize"]=&gt;
+  string(2) "16"
+  ["cpuCores"]=&gt;
+  string(1) "4"
+  ["batteryInfo"]=&gt;
+  string(8) "infinite"
+  ["os"]=&gt;
+  string(6) "ubuntu"
+  ["camera"]=&gt;
+  bool(true)
+  ["touchScreen"]=&gt;
+  bool(true)
+  ["displaySize"]=&gt;
+  string(1) "1"
+  ["ElectronicType_id"]=&gt;
+  string(1) "1"
+  ["image"]=&gt;
+  string(12) "C:/Users/Mel"
+  ["electronicItems"]=&gt;
+  array(2) {
+    [0]=&gt;
+    array(5) {
+      ["id"]=&gt;
+      int(1)
+      ["serialNumber"]=&gt;
+      int(123)
+      ["ElectronicSpecification_id"]=&gt;
+      int(123)
+      ["User_id"]=&gt;
+      int(123)
+      ["expiryForUser"]=&gt;
+      string(19) "2018-02-20 12:03:51"
+    }
+    [1]=&gt;
+    array(5) {
+      ["id"]=&gt;
+      int(2)
+      ["serialNumber"]=&gt;
+      int(456)
+      ["ElectronicSpecification_id"]=&gt;
+      int(123)
+      ["User_id"]=&gt;
+      int(123)
+      ["expiryForUser"]=&gt;
+      string(19) "2018-02-20 12:03:51"
+    }
+  }
+}
+</system-out>
+        </testcase>
+        <testcase name="testfindElectronicSpecification" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="338" assertions="1" time="0.045329"/>
+        <testcase name="testdeleteElectronicItem" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="385" assertions="1" time="0.040783"/>
+        <testcase name="testSetGet" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="448" assertions="1" time="0.032190"/>
+        <testcase name="testReturnedEI" class="Tests\Unit\ElectronicCatalogTest" classname="Tests.Unit.ElectronicCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicCatalogTest.php" line="495" assertions="1" time="0.032143"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\ElectroniItemTests" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicItemTest.php" tests="4" assertions="4" errors="0" failures="0" skipped="0" time="0.132033">
+        <testcase name="testsetGet" class="Tests\Unit\ElectroniItemTests" classname="Tests.Unit.ElectroniItemTests" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicItemTest.php" line="12" assertions="1" time="0.037774"/>
+        <testcase name="testgetId" class="Tests\Unit\ElectroniItemTests" classname="Tests.Unit.ElectroniItemTests" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicItemTest.php" line="35" assertions="1" time="0.037865"/>
+        <testcase name="testsetGetSerialNumber" class="Tests\Unit\ElectroniItemTests" classname="Tests.Unit.ElectroniItemTests" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicItemTest.php" line="47" assertions="1" time="0.028495"/>
+        <testcase name="testgetElectronicSpecification_id" class="Tests\Unit\ElectroniItemTests" classname="Tests.Unit.ElectroniItemTests" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicItemTest.php" line="58" assertions="1" time="0.027899"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\ElectronicSpecificationClassTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicSpecificationClassTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.030846">
+        <testcase name="testSetGetTest" class="Tests\Unit\ElectronicSpecificationClassTest" classname="Tests.Unit.ElectronicSpecificationClassTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ElectronicSpecificationClassTest.php" line="18" assertions="1" time="0.030846"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\ShoppingCartTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php" tests="4" assertions="4" errors="0" failures="4" skipped="0" time="0.139835">
+        <testcase name="testAddEIToCart" class="Tests\Unit\ShoppingCartTest" classname="Tests.Unit.ShoppingCartTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php" line="15" assertions="1" time="0.046377">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\ShoppingCartTest::testAddEIToCart
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php:72
+</failure>
+        </testcase>
+        <testcase name="testGetSetEIList" class="Tests\Unit\ShoppingCartTest" classname="Tests.Unit.ShoppingCartTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php" line="86" assertions="1" time="0.030928">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\ShoppingCartTest::testGetSetEIList
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php:134
+</failure>
+        </testcase>
+        <testcase name="testRemoveOutdatedEI" class="Tests\Unit\ShoppingCartTest" classname="Tests.Unit.ShoppingCartTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php" line="137" assertions="1" time="0.034833">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\ShoppingCartTest::testRemoveOutdatedEI
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php:185
+</failure>
+        </testcase>
+        <testcase name="testUpdateEIList" class="Tests\Unit\ShoppingCartTest" classname="Tests.Unit.ShoppingCartTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php" line="188" assertions="1" time="0.027697">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\ShoppingCartTest::testUpdateEIList
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/Core/ShoppingCartTest.php:244
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Unit\TransactionCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionCatalogTest.php" tests="5" assertions="5" errors="0" failures="0" skipped="0" time="0.138926">
+        <testcase name="testGetAndSet" class="Tests\Unit\TransactionCatalogTest" classname="Tests.Unit.TransactionCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionCatalogTest.php" line="18" assertions="1" time="0.030442"/>
+        <testcase name="testGetTransactionObjectByItemId" class="Tests\Unit\TransactionCatalogTest" classname="Tests.Unit.TransactionCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionCatalogTest.php" line="53" assertions="1" time="0.023237"/>
+        <testcase name="testGetTransactionByItemId" class="Tests\Unit\TransactionCatalogTest" classname="Tests.Unit.TransactionCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionCatalogTest.php" line="81" assertions="1" time="0.023264"/>
+        <testcase name="testGetTransactionsByUserIdAndTimestamp" class="Tests\Unit\TransactionCatalogTest" classname="Tests.Unit.TransactionCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionCatalogTest.php" line="115" assertions="1" time="0.032255"/>
+        <testcase name="testGetTransactionListForUser" class="Tests\Unit\TransactionCatalogTest" classname="Tests.Unit.TransactionCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionCatalogTest.php" line="147" assertions="1" time="0.029728"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\TransactionTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionTest.php" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.082873">
+        <testcase name="testGetAndSet" class="Tests\Unit\TransactionTest" classname="Tests.Unit.TransactionTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionTest.php" line="22" assertions="1" time="0.027486"/>
+        <testcase name="testPurchase" class="Tests\Unit\TransactionTest" classname="Tests.Unit.TransactionTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionTest.php" line="43" assertions="1" time="0.032450"/>
+        <testcase name="testGetSetTimestamp" class="Tests\Unit\TransactionTest" classname="Tests.Unit.TransactionTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/TransactionTest.php" line="99" assertions="1" time="0.022937"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\UserCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserCatalogTest.php" tests="4" assertions="4" errors="0" failures="0" skipped="0" time="0.274068">
+        <testcase name="testAccessorsMethods" class="Tests\Unit\UserCatalogTest" classname="Tests.Unit.UserCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserCatalogTest.php" line="20" assertions="1" time="0.023339"/>
+        <testcase name="testCheckUser" class="Tests\Unit\UserCatalogTest" classname="Tests.Unit.UserCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserCatalogTest.php" line="56" assertions="1" time="0.183801"/>
+        <testcase name="testFindUser" class="Tests\Unit\UserCatalogTest" classname="Tests.Unit.UserCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserCatalogTest.php" line="94" assertions="1" time="0.033107"/>
+        <testcase name="testMakeCustomer" class="Tests\Unit\UserCatalogTest" classname="Tests.Unit.UserCatalogTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserCatalogTest.php" line="130" assertions="1" time="0.033821"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\UserClassTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserClassTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.033206">
+        <testcase name="testSetGetTest" class="Tests\Unit\UserClassTest" classname="Tests.Unit.UserClassTest" file="/var/www/html/sobamewei/tests/Unit/Classes/Core/UserClassTest.php" line="16" assertions="1" time="0.033206"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\ElectronicCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ElectronicCatalogTDGTest.php" tests="4" assertions="4" errors="0" failures="1" skipped="0" time="0.186649">
+        <testcase name="testInsertAndFindES" class="Tests\Unit\ElectronicCatalogTDGTest" classname="Tests.Unit.ElectronicCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ElectronicCatalogTDGTest.php" line="13" assertions="1" time="0.041846">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\ElectronicCatalogTDGTest::testInsertAndFindES
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/TDG/ElectronicCatalogTDGTest.php:53
+</failure>
+        </testcase>
+        <testcase name="testUpdateES" class="Tests\Unit\ElectronicCatalogTDGTest" classname="Tests.Unit.ElectronicCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ElectronicCatalogTDGTest.php" line="56" assertions="1" time="0.045927"/>
+        <testcase name="testInsertEI" class="Tests\Unit\ElectronicCatalogTDGTest" classname="Tests.Unit.ElectronicCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ElectronicCatalogTDGTest.php" line="104" assertions="1" time="0.054326"/>
+        <testcase name="testDeleteEI" class="Tests\Unit\ElectronicCatalogTDGTest" classname="Tests.Unit.ElectronicCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ElectronicCatalogTDGTest.php" line="144" assertions="1" time="0.044550"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\ShoppingCartTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ShoppingCartTDGTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.040332">
+        <testcase name="testFindAllEIFromUser" class="Tests\Unit\ShoppingCartTDGTest" classname="Tests.Unit.ShoppingCartTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/ShoppingCartTDGTest.php" line="16" assertions="1" time="0.040332">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\ShoppingCartTDGTest::testFindAllEIFromUser
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/TDG/ShoppingCartTDGTest.php:89
+</failure>
+          <system-out>array(0) {
+}
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Unit\UserCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/UserCatalogTDGTest.php" tests="4" assertions="4" errors="0" failures="1" skipped="0" time="0.217892">
+        <testcase name="testAdd" class="Tests\Unit\UserCatalogTDGTest" classname="Tests.Unit.UserCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/UserCatalogTDGTest.php" line="20" assertions="1" time="0.036806"/>
+        <testcase name="testLogin" class="Tests\Unit\UserCatalogTDGTest" classname="Tests.Unit.UserCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/UserCatalogTDGTest.php" line="43" assertions="1" time="0.104397"/>
+        <testcase name="testFind" class="Tests\Unit\UserCatalogTDGTest" classname="Tests.Unit.UserCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/UserCatalogTDGTest.php" line="51" assertions="1" time="0.034782">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\UserCatalogTDGTest::testFind
+Failed asserting that false is true.
+
+/var/www/html/sobamewei/tests/Unit/Classes/TDG/UserCatalogTDGTest.php:70
+</failure>
+        </testcase>
+        <testcase name="testFindAll" class="Tests\Unit\UserCatalogTDGTest" classname="Tests.Unit.UserCatalogTDGTest" file="/var/www/html/sobamewei/tests/Unit/Classes/TDG/UserCatalogTDGTest.php" line="77" assertions="1" time="0.041907"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

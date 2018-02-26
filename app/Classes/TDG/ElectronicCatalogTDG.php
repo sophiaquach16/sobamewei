@@ -1,7 +1,7 @@
 <?php
 namespace App\Classes\TDG;
 class ElectronicCatalogTDG {
-    private $conn;
+    public $conn;
     public function __construct() {
         $this->conn = new MySQLConnection();
     }
@@ -10,9 +10,7 @@ class ElectronicCatalogTDG {
      * @param type $parameters "Associative array with the SQL field and the wanted value. Ex: $parameter['id'] = 4; $parameter['modelNumber'] = 'NFDSGF767';
      */
     public function find($parameters) {
-        $queryString = 'SELECT *
-            FROM ElectronicSpecification
-            WHERE ';
+        $queryString = 'SELECT * FROM ElectronicSpecification WHERE ';
 
         //For each key, (ex: id, email, etc.), we build the query
         foreach ($parameters as $key => $value) {
@@ -32,9 +30,7 @@ class ElectronicCatalogTDG {
         //dd($eSDataList);
         foreach ($eSDataList as &$eSData) {
             //dd($eSData);
-            $queryString = 'SELECT *
-            FROM ElectronicItem
-            WHERE ';
+            $queryString = 'SELECT * FROM ElectronicItem WHERE ';
             $parameters = array('ElectronicSpecification_id' => $eSData->id);
             //For each key, (ex: id, email, etc.), we build the query
             foreach ($parameters as $key => $value) {
@@ -158,5 +154,5 @@ class ElectronicCatalogTDG {
         $queryString = substr($queryString, 0, -2);
 
         return $this->conn->query($queryString, $parameters);
-}
+    }
 }

@@ -7,7 +7,7 @@ use Auth;
 class ShoppingCartTDG
 {
 
-    private $conn;
+    public $conn;
 
     public function __construct()
     {
@@ -49,11 +49,7 @@ class ShoppingCartTDG
                 unset($eIsData[$key]);
             }
         }
-
         return $eIsData;
     }
-
-
-
 }
 ?>

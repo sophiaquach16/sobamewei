@@ -4,7 +4,7 @@ namespace App\Classes\Core;
 
 use Hash;
 
-class UserCatalog
+class UserCatalog implements iUserCatalog
 {
 
     private $userList;

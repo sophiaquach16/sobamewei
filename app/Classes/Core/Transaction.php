@@ -7,7 +7,7 @@ use PhpDeal\Annotation as Contract;
  * Class Transaction
  * @Contract\Invariant("Auth::check() && Auth::user()->admin === 0")
  */
-class Transaction
+class Transaction implements iTransaction
 {
 
     private $timestamp;
@@ -78,14 +78,11 @@ class Transaction
 
     public function get(){
         $returnData = new \stdClass();
-
         $returnData->item_id = $this->item_id;
         $returnData->customer_id = $this->customer_id;
         $returnData->serialNumber = $this->serialNumber;
         $returnData->ElectronicSpec_id = $this->ElectronicSpec_id;
         $returnData->timestamp = $this->timestamp;
-
-
         return $returnData;
     }
 
