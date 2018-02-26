@@ -10,7 +10,7 @@ use App\Classes\Core\ElectronicItem;
  * shopping cart class
  * @Contract\Invariant("Auth::check() && Auth::user()->admin === 0 && count($this->eIList) >= 0 && count($this->eIList) <= 7")
  */
-class ShoppingCart implements iShoppingCart {
+class ShoppingCart  {
     private static  $instance= null;
     private $eIList;
 

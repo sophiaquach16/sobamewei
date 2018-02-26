@@ -10,7 +10,7 @@ use app\Classes\Core\iTransaction;
 use app\Classes\Core\iUser;
 use app\Classes\Core\iUserCatalog;
 
-class MockUserCatalog implements iUserCatalog
+class MockUserCatalog
 {
     public function findUser($email)
     {
@@ -42,7 +42,7 @@ class MockUserCatalog implements iUserCatalog
     }
 }
 
-class MockUserCatalogTDG implements iUserCatalog
+class MockUserCatalogTDG
 {
     public function add($user)
     {
@@ -137,7 +137,7 @@ class MockTransactionTDG
 }
 
 
-class MockShoppingCart implements iShoppingCart
+class MockShoppingCart
 {
     public function getEIList()
     {
@@ -197,7 +197,7 @@ class MockElectronicCataLogTDG
     }
 }
 
-class MockElectronicCatalog implements iElectronicCatalog
+class MockElectronicCatalog
 {
     private $esList;
 
@@ -310,7 +310,7 @@ class MockUnitOfWork
     }
 }
 
-class MockTransaction implements iTransaction
+class MockTransaction
 {
     public $timestamp = 888888;
     public $item_id = 72;
@@ -347,7 +347,7 @@ class MockTransaction implements iTransaction
     }
 }
 
-class MockUser implements iUser
+class MockUser
 {
     public $id = 999;
     public $firstName = 'example_firstname';
@@ -379,7 +379,7 @@ class MockUser implements iUser
     }
 }
 
-class MockElectronicItem implements iElectronicItem
+class MockElectronicItem
 {
 
     public $id = 1;
@@ -436,7 +436,7 @@ class MockElectronicItem implements iElectronicItem
     }
 }
 
-class MockElectronicSpecification implements iElectronicSpecification
+class MockElectronicSpecification
 {
     public $id = 1;
     public $dimension = '100 x 200 x 300';
