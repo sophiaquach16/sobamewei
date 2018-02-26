@@ -9,7 +9,23 @@ use App\Classes\Core\ElectronicItem;
 use App\Classes\Core\ElectronicSpecification;
 
 class ElectronicCatalogTest extends TestCase {
+    private $electronicCatalog;
+    
+    public function setup(){
+       parent::setup();
 
+       $this->electronicCatalog = ElectronicCatalog::getInstance();
+
+       $this->electronicItemMock1 = $this
+           ->getMockBuilder(ElectronicItem::class)
+           ->getMethods(['get'])
+           ->getMock();
+
+       $this->electronicItemMock2 = $this
+           ->getMockBuilder(ElectronicItem::class)
+           ->getMethods(['get'])
+           ->getMock();
+   }
 
     public function testmodifyElectronicSpecification() {
         $electronicSpecification = new ElectronicSpecification();
