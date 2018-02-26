@@ -27,7 +27,7 @@ class ElectronicSpecificationClassTest extends TestCase
 
     }
 
-    public function testSetGetTest()
+    public function SetGetTest()
     {
 
         $electronic = new ElectronicSpecification();
