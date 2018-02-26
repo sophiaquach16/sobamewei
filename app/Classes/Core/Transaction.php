@@ -7,7 +7,7 @@ use PhpDeal\Annotation as Contract;
  * Class Transaction
  * @Contract\Invariant("Auth::check() && Auth::user()->admin === 0")
  */
-class Transaction implements iTransaction
+class Transaction
 {
 
     private $timestamp;

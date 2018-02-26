@@ -2,7 +2,7 @@
 
 namespace App\Classes\Core;
 
-class ElectronicSpecification implements iElectronicSpecification {
+class ElectronicSpecification  {
 
     private $id;
     private $dimension;
