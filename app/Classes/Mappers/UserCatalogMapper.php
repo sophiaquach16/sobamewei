@@ -22,14 +22,24 @@ class UserCatalogMapper {
             case 0:
                 self::__construct0();
                 break;
+
+            case 4:
+                self::__construct4($argv[0],$argv[1],$argv[2],$argv[3]);
         }
     }
 
     function __construct0() {
-        $this->userCatalogTDG = new userCatalogTDG();
+        $this->userCatalogTDG = new userCatalogTDGMock();
         $this->userCatalog = new userCatalog($this->userCatalogTDG->findAll());
         $this->unitOfWork = new UnitOfWork(['userCatalogMapper' => $this]);
         $this->identityMap = new IdentityMap();
+    }
+
+    function __construct4($userCatalogTDGMock, $userCatalogMock, $unitOfWorkMock, $identityMapMock){
+        $this->userCatalogTDG = $userCatalogTDGMock;
+        $this->userCatalog = $userCatalogMock;
+        $this->unitOfWork = $unitOfWorkMock;
+        $this->identityMap = $identityMapMock;
     }
 
     function saveUser($user) {
