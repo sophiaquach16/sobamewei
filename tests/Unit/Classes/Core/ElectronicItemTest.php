@@ -7,8 +7,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Classes\Core\User;
 use App\Classes\Core\ElectronicItem;
 
-class ElectroniItemTests extends TestCase{
+class ElectronicItemTests extends TestCase{
 
+    //This test case only uses Electronic items, and therefore does not need mocks
   public function testsetGet(){
     $itemData=new \stdClass();
     $itemData->id=1;
@@ -32,6 +33,7 @@ class ElectroniItemTests extends TestCase{
     $this->assertTrue($valuesMatch);
   }//end of testSetGet
 
+    //This test case only uses Electronic items, and therefore does not need mocks
   public function testgetId (){
     $itemData=new \stdClass();
     $itemData->id=1;
@@ -44,6 +46,7 @@ class ElectroniItemTests extends TestCase{
   }
 
   //test for both setSerialNumber and getSerialNumber
+    //This test case only uses Electronic items, and therefore does not need mocks
   public function testsetGetSerialNumber (){
     $itemData=new \stdClass();
     $itemData->id=1;
@@ -54,6 +57,7 @@ class ElectroniItemTests extends TestCase{
     $retrievedSerialNumber=$electronicItem->getSerialNumber();
     $this->assertTrue($retrievedSerialNumber==$itemData->serialNumber);
   }
+    //This test case only uses Electronic items, and therefore does not need mocks
 
   public function testgetElectronicSpecification_id(){
     $itemData=new \stdClass();

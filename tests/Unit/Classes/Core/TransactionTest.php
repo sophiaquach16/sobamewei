@@ -19,6 +19,25 @@ use Illuminate\Support\Facades\Auth;
 class TransactionTest extends TestCase {
     //This tests get, set, and purchase from the Transaction class
 
+
+    public function setUp(){
+
+        parent::setUp();
+
+        $this-> userMock = $this
+            ->getMockBuilder(User::class)
+            ->setMethods(['get'])
+            ->getMock();
+
+
+        $this->shoppingCart = ShoppingCart::getInstance();
+
+        $this->electronicItemMock1 = $this
+            ->getMockBuilder(ElectronicItem::class)
+            ->setMethods(['get'])
+            ->getMock();
+
+    }
     public function testGetAndSet(){
         //create a transaction
         $transaction = new Transaction();
@@ -42,7 +61,7 @@ class TransactionTest extends TestCase {
 
     public function testPurchase(){
         //Create user
-        $user = new User();
+
         $userData = new \stdClass();
 
         $userData->id = '1';
@@ -54,17 +73,12 @@ class TransactionTest extends TestCase {
         $userData->physicalAddress = '1234 Wallstreet';
         $userData->password = 'password123';
 
-        //logging in the user
-        $user->set($userData);
-        Auth::login($user);
-        Auth::check();
+        $this-> userMock->method('get') ->willReturn($userData);
 
-        //create a shopping cart
+        $this->be($this->userMock);
 
-        $shoppingCart= ShoppingCart::getInstance();
-
+        $shoppingCart = ShoppingCart::getInstance();
         //create an item
-        $electronicItem1 = new ElectronicItem();
         $item1Data = new \stdClass();
         $item1Data->id="1";
         $item1Data->serialNumber = 123;
@@ -72,11 +86,15 @@ class TransactionTest extends TestCase {
         $item1Data->User_id='1';
         $item1Data->expiryForUser='2017-12-25 12:12:12';
 
-        $electronicItem1->set($item1Data);
-        $shoppingItem = array($electronicItem1);
-        $shoppingCart->setEIList($shoppingItem); //shopping cart only contains one item
+        $this->electronicItemMock1->method('get')->willReturn($item1Data);
 
-        $shoppingList = $shoppingCart->getEIList();
+
+
+        ($this->shoppingCart->addEIToCart($this->electronicItemMock1));
+
+
+
+        $shoppingList = $this->shoppingCart->getEIList();
 
         //create a transaction
         $transaction = new Transaction();
@@ -89,6 +107,7 @@ class TransactionTest extends TestCase {
 
         $transaction->set($transactionData);
 
+        dump($this->electronicItemMock1);
 
         $purchaseItems = $transaction->purchase('1'); //list of purchased items
 

@@ -15,20 +15,35 @@ class ElectronicSpecificationClassTest extends TestCase
      *
      * @return void
      */
+    public function setUp(){
+
+        parent::setUp();
+
+
+
+        $this->electronicItemMock1 = $this ->createMock(ElectronicItem::Class);
+
+
+
+    }
+
     public function testSetGetTest()
     {
 
         $electronic = new ElectronicSpecification();
-        $electronicItem = new ElectronicItem();
+
+
 
         $electronicItemData = new \stdClass();
         $electronicItemData->id = 'TESTINGID123';
         $electronicItemData->serialNumber = 'TESTINGSERIAL';
         $electronicItemData->ElectronicSpecification_id = 'TESTAGAIN';
-
-        $electronicItem->set($electronicItemData);
-        $electronicItems = array($electronicItem);
-
+        $electronicItemData->User_id='1';
+        $electronicItemData->expiryForUser = '2017-12-25 12:12:12';
+        $this->electronicItemMock1 -> setUserId($electronicItemData);
+        $this-> electronicItemMock1 ->method('get') ->willReturn($electronicItemData);
+        $electronicItems = array($this-> electronicItemMock1);
+        dump($this->electronicItemMock1);
         $electronicData = new \stdClass();
 
         $electronicData->id = '1';
@@ -46,7 +61,8 @@ class ElectronicSpecificationClassTest extends TestCase
         $electronicData->camera = true;
         $electronicData->touchScreen = true;
         $electronicData->ElectronicType_id = '1';
-        $electronicData->electronicItems = $electronicItems;
+        $electronicData->electronicItems = $this->electronicItemMock1;
+
 
 
         $electronic->set($electronicData);
@@ -62,8 +78,11 @@ class ElectronicSpecificationClassTest extends TestCase
                     if ($value1->get()->id !== $electronic->get()->$key[$key1]->id &&
                         $value1->get()->serialNumber !== $electronic->get()->$key[$key1]->serialNumber &&
                         $value1->get()->ElectronicSpecification_id !== $electronic->get()->$key[$key1]->ElectronicSpecification_id) {
-                        //dump($electronic->get()->$key[$key1]->id);
-                        //dump($value1->get()->id);
+                        //var_dump($electronic->get()->$key[$key1]->ElectronicSpecification_id);
+                       // var_dump('----------------------------');
+                        dump($electronic->get()->$key[$key1]);
+                        dump('----------');
+                        dump($value1->get()->id);
                         $result = false;
                     }
                 }
