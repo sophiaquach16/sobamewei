@@ -3,13 +3,12 @@ import os
 
 
 class MongoDbConnector:
-    database = os.environ['DB_DATABASE']
-    user = os.environ['DB_USERNAME']
-    password = os.environ['DB_PASSWORD']
-    host = os.environ['DB_HOST']
+    database = 'conushop'
+    user = 'root'
+    host = 'localhost'
 
     def __init__(self):
-        self.client = MongoClient(host=self.host, username=self.user, password=self.password)
+        self.client = MongoClient()
 
     def reset(self):
         collections = self.client[self.database].collection_names()
