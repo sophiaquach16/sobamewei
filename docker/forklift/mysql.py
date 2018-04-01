@@ -2,6 +2,7 @@ import MySQLdb
 import os
 import sys
 import models
+import time
 
 
 class MySQLConnector:
@@ -331,3 +332,15 @@ class MySQLConnector:
             user_list.append(user_model)
         db.close()
         return user_list
+
+    def update_last_forklift(self):
+        db = MySQLdb.connect(host=self.host, user=self.user, passwd=self.password, db=self.database)
+        cursor = db.cursor()
+        cursor.execute("update ElectronicItem set last_forklift_or_change_check = %s", [time.time()])
+        cursor.execute("update ElectronicSpecification set last_forklift_or_change_check = %s", [time.time()])
+        cursor.execute("update ElectronicType set last_forklift_or_change_check = %s", [time.time()])
+        cursor.execute("update LoginLog set last_forklift_or_change_check = %s", [time.time()])
+        cursor.execute("update Transaction set last_forklift_or_change_check = %s", [time.time()])
+        cursor.execute("update User set last_forklift_or_change_check = %s", [time.time()])
+        db.commit()
+        db.close()
