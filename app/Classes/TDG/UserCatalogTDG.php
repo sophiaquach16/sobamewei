@@ -128,20 +128,22 @@ class UserCatalogTDG {
         return $this->conn->query($queryString, $parameters);
 
     }
-
+    //Change delet eto UPDATE for migration purposes
     public function deleteLoginLog($userId) {
 
-          $queryString = 'DELETE FROM LoginLog WHERE ';
-          $queryString .= 'User_id' . ' = :' . 'User_id';
+          $queryString = 'UPDATE  LoginLog  ';
+          $queryString .= 'SET last_forklift_or_change_check = -1';
+          $queryString .= 'WHERE User_id' . ' = :' . 'User_id';
 
           $parameters = new \stdClass();
           $parameters->User_id = $userId;
 
           return $this->conn->query($queryString, $parameters);
     }
-
+    //Set Soft deltee for user transaction
     public function deleteUserTransaction($userId){
-        $queryString = 'DELETE FROM Transaction WHERE ';
+        $queryString = 'DELETE  Transaction ';
+        $queryString = 'WHERE last_forklift_or_change_check = -1';
         $queryString .= 'customer_id' . ' = :' . 'customer_id';
 
         $parameters = new \stdClass();
