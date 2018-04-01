@@ -115,10 +115,12 @@ class UserCatalogTDG {
         return $this->conn->query($queryString, $parameters);
     }
 
+    //soft Delete for migration to MongoDB
     public function deleteUser($user){
 
-        $queryString = 'DELETE FROM User WHERE ';
-        $queryString .= 'id' . ' = :' . 'id';
+        $queryString = 'UPDATE  User  ';
+        $queryString .= 'SET last_forklift_or_change_check ';
+        $queryString .= ' WHERE id' . ' = :' . 'id';
 
         $parameters = new \stdClass();
         $parameters->id = $user->get()->id;
