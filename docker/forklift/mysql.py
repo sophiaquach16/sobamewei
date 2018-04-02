@@ -63,8 +63,9 @@ class MySQLConnector:
         INNER JOIN ElectronicSpecification on ElectronicItem.ElectronicSpecification_id = ElectronicSpecification.id
         INNER JOIN User on ElectronicItem.User_id = User.id
         INNER JOIN ElectronicType on ElectronicSpecification.ElectronicType_id = ElectronicType.id"""
-        if x in (-1,0,2):
-            query = query + "WHERE last_forklift_or_change_check in (-1,0,2)"
+        if x == 0:
+            query = query + "\nWHERE ElectronicItem.last_forklift_or_change_check in (-1,0,2)"
+            print query
         cursor.execute(query)
         results = cursor.fetchall()
         for r in results:
@@ -138,8 +139,8 @@ class MySQLConnector:
         ElectronicSpecification.image
         FROM ElectronicSpecification
         INNER JOIN ElectronicType on ElectronicSpecification.ElectronicType_id = ElectronicType.id"""
-        if x in (-1,0,2):
-         query = query + "WHERE last_forklift_or_change_check in (-1,0,2)"
+        if x == 0:
+         query = query + "\nWHERE ElectronicSpecification.last_forklift_or_change_check in (-1,0,2)"
         cursor.execute(query)
         results = cursor.fetchall()
         for r in results:
@@ -175,8 +176,8 @@ class MySQLConnector:
         db = MySQLdb.connect(host=self.host, user=self.user, passwd=self.password, db=self.database)
         cursor = db.cursor()
         query = "SELECT * FROM ElectronicType"
-        if x in (-1,0,2):
-            query = query + "WHERE last_forklift_or_change_check in (-1,0,2)"
+        if x == 1:
+            query = query + "\nWHERE ElectronicType.last_forklift_or_change_check in (-1,0,2)"
         cursor.execute(query)
         results = cursor.fetchall()
         for r in results:
@@ -207,8 +208,6 @@ class MySQLConnector:
         User.remember_token        
         FROM LoginLog
         INNER JOIN User ON LoginLog.User_id = User.id"""
-        if x in (-1,0,2):
-         query = query + "WHERE last_forklift_or_change_check in (-1,0,2)"
         cursor.execute(query)
         results = cursor.fetchall()
         for r in results:
@@ -272,8 +271,7 @@ class MySQLConnector:
         INNER JOIN ElectronicSpecification ON Transaction.ElectronicSpec_id = ElectronicSpecification.id
         INNER JOIN ElectronicType ON ElectronicSpecification.ElectronicType_id = ElectronicType.id
         INNER JOIN User ON Transaction.customer_id = User.id"""
-        if x in (-1,0,2):
-          query = query + "WHERE last_forklift_or_change_check in (-1,0,2)"
+
         cursor.execute(query)
         results = cursor.fetchall()
         for r in results:
@@ -327,7 +325,7 @@ class MySQLConnector:
         cursor = db.cursor()
         query = "SELECT * FROM User"
         if x in (-1,0,2):
-           query = query + "WHERE last_forklift_or_change_check in (-1,0,2)"
+           query = query + "\nWHERE User.last_forklift_or_change_check in (-1,0,2)"
         cursor.execute(query)
         results = cursor.fetchall()
         for r in results:
@@ -348,12 +346,12 @@ class MySQLConnector:
     def update_last_forklift(self):
         db = MySQLdb.connect(host=self.host, user=self.user, passwd=self.password, db=self.database)
         cursor = db.cursor()
-        cursor.execute("update ElectronicItem set last_forklift_or_change_check = %s", [time.time()])
-        cursor.execute("update ElectronicSpecification set last_forklift_or_change_check = %s", [time.time()])
-        cursor.execute("update ElectronicType set last_forklift_or_change_check = %s", [time.time()])
-        cursor.execute("update LoginLog set last_forklift_or_change_check = %s", [time.time()])
-        cursor.execute("update Transaction set last_forklift_or_change_check = %s", [time.time()])
-        cursor.execute("update User set last_forklift_or_change_check = %s", [time.time()])
+        cursor.execute("update ElectronicItem set last_forklift_or_change_check = 1")
+        cursor.execute("update ElectronicSpecification set last_forklift_or_change_check = 1")
+        cursor.execute("update ElectronicType set last_forklift_or_change_check = 1")
+        cursor.execute("update LoginLog set last_forklift_or_change_check = 1")
+        cursor.execute("update Transaction set last_forklift_or_change_check = 1")
+        cursor.execute("update User set last_forklift_or_change_check = 1")
         db.commit()
         db.close()
 
