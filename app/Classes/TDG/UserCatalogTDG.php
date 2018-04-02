@@ -6,7 +6,7 @@ use Hash;
 
 class UserCatalogTDG {
 
-    private $conn;
+    public $conn;
 
     public function __construct() {
         $this->conn = new MySQLConnection();
@@ -18,9 +18,7 @@ class UserCatalogTDG {
      */
     public function find($parameters) {
 
-        $queryString = 'SELECT id, firstname, lastName, email, phone, admin,
-                physicalAddress, password FROM User
-                WHERE ';
+        $queryString = 'SELECT id, firstname, lastName, email, phone, admin, physicalAddress, password FROM User WHERE ';
 
         //For each key, (ex: id, email, etc.), we build the query
         foreach ($parameters as $key => $value) {
@@ -60,7 +58,7 @@ class UserCatalogTDG {
         }
 
         //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
+        $queryString = " last_forklift_or_change_check = 0";
 
         return $this->conn->query($queryString, $parameters);
     }
@@ -83,7 +81,6 @@ class UserCatalogTDG {
         //We send to MySQLConnection the associative array, to bind values to keys
         //Please mind that stdClass and associative arrays are not the same data structure, althought being both based on the big family of hashtables
         $array = $this->conn->query($queryString, $parameters);
-
         if (count($array) > 0 && Hash::check($password, $array[0]->password)) {
             return true;
         } else {
@@ -112,16 +109,18 @@ class UserCatalogTDG {
         }
 
         //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
+        $queryString = " last_forklift_or_change_check = 0";
 
 
         return $this->conn->query($queryString, $parameters);
     }
 
+    //soft Delete for migration to MongoDB
     public function deleteUser($user){
 
-        $queryString = 'DELETE FROM User WHERE ';
-        $queryString .= 'id' . ' = :' . 'id';
+        $queryString = 'UPDATE  User  ';
+        $queryString .= 'SET last_forklift_or_change_check = -1 ';
+        $queryString .= ' WHERE id' . ' = :' . 'id';
 
         $parameters = new \stdClass();
         $parameters->id = $user->get()->id;
@@ -129,20 +128,21 @@ class UserCatalogTDG {
         return $this->conn->query($queryString, $parameters);
 
     }
-
+    //Change delete to UPDATE for migration purposes
     public function deleteLoginLog($userId) {
 
-          $queryString = 'DELETE FROM LoginLog WHERE ';
-          $queryString .= 'User_id' . ' = :' . 'User_id';
+          $queryString = 'UPDATE  LoginLog  ';
+          $queryString .= 'SET last_forklift_or_change_check = -1';
+          $queryString .= 'WHERE User_id' . ' = :' . 'User_id';
 
           $parameters = new \stdClass();
           $parameters->User_id = $userId;
 
           return $this->conn->query($queryString, $parameters);
     }
-
+    //Set Soft deltee for user transaction
     public function deleteUserTransaction($userId){
-        $queryString = 'DELETE FROM Transaction WHERE ';
+        $queryString = 'DELETE  Transaction ';
         $queryString .= 'customer_id' . ' = :' . 'customer_id';
 
         $parameters = new \stdClass();

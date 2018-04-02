@@ -10,11 +10,11 @@ use Hash;
 
 class UserCatalogMapper {
 
-    private $userCatalog;
-    private $userCatalogTDG;
-    private $unitOfWork;
-    private $identityMap;
-    private $lockFilePointer;
+    public $userCatalog;
+    public $userCatalogTDG;
+    public $unitOfWork;
+    public $identityMap;
+    public $lockFilePointer;
 
     function __construct() {
         $argv = func_get_args();
@@ -22,6 +22,9 @@ class UserCatalogMapper {
             case 0:
                 self::__construct0();
                 break;
+
+            case 4:
+                self::__construct4($argv[0],$argv[1],$argv[2],$argv[3]);
         }
     }
 
@@ -30,6 +33,13 @@ class UserCatalogMapper {
         $this->userCatalog = new userCatalog($this->userCatalogTDG->findAll());
         $this->unitOfWork = new UnitOfWork(['userCatalogMapper' => $this]);
         $this->identityMap = new IdentityMap();
+    }
+
+    function __construct4($userCatalogTDGMock, $userCatalogMock, $unitOfWorkMock, $identityMapMock){
+        $this->userCatalogTDG = $userCatalogTDGMock;
+        $this->userCatalog = $userCatalogMock;
+        $this->unitOfWork = $unitOfWorkMock;
+        $this->identityMap = $identityMapMock;
     }
 
     function saveUser($user) {
@@ -41,6 +51,7 @@ class UserCatalogMapper {
         $timestamp = date("Y-m-d H:i:s");
 
         $this->userCatalogTDG->insertLoginLog($id, $timestamp);
+        return true;
     }
 
     function makeNewCustomer($userData) {
@@ -76,8 +87,11 @@ class UserCatalogMapper {
 
     function deleteUser($userId){
         $message = "";
-        $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c');
-        flock($this->lockFilePointer, LOCK_EX);
+        try{
+            $this->lockFilePointer = fopen(app_path('Locks/dataAccess'), 'c');
+            flock($this->lockFilePointer, LOCK_EX);
+        }catch(\Exception $e){
+        }
 
         $this->identityMap->delete('User', 'id', $userId);
         $user=$this->userCatalog->getDeleteUserInfo($userId);
@@ -90,9 +104,12 @@ class UserCatalogMapper {
         else {
           $message = "userDeleteFailure";
         }
-
-        flock($this->lockFilePointer, LOCK_UN);
-        fclose($this->lockFilePointer);
+        
+        try{
+            flock($this->lockFilePointer, LOCK_UN);
+            fclose($this->lockFilePointer);
+        }catch(\Exception $e){
+        }
 
         return $message;
     }

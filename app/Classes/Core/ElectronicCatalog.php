@@ -4,7 +4,7 @@ namespace App\Classes\Core;
 use PhpDeal\Annotation as Contract;
 use Auth;
 
-class ElectronicCatalog {
+class ElectronicCatalog  {
 
     private $eSList;
 

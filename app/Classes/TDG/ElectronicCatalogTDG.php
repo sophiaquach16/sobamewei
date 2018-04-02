@@ -1,7 +1,7 @@
 <?php
 namespace App\Classes\TDG;
 class ElectronicCatalogTDG {
-    private $conn;
+    public $conn;
     public function __construct() {
         $this->conn = new MySQLConnection();
     }
@@ -10,9 +10,7 @@ class ElectronicCatalogTDG {
      * @param type $parameters "Associative array with the SQL field and the wanted value. Ex: $parameter['id'] = 4; $parameter['modelNumber'] = 'NFDSGF767';
      */
     public function find($parameters) {
-        $queryString = 'SELECT *
-            FROM ElectronicSpecification
-            WHERE ';
+        $queryString = 'SELECT * FROM ElectronicSpecification WHERE ';
 
         //For each key, (ex: id, email, etc.), we build the query
         foreach ($parameters as $key => $value) {
@@ -32,9 +30,7 @@ class ElectronicCatalogTDG {
         //dd($eSDataList);
         foreach ($eSDataList as &$eSData) {
             //dd($eSData);
-            $queryString = 'SELECT *
-            FROM ElectronicItem
-            WHERE ';
+            $queryString = 'SELECT * FROM ElectronicItem WHERE ';
             $parameters = array('ElectronicSpecification_id' => $eSData->id);
             //For each key, (ex: id, email, etc.), we build the query
             foreach ($parameters as $key => $value) {
@@ -67,6 +63,7 @@ class ElectronicCatalogTDG {
 
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
+        $queryString .= ', last_forklift_or_change_check = 0';
         return $this->conn->query($queryString, $parameters);
     }
 
@@ -89,11 +86,15 @@ class ElectronicCatalogTDG {
         }
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
+        $queryString .= ", last_forklift_or_change_check = 0";
         return $this->conn->query($queryString, $parameters);
     }
+
+    //set soft delete in OLD database (MySQL)
     public function deleteElectronicItem($electronicItem) {
-        $queryString = 'DELETE FROM ElectronicItem WHERE ';
-        $queryString .= 'id' . ' = :' . 'id';
+        $queryString = 'UPDATE ElectronicItem ';
+        $queryString .= 'SET last_forklift_or_change_check = -1 ';
+        $queryString .= ' WHERE id' . ' = :' . 'id';
 
         $parameters = new \stdClass();
         $parameters->id = $electronicItem->get()->id;
@@ -112,10 +113,11 @@ class ElectronicCatalogTDG {
             }
         }
 
-        //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
+        //2 is indicative of modified
+        $queryString .= "last_forklift_or_change_check = 2";
 
         $queryString .= ' WHERE id = :id';
+
         return $this->conn->query($queryString, $parameters);
     }
 
@@ -155,8 +157,8 @@ class ElectronicCatalogTDG {
         }
 
         //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
+        $queryString .= "last_forklift_or_change_check = 0";
 
         return $this->conn->query($queryString, $parameters);
-}
+    }
 }

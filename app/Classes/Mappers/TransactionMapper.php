@@ -15,17 +15,19 @@ use Hash;
 class TransactionMapper
 {
 
-    private $transactionCatalog;
-    private $transactionTDG;
-    private $unitOfWork;
-    private $identityMap;
+    public $transactionCatalog;
+    public $transactionTDG;
+    public $unitOfWork;
+    public $identityMap;
 
     function __construct($user_id)
     {
-        $this->transactionTDG = new TransactionTDG();
-        $this->transactionCatalog = new TransactionCatalog($this->transactionTDG->findAll());
-        $this->identityMap = new IdentityMap();
-        $this->unitOfWork = new UnitOfWork(['transactionMapper' => $this]);
+        if ($user_id > -1){
+            $this->transactionTDG = new TransactionTDG();
+            $this->transactionCatalog = new TransactionCatalog($this->transactionTDG->findAll());
+            $this->identityMap = new IdentityMap();
+            $this->unitOfWork = new UnitOfWork(['transactionMapper' => $this]);
+        }
     }
 
     function getAllTransactions($user_id)
@@ -111,7 +113,7 @@ class TransactionMapper
          }
      }
     function deleteTransaction($tr){
-
         $this->transactionTDG->deleteTransaction($tr);
+        return true;
     }
 }

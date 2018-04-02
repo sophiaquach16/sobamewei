@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartMapper {
 
-    private $electronicCatalogTDG;
-    private $shoppingCart;
-    private $transaction;
-    private $shoppingCartTDG;
-    private $unitOfWork;
-    private $identityMap;
-    private $ElectronicCatalogMapper;
+    public $electronicCatalogTDG;
+    public $shoppingCart;
+    public $transaction;
+    public $shoppingCartTDG;
+    public $unitOfWork;
+    public $identityMap;
+    public $ElectronicCatalogMapper;
 
     function __construct($userId) {
         $this->electronicCatalogTDG = new ElectronicCatalogTDG();
@@ -59,6 +59,7 @@ class ShoppingCartMapper {
 
     function updateEI($eI) {
         $this->shoppingCartTDG->updateEI($eI);
+        return true;
     }
 
 
@@ -79,6 +80,4 @@ class ShoppingCartMapper {
         $this->shoppingCart->updateEIList();
         return 'Item Removed';
     }
-
-
 }

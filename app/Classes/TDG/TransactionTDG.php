@@ -6,7 +6,7 @@ use Hash;
 
 class TransactionTDG {
 
-    private $conn;
+    public $conn;
 
     public function __construct() {
         $this->conn = new MySQLConnection();
