@@ -63,6 +63,7 @@ class ElectronicCatalogTDG {
 
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
+        $queryString .= ', last_forklift_or_change_check = 0';
         return $this->conn->query($queryString, $parameters);
     }
 
@@ -85,6 +86,7 @@ class ElectronicCatalogTDG {
         }
         //We delete the last useless ' , '
         $queryString = substr($queryString, 0, -2);
+        $queryString .= ", last_forklift_or_change_check = 0";
         return $this->conn->query($queryString, $parameters);
     }
 
