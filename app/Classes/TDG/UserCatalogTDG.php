@@ -58,7 +58,7 @@ class UserCatalogTDG {
         }
 
         //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
+        $queryString = " last_forklift_or_change_check = 0";
 
         return $this->conn->query($queryString, $parameters);
     }
@@ -109,7 +109,7 @@ class UserCatalogTDG {
         }
 
         //We delete the last useless ' , '
-        $queryString = substr($queryString, 0, -2);
+        $queryString = " last_forklift_or_change_check = 0";
 
 
         return $this->conn->query($queryString, $parameters);
@@ -119,7 +119,7 @@ class UserCatalogTDG {
     public function deleteUser($user){
 
         $queryString = 'UPDATE  User  ';
-        $queryString .= 'SET last_forklift_or_change_check ';
+        $queryString .= 'SET last_forklift_or_change_check = -1 ';
         $queryString .= ' WHERE id' . ' = :' . 'id';
 
         $parameters = new \stdClass();
@@ -128,7 +128,7 @@ class UserCatalogTDG {
         return $this->conn->query($queryString, $parameters);
 
     }
-    //Change delet eto UPDATE for migration purposes
+    //Change delete to UPDATE for migration purposes
     public function deleteLoginLog($userId) {
 
           $queryString = 'UPDATE  LoginLog  ';
@@ -143,7 +143,6 @@ class UserCatalogTDG {
     //Set Soft deltee for user transaction
     public function deleteUserTransaction($userId){
         $queryString = 'DELETE  Transaction ';
-        $queryString = 'WHERE last_forklift_or_change_check = -1';
         $queryString .= 'customer_id' . ' = :' . 'customer_id';
 
         $parameters = new \stdClass();
